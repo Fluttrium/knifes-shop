@@ -2,8 +2,10 @@
   "name": "knifes-shop",
   "private": true,
   "scripts": {
+    "build:libs": "turbo run build:libs",
     "build": "turbo run build",
-    "dev": "turbo run dev",
+    "dev": "npm run build:libs && turbo run dev --filter=web --filter=api",
+    "dev:all": "turbo run dev",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "check-types": "turbo run check-types"

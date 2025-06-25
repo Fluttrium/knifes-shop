@@ -1,0 +1,17 @@
+{
+  "name": "@knifes-shop/shared",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build:libs": "tsc",
+    "build": "tsc",
+    "clean": "rm -rf dist",
+    "lint": "eslint . --max-warnings 0",
+    "type-check": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.2"
+  }
+}
