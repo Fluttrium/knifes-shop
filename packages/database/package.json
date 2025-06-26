@@ -1,36 +1,29 @@
 {
   "name": "@repo/database",
   "version": "1.0.0",
+  "main": "./src/index.js",
+  "types": "./src/index.ts",
   "exports": {
-    ".": "./src/client.ts"
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.js"
+    }
   },
   "scripts": {
-    "db:migrate:dev": "dotenv -e ../../.env -- prisma migrate dev",
+    "build": "tsc",
+    "dev": "tsc --watch",
     "db:generate": "dotenv -e ../../.env -- prisma generate",
+    "db:migrate:dev": "dotenv -e ../../.env -- prisma migrate dev",
     "db:push": "dotenv -e ../../.env -- prisma db push",
     "db:studio": "dotenv -e ../../.env -- prisma studio",
-    "db:migrate:deploy": "dotenv -e ../../.env -- prisma migrate deploy",
-    "db:seed": "tsx src/seed.ts",
-    "dev": "tsup src/* --watch",
-    "format": "prisma format",
-    "generate": "prisma generate",
-    "lint": "eslint . --max-warnings 0",
-    "prebuild": "npm run generate",
-    "predev": "npm run generate",
-    "studio": "prisma studio"
+    "prebuild": "npm run db:generate"
   },
   "dependencies": {
     "@prisma/client": "latest"
   },
   "devDependencies": {
-    "@repo/eslint-config": "*",
-    "@repo/typescript-config": "*",
-    "dotenv-cli": "^8.0.0",
-    "eslint": "^8.57.0",
     "prisma": "latest",
-    "rimraf": "^5.0.5",
     "tsup": "^8.0.2",
-    "tsx": "4.19.1",
-    "typescript": "5.5.4"
+    "typescript": "^5.0.0"
   }
 }

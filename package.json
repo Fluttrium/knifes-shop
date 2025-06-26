@@ -22,5 +22,9 @@
   "workspaces": [
     "apps/*",
     "packages/*"
-  ]
+  ],
+  "dependencies": {
+    "class-validator": "^0.14.2",
+    "zod": "^3.25.67"
+  }
 }
