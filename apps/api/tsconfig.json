@@ -17,20 +17,6 @@
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
-    "moduleResolution": "node",
-    "esModuleInterop": true,
-    "resolveJsonModule": true,
-    "paths": {
-      "@repo/database": ["../../packages/database/src"],
-      "@repo/database/*": ["../../packages/database/src/*"],
-      "@knifes-shop/shared": ["../../packages/shared/src"],
-      "@knifes-shop/shared/*": ["../../packages/shared/src/*"]
-    }
-  },
-  "include": [
-    "src/**/*",
-    "../../packages/database/src/**/*",
-    "../../packages/shared/src/**/*"
-  ],
-  "exclude": ["node_modules", "dist"]
+    "moduleResolution": "node"
+  }
 }

@@ -1,29 +1,18 @@
 {
   "name": "@repo/database",
-  "version": "1.0.0",
-  "main": "./src/index.js",
-  "types": "./src/index.ts",
-  "exports": {
-    ".": {
-      "types": "./src/index.ts",
-      "default": "./src/index.js"
-    }
-  },
+  "version": "0.0.1",
+  "private": true,
+  "main": "index.js",
   "scripts": {
-    "build": "tsc",
-    "dev": "tsc --watch",
-    "db:generate": "dotenv -e ../../.env -- prisma generate",
-    "db:migrate:dev": "dotenv -e ../../.env -- prisma migrate dev",
-    "db:push": "dotenv -e ../../.env -- prisma db push",
-    "db:studio": "dotenv -e ../../.env -- prisma studio",
-    "prebuild": "npm run db:generate"
+    "db:generate": "prisma generate",
+    "db:push": "prisma db push",
+    "db:migrate": "prisma migrate dev",
+    "db:studio": "prisma studio"
   },
   "dependencies": {
-    "@prisma/client": "latest"
+    "@prisma/client": "^6.11.0"
   },
   "devDependencies": {
-    "prisma": "latest",
-    "tsup": "^8.0.2",
-    "typescript": "^5.0.0"
+    "prisma": "^6.11.0"
   }
 }

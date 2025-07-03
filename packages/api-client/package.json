@@ -1,24 +1,19 @@
 {
-  "name": "@knifes-shop/api-client",
-  "version": "0.0.0",
+  "name": "@repo/api-client",
+  "version": "0.0.1",
   "private": true,
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "build:libs": "tsc",
     "build": "tsc",
+    "dev": "tsc --watch",
     "clean": "rm -rf dist"
   },
   "dependencies": {
-    "@knifes-shop/shared": "*",
-    "axios": "^1.6.0"
+    "@repo/shared": "*",
+    "axios": "^1.10.0"
   },
   "devDependencies": {
-    "@types/react": "^19.0.0",
-    "react": "^19.0.0",
-    "typescript": "^5.8.2"
-  },
-  "peerDependencies": {
-    "react": "^18.0.0"
+    "typescript": "^5.8.3"
   }
 }
