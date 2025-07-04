@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="4176361d-84bf-49e8-bfd1-9c64d1c7c2d7" name="Changes" comment="вот такая поебота">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/knifes-shop.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/eslint.config.mjs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/nest-cli.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/src/app.controller.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/src/app.controller.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/src/app.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/src/app.service.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/src/auth/auth.controller.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/src/auth/auth.controller.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/src/auth/auth.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/src/auth/auth.service.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/src/auth/auth.service.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/src/auth/decorators/auth.decorator.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/src/auth/decorators/get-user.decorator.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/src/auth/decorators/index.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/src/auth/decorators/rol-protected.decorator.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/src/auth/dto/login-user.dto.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/src/auth/dto/register-user.dto.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/src/auth/guards/user-role/user-role.guard.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/src/auth/interfaces/index.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/src/auth/interfaces/jwt-payload.interface.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/src/auth/interfaces/responses/login.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/src/auth/interfaces/valid-roles.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/src/auth/strategies/jwt.strategies.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/src/common/index.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/src/common/swagger/sawgger.config.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/src/main.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/src/prisma/prisma.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/src/prisma/prisma.service.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/src/user/entities/user.entity.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/src/user/user.controller.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/src/user/user.controller.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/src/user/user.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/src/user/user.service.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/src/user/user.service.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/test/app.e2e-spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/test/jest-e2e.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/tsconfig.build.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/tsconfig.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web/components.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web/eslint.config.mjs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web/next.config.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web/postcss.config.mjs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web/public/file.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web/public/globe.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web/public/next.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web/public/vercel.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web/public/window.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web/src/app/favicon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web/src/app/globals.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web/src/app/layout.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web/src/app/login/page.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web/src/app/page.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web/src/components/login-form.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web/src/components/ui/button.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web/src/components/ui/card.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web/src/components/ui/input.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web/src/components/ui/label.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web/src/lib/utils.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web/tsconfig.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/api-client/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/api-client/src/base.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/api-client/src/index.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/api-client/src/resources/users.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/api-client/tsconfig.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/database/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/database/prisma/schema.prisma" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/database/src/generated/client.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/database/src/generated/client.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/database/src/generated/default.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/database/src/generated/default.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/database/src/generated/edge.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/database/src/generated/edge.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/database/src/generated/index-browser.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/database/src/generated/index.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/database/src/generated/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/database/src/generated/libquery_engine-darwin-arm64.dylib.node" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/database/src/generated/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/database/src/generated/runtime/edge-esm.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/database/src/generated/runtime/edge.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/database/src/generated/runtime/index-browser.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/database/src/generated/runtime/index-browser.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/database/src/generated/runtime/library.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/database/src/generated/runtime/library.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/database/src/generated/runtime/react-native.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/database/src/generated/runtime/wasm-compiler-edge.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/database/src/generated/runtime/wasm-engine-edge.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/database/src/generated/schema.prisma" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/database/src/generated/wasm.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/database/src/generated/wasm.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/database/src/index.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/database/src/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/database/src/index.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/database/src/index.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/eslint-config/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/eslint-config/base.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/eslint-config/next.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/eslint-config/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/eslint-config/react-internal.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/shared/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/shared/src/dto/base.dto.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/shared/src/dto/index.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/shared/src/dto/user.dto.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/shared/src/index.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/shared/tsconfig.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/typescript-config/base.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/typescript-config/nextjs.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/typescript-config/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/typescript-config/react-library.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/turbo.json" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="ROOT_SYNC" value="SYNC" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;OkaneKatsuro-bot&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Fluttrium/knifes-shop.git&quot;,
+    &quot;accountId&quot;: &quot;e33ad7c9-7ea0-4a9a-81dc-ce0357a0b854&quot;
+  }
+}</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="ProjectErrors" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
+  <component name="ProjectId" id="2ykt4XrfXGTTUKtBFVopCMFD8Um" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;20.17.0&quot;,
+    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;20.17.58&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/romanmaksimov/Desktop/knifes-shop/packages/shared/src/dto/user/entities&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;npm.api &gt; dev.executor&quot;: &quot;Run&quot;,
+    &quot;npm.api-client &gt; build.executor&quot;: &quot;Run&quot;,
+    &quot;npm.build.executor&quot;: &quot;Run&quot;,
+    &quot;npm.database &gt; build.executor&quot;: &quot;Run&quot;,
+    &quot;npm.database &gt; db:build.executor&quot;: &quot;Run&quot;,
+    &quot;npm.database &gt; db:generate.executor&quot;: &quot;Run&quot;,
+    &quot;npm.database &gt; db:migrate:deploy.executor&quot;: &quot;Run&quot;,
+    &quot;npm.database &gt; db:migrate:dev.executor&quot;: &quot;Run&quot;,
+    &quot;npm.database &gt; db:studio.executor&quot;: &quot;Run&quot;,
+    &quot;npm.database &gt; generate.executor&quot;: &quot;Run&quot;,
+    &quot;npm.dev.executor&quot;: &quot;Run&quot;,
+    &quot;npm.shared &gt; build.executor&quot;: &quot;Run&quot;,
+    &quot;npm.ui &gt; build:libs.executor&quot;: &quot;Run&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.DirectoryMappings&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Users/romanmaksimov/Desktop/knifes-shop/node_modules/typescript/lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;postgresql&quot;
+    ]
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/packages/shared/src/dto/user/entities" />
+      <recent name="$PROJECT_DIR$/apps/api" />
+      <recent name="$PROJECT_DIR$/apps/api/src/auth" />
+      <recent name="$PROJECT_DIR$/apps/api/src/auth/interfaces" />
+      <recent name="$PROJECT_DIR$/packages/api-client" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/packages/shared/src" />
+      <recent name="$PROJECT_DIR$/apps/api/src/user/entities" />
+      <recent name="$PROJECT_DIR$/packages/database" />
+      <recent name="$PROJECT_DIR$/apps/web" />
+      <recent name="$PROJECT_DIR$/packages/database/src" />
+    </key>
+  </component>
+  <component name="RunManager" selected="npm.database &gt; db:generate">
+    <configuration name="api &gt; dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/apps/api/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="api-client &gt; build" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/packages/api-client/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="build" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="database &gt; build" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/packages/database/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="build" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="database &gt; db:generate" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/packages/database/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="db:generate" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="shared &gt; build" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/packages/shared/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="build" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.database &gt; db:generate" />
+        <item itemvalue="npm.api-client &gt; build" />
+        <item itemvalue="npm.shared &gt; build" />
+        <item itemvalue="npm.api &gt; dev" />
+        <item itemvalue="npm.database &gt; build" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-b26f3e71634d-JavaScript-WS-251.26094.131" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="4176361d-84bf-49e8-bfd1-9c64d1c7c2d7" name="Changes" comment="" />
+      <created>1750390207759</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1750390207759</updated>
+      <workItem from="1750390208952" duration="1843000" />
+      <workItem from="1750441738728" duration="997000" />
+      <workItem from="1750443262906" duration="5000" />
+      <workItem from="1750444667256" duration="1885000" />
+      <workItem from="1750493574648" duration="852000" />
+      <workItem from="1750613049127" duration="1638000" />
+      <workItem from="1750742704663" duration="268000" />
+      <workItem from="1750764987839" duration="15828000" />
+      <workItem from="1750832647862" duration="364000" />
+      <workItem from="1750833045419" duration="4118000" />
+      <workItem from="1750842607367" duration="2000" />
+      <workItem from="1750845275097" duration="711000" />
+      <workItem from="1750911692703" duration="4498000" />
+      <workItem from="1750918765334" duration="820000" />
+      <workItem from="1751005618394" duration="4131000" />
+      <workItem from="1751378645895" duration="2172000" />
+      <workItem from="1751399699066" duration="654000" />
+      <workItem from="1751493997561" duration="5358000" />
+      <workItem from="1751537263219" duration="1643000" />
+      <workItem from="1751539754202" duration="657000" />
+      <workItem from="1751540422402" duration="3141000" />
+      <workItem from="1751546593136" duration="1783000" />
+      <workItem from="1751568022010" duration="3537000" />
+      <workItem from="1751578178600" duration="1528000" />
+      <workItem from="1751579724512" duration="9880000" />
+      <workItem from="1751647179435" duration="4139000" />
+      <workItem from="1751654173635" duration="1294000" />
+    </task>
+    <task id="LOCAL-00001" summary=".">
+      <option name="closed" value="true" />
+      <created>1750442033002</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1750442033002</updated>
+    </task>
+    <task id="LOCAL-00002" summary="api added">
+      <option name="closed" value="true" />
+      <created>1750442624318</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1750442624318</updated>
+    </task>
+    <task id="LOCAL-00003" summary="db package setup">
+      <option name="closed" value="true" />
+      <created>1750820686037</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1750820686037</updated>
+    </task>
+    <task id="LOCAL-00004" summary="next js update &#10;dto-types package added&#10;db package added &#10;ui lib added">
+      <option name="closed" value="true" />
+      <created>1750828006157</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1750828006157</updated>
+    </task>
+    <task id="LOCAL-00005" summary="client geberated and conect to backend">
+      <option name="closed" value="true" />
+      <created>1750916296434</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1750916296434</updated>
+    </task>
+    <task id="LOCAL-00006" summary="SWAGGER config">
+      <option name="closed" value="true" />
+      <created>1750916775767</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1750916775767</updated>
+    </task>
+    <task id="LOCAL-00007" summary="вот такая поебота">
+      <option name="closed" value="true" />
+      <created>1751571142256</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1751571142256</updated>
+    </task>
+    <task id="LOCAL-00008" summary="вот такая поебота">
+      <option name="closed" value="true" />
+      <created>1751576264308</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1751576264308</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$/apps/api" />
+    </ignored-roots>
+    <MESSAGE value="." />
+    <MESSAGE value="api added" />
+    <MESSAGE value="db package setup" />
+    <MESSAGE value="next js update &#10;dto-types package added&#10;db package added &#10;ui lib added" />
+    <MESSAGE value="client geberated and conect to backend" />
+    <MESSAGE value="SWAGGER config" />
+    <MESSAGE value="хз че это я забыл" />
+    <MESSAGE value="вот такая поебота" />
+    <option name="LAST_COMMIT_MESSAGE" value="вот такая поебота" />
+  </component>
+</project>
