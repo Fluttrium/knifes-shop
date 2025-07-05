@@ -1,6 +1,9 @@
 import Image, { type ImageProps } from "next/image";
-import { Button } from "@repo/ui/button";
+
 import styles from "./page.module.css";
+import api from "@repo/api-client";
+
+
 
 type Props = Omit<ImageProps, "src"> & {
   srcLight: string;
@@ -9,6 +12,15 @@ type Props = Omit<ImageProps, "src"> & {
 
 const ThemeImage = (props: Props) => {
   const { srcLight, srcDark, ...rest } = props;
+
+  const loginUser = async () => {
+    try {
+      const result = await api.auth.login('user@example.com', 'password123');
+      console.log('Успешный логин:', result);
+    } catch (error) {
+      console.error('Ошибка логина:', error);
+    }
+  };
 
   return (
     <>
@@ -63,9 +75,7 @@ export default function Home() {
             Read our docs
           </a>
         </div>
-        <Button appName="web" className={styles.secondary}>
-          Open alert
-        </Button>
+
       </main>
       <footer className={styles.footer}>
         <a
