@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Создаем базовый instance
 const instance = axios.create({
-    baseURL: 'https://api.yourapp.com/v1',
+    baseURL: 'http://localhost:1488/api/v1',
     timeout: 10000,
     headers: {
         'Content-Type': 'application/json',

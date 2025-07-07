@@ -10,7 +10,7 @@ import { User } from 'src/user/entities/user.entity';
 export class UserRoleGuard implements CanActivate {
 
   constructor(
-    private readonly reflector: Reflector   //Permite tener acceso a la informacion de los decoradores y la metadata de la request
+    private readonly reflector: Reflector
   ){}
 
   canActivate(
@@ -20,7 +20,6 @@ export class UserRoleGuard implements CanActivate {
     
     const validRol: string[] = this.reflector.get(META_ROLES, context.getHandler());
 
-    //SI NO SE ESPECIFICAN ROLES, ENTONCES EL ACCESO ES PUBLICO
     if (!validRol || validRol.length === 0) return true;
 
     const req = context.switchToHttp().getRequest();
