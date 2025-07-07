@@ -10,8 +10,15 @@ export const auth = {
         return response.data;
     },
 
-    async register(email: string, password: string, name: string) {
-        const response = await instance.post('/auth/register', { email, password, name });
+    async register(userData: {
+        name: string;
+        email: string;
+        password: string;
+        passwordconf: string;
+        image?: string;
+    }) {
+        const response = await instance.post('/auth/register', userData);
+
         return response.data;
     },
 
