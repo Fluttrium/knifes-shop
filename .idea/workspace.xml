@@ -4,10 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4176361d-84bf-49e8-bfd1-9c64d1c7c2d7" name="Changes" comment="куки логика почти готова на беке">
+    <list default="true" id="4176361d-84bf-49e8-bfd1-9c64d1c7c2d7" name="Changes" comment="исправленая куки логика почти готова на беке">
+      <change afterPath="$PROJECT_DIR$/packages/api-client/src/types/auth.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/api-client/src/types/common.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/api-client/src/user.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/auth/auth.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/auth/auth.controller.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/auth/auth.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/auth/auth.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/src/auth/auth.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/auth/auth.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/main.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/api-client/src/auth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/api-client/src/auth.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/api-client/src/config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/api-client/src/config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/api-client/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/api-client/src/index.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -207,7 +213,7 @@
       <workItem from="1751907297188" duration="26000" />
       <workItem from="1751916818311" duration="1164000" />
       <workItem from="1752007921484" duration="124000" />
-      <workItem from="1752008053744" duration="5302000" />
+      <workItem from="1752008053744" duration="7696000" />
     </task>
     <task id="LOCAL-00001" summary=".">
       <option name="closed" value="true" />
@@ -297,7 +303,15 @@
       <option name="project" value="LOCAL" />
       <updated>1752012759472</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="исправленая куки логика почти готова на беке">
+      <option name="closed" value="true" />
+      <created>1752013673531</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1752013673531</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -329,6 +343,7 @@
     <MESSAGE value="&quot;Путь в тысячу ли начинается с одного шага.&quot; - Лао-цзы" />
     <MESSAGE value="настроил свагер" />
     <MESSAGE value="куки логика почти готова на беке" />
-    <option name="LAST_COMMIT_MESSAGE" value="куки логика почти готова на беке" />
+    <MESSAGE value="исправленая куки логика почти готова на беке" />
+    <option name="LAST_COMMIT_MESSAGE" value="исправленая куки логика почти готова на беке" />
   </component>
 </project>

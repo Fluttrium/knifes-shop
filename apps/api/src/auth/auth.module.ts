@@ -29,6 +29,6 @@ import {CookieService} from "./cookie/cookie.service";
     }),
     PrismaModule,
   ],
-  exports:[JwtStrategy, PassportModule, JwtModule]
+  exports:[JwtStrategy, PassportModule, JwtModule, CookieService]
 })
 export class AuthModule {}
