@@ -4,15 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4176361d-84bf-49e8-bfd1-9c64d1c7c2d7" name="Changes" comment="настроил свагер">
-      <change afterPath="$PROJECT_DIR$/apps/api/src/auth/config/cookie.config.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/api/src/auth/cookie/cookie.service.ts" afterDir="false" />
+    <list default="true" id="4176361d-84bf-49e8-bfd1-9c64d1c7c2d7" name="Changes" comment="куки логика почти готова на беке">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/auth/auth.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/auth/auth.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/auth/strategies/jwt.strategy.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/auth/strategies/jwt.strategy.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/web/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/web/src/components/signup-componets/signup-form.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web/src/components/signup-componets/signup-form.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/src/auth/auth.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/auth/auth.controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/src/auth/auth.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/auth/auth.service.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -212,7 +207,7 @@
       <workItem from="1751907297188" duration="26000" />
       <workItem from="1751916818311" duration="1164000" />
       <workItem from="1752007921484" duration="124000" />
-      <workItem from="1752008053744" duration="4488000" />
+      <workItem from="1752008053744" duration="5302000" />
     </task>
     <task id="LOCAL-00001" summary=".">
       <option name="closed" value="true" />
@@ -294,7 +289,15 @@
       <option name="project" value="LOCAL" />
       <updated>1751749438370</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="куки логика почти готова на беке">
+      <option name="closed" value="true" />
+      <created>1752012759472</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1752012759472</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -325,6 +328,7 @@
     <MESSAGE value="вот такая поебота" />
     <MESSAGE value="&quot;Путь в тысячу ли начинается с одного шага.&quot; - Лао-цзы" />
     <MESSAGE value="настроил свагер" />
-    <option name="LAST_COMMIT_MESSAGE" value="настроил свагер" />
+    <MESSAGE value="куки логика почти готова на беке" />
+    <option name="LAST_COMMIT_MESSAGE" value="куки логика почти готова на беке" />
   </component>
 </project>

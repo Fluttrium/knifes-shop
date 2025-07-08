@@ -1,11 +1,8 @@
 import {BadRequestException, Injectable, InternalServerErrorException, Logger} from '@nestjs/common';
 import {JwtService} from '@nestjs/jwt';
-
 import * as bcrypt from 'bcryptjs';
-
 import {RegisterUserDto} from './dto/register-user.dto';
-import {JwtPayload} from './interfaces/jwt-payload.interface';
-
+import {JwtPayload} from './interfaces';
 import {PrismaService} from 'src/prisma/prisma.service';
 import {User} from 'src/user/entities/user.entity';
 
@@ -22,7 +19,7 @@ export class AuthService {
     }
 
 
-    async registerUser(dto: RegisterUserDto, res): Promise<any> {
+    async registerUser(dto: RegisterUserDto,): Promise<any> {
         this.logger.log(`POST: user/register: Register user started`);
 
         if (dto.password !== dto.passwordconf) {
@@ -52,13 +49,6 @@ export class AuthService {
             const token = this.getJwtToken({
                 id: newuser.id,
             });
-
-
-            res.cookie('access_token', token, {
-                httpOnly: true,
-                secure: false,
-            });
-
 
             return {
                 user: newuser,
@@ -131,8 +121,7 @@ export class AuthService {
 
     private getJwtToken(payload: JwtPayload) {
 
-        const token = this.jwtService.sign(payload);
-        return token;
+        return this.jwtService.sign(payload);
 
     }
 

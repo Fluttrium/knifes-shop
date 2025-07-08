@@ -1,30 +1,38 @@
-import {Controller, Get, Post, Body, Patch, Param, Delete, Res, HttpStatus} from '@nestjs/common';
-
+import {Controller, Post, Body, Res, } from '@nestjs/common';
+import {Response} from 'express';
 import {RegisterUserDto} from './dto/register-user.dto';
 import {AuthService} from './auth.service';
 import {LoginResponse} from './interfaces';
-import {Auth, GetUser} from './decorators';
-
-import {ApiBearerAuth, ApiOperation, ApiResponse, ApiTags} from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {LoginUserDto} from './dto/login-user.dto';
-import {User} from 'src/user/entities/user.entity';
+import {CookieService} from "./cookie/cookie.service";
 
 @ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
-    constructor(private readonly authService: AuthService) {
+    constructor(private readonly authService: AuthService, private cookieService: CookieService) {
     }
 
     @Post('register')
     @ApiOperation({
         summary: 'REGISTER',
-        description: 'Публичный endpoint для регистаици с ролью "User".'
+        description: 'Публичный endpoint для регистрации с ролью "User".'
     })
     @ApiResponse({status: 201, description: 'Ok', type: LoginResponse})
     @ApiResponse({status: 400, description: 'Bad request'})
     @ApiResponse({status: 500, description: 'Server error'})
-    register(@Body() createUserDto: RegisterUserDto, @Res({ passthrough: true }) res) {
-        return this.authService.registerUser(createUserDto, res);
+    async register(@Body() createUserDto: RegisterUserDto, @Res({passthrough: true}) res: Response) {
+
+        const result = await this.authService.registerUser(createUserDto);
+
+        const token = result.token;
+
+        this.cookieService.setAuthCookie(res, token);
+
+        return {
+            user: result.user,
+            message: 'Регистрация успешна'
+        };
     }
 
     @Post('login')
@@ -35,24 +43,23 @@ export class AuthController {
     @ApiResponse({status: 200, description: 'Ok', type: LoginResponse})
     @ApiResponse({status: 400, description: 'Bad request'})
     @ApiResponse({status: 500, description: 'Server error'})
-    async login(@Res() response, @Body() loginUserDto: LoginUserDto) {
-        const data = await this.authService.loginUser(loginUserDto.email, loginUserDto.password);
-        response.status(HttpStatus.OK).send(data);
+    async login(@Body() loginUserDto: LoginUserDto, @Res({passthrough: true}) res: Response) {
+        const result = await this.authService.loginUser(loginUserDto.email, loginUserDto.password);
+
+        this.cookieService.setAuthCookie(res, result.token);
+
+        return result;
     }
 
-    @Get('refresh-token')
+    @Post('logout')
     @ApiOperation({
-        summary: 'REFRESH TOKEN',
-        description: 'Private endpoint allowed for logged in users to refresh the Access Token before it expires.'
+        summary: 'LOGOUT',
+        description: 'Выход из системы - удаление токена из куки'
     })
-    @ApiBearerAuth()
-    @ApiResponse({status: 200, description: 'Ok', type: LoginResponse})
-    @ApiResponse({status: 401, description: 'Unauthorized'})
-    @Auth()
-    refreshToken(
-        @GetUser() user: User
-    ) {
-        return this.authService.refreshToken(user);
+    @ApiResponse({status: 200, description: 'Ok'})
+    logout(@Res({passthrough: true}) res: Response) {
+        this.cookieService.clearAuthCookie(res);
+        return {message: 'Выход выполнен успешно'};
     }
 
 
