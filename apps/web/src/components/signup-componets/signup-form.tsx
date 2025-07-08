@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import api from "@repo/api-client";
 
+
 interface SignUpFormData {
     name: string
     email: string
