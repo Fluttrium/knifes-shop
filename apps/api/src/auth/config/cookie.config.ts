@@ -12,8 +12,18 @@ export const getCookieConfig = (isProduction: boolean): CookieConfig => ({
   name: 'auth-token',
   options: {
     httpOnly: true,
-    secure: isProduction, // HTTPS только в продакшене
+    secure: isProduction,
     sameSite: 'strict',
-    maxAge: 24 * 60 * 60 * 1000, // 24 часа
+    maxAge: 60 * 60 * 1000,
+  },
+});
+
+export const getCookieConfigRef = (isProduction: boolean): CookieConfig => ({
+  name: 'refresh-token',
+  options: {
+    httpOnly: true,
+    secure: isProduction,
+    sameSite: 'strict',
+    maxAge: 3 * 24 * 60 * 60 * 1000,
   },
 });

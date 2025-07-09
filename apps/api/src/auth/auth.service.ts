@@ -10,6 +10,7 @@ import { RegisterUserDto } from './dto/register-user.dto';
 import { JwtPayload } from './interfaces';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { User } from 'src/user/entities/user.entity';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthService {
@@ -18,6 +19,7 @@ export class AuthService {
   constructor(
     private prisma: PrismaService,
     private readonly jwtService: JwtService,
+    private configService: ConfigService,
   ) {}
 
   async registerUser(dto: RegisterUserDto): Promise<any> {
@@ -32,6 +34,7 @@ export class AuthService {
     const hashedPassword = await bcrypt.hash(dto.password, 10);
 
     try {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { passwordconf, ...newUserData } = dto;
       newUserData.password = hashedPassword;
 
@@ -51,9 +54,14 @@ export class AuthService {
         id: newuser.id,
       });
 
+      const refToken = this.getRefreshToken({
+        id: newuser.id,
+      });
+
       return {
         user: newuser,
         token: token,
+        refreshToken: refToken,
       };
     } catch (error) {
       if (error.code === 'P2002') {
@@ -108,11 +116,26 @@ export class AuthService {
     };
   }
 
-  async refreshToken(user: User) {
+  async refreshTokens(user: User) {
+    const payload = { id: user.id, email: user.email };
+
+    const token = this.getJwtToken(payload);
+
+    const refToken = this.getRefreshToken(payload);
     return {
-      user: user,
-      token: this.getJwtToken({ id: user.id }),
+      token,
+      refToken,
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+      },
     };
+  }
+
+  private getRefreshToken(payload: JwtPayload) {
+    return this.jwtService.sign(payload, { expiresIn: '7d' });
   }
 
   private getJwtToken(payload: JwtPayload) {

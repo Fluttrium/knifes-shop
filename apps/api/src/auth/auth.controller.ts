@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Res } from '@nestjs/common';
+import { Controller, Post, Body, Res, UseGuards } from '@nestjs/common';
 import { Response } from 'express';
 import { RegisterUserDto } from './dto/register-user.dto';
 import { AuthService } from './auth.service';
@@ -6,6 +6,9 @@ import { LoginResponse } from './interfaces';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { LoginUserDto } from './dto/login-user.dto';
 import { CookieService } from './cookie/cookie.service';
+import { RefreshJwtGuard } from './guards/refresh-jwt.guard';
+import { GetUser } from './decorators';
+import { User } from '../user/entities/user.entity';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -30,8 +33,10 @@ export class AuthController {
     const result = await this.authService.registerUser(createUserDto);
 
     const token = result.token;
+    const refreshToken = result.refreshToken;
 
     this.cookieService.setAuthCookie(res, token);
+    this.cookieService.setRefreshCookie(res, refreshToken);
 
     return {
       user: result.user,
@@ -70,5 +75,22 @@ export class AuthController {
   logout(@Res({ passthrough: true }) res: Response) {
     this.cookieService.clearAuthCookie(res);
     return { message: 'Выход выполнен успешно' };
+  }
+
+  @Post('refresh')
+  @UseGuards(RefreshJwtGuard) // Используем refresh guard
+  async refresh(
+    @GetUser() user: User,
+    @Res({ passthrough: true }) res: Response,
+  ) {
+    const tokens = await this.authService.refreshTokens(user);
+
+    this.cookieService.setAuthCookie(res, tokens.token);
+    this.cookieService.setRefreshCookie(res, tokens.refToken);
+
+    return {
+      message: 'Tokens refreshed successfully',
+      user: tokens.user,
+    };
   }
 }

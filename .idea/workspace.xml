@@ -4,64 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4176361d-84bf-49e8-bfd1-9c64d1c7c2d7" name="Changes" comment="поправил клиент">
-      <change afterPath="$PROJECT_DIR$/apps/web/src/components/ui/toats/basic-toats.tsx" afterDir="false" />
+    <list default="true" id="4176361d-84bf-49e8-bfd1-9c64d1c7c2d7" name="Changes" comment="*исправил ui свагера &#10;* Перевел нужные участики документации &#10;* создал базовый пример для демонстрации">
+      <change afterPath="$PROJECT_DIR$/apps/api/src/auth/guards/refresh-jwt.guard.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/api/src/auth/strategies/refreshJwt.strategy.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/.prettierrc" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/.prettierrc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/prisma/seed/seed.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/app.controller.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/app.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/app.controller.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/app.module.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/app.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/app.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/app.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/auth/auth.controller.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/dev" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/api/src/auth/auth.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/auth/auth.controller.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/api/src/auth/auth.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/auth/auth.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/auth/auth.service.spec.ts" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/api/src/auth/auth.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/auth/auth.service.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/api/src/auth/config/cookie.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/auth/config/cookie.config.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/api/src/auth/cookie/cookie.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/auth/cookie/cookie.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/auth/decorators/auth.decorator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/auth/decorators/auth.decorator.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/api/src/auth/decorators/get-user.decorator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/auth/decorators/get-user.decorator.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/auth/decorators/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/auth/decorators/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/auth/decorators/rol-protected.decorator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/auth/decorators/rol-protected.decorator.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/auth/dto/login-user.dto.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/auth/dto/login-user.dto.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/auth/dto/register-user.dto.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/auth/dto/register-user.dto.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/auth/guards/user-role/user-role.guard.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/auth/guards/user-role/user-role.guard.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/auth/interfaces/jwt-payload.interface.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/auth/interfaces/jwt-payload.interface.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/auth/interfaces/responses/login.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/auth/interfaces/responses/login.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/auth/interfaces/valid-roles.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/auth/interfaces/valid-roles.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/auth/strategies/jwt.strategy.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/auth/strategies/jwt.strategy.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/common/swagger/swagger.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/common/swagger/swagger.config.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/main.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/prisma/prisma.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/prisma/prisma.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/user/dto/create-user.dto.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/user/dto/create-user.dto.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/user/dto/update-user.dto.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/user/dto/update-user.dto.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/user/entities/user.entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/user/entities/user.entity.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/user/user.controller.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/user/user.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/user/user.controller.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/user/user.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/user/user.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/user/user.service.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/user/user.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/user/user.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/web/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/web/src/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web/src/app/layout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/web/src/app/signin/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web/src/app/signin/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/web/src/app/signup/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web/src/app/signup/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/web/src/components/login-form.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web/src/components/signin-components/login-form.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/web/src/components/signup-componets/signup-form.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web/src/components/signup-componets/signup-form.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/web/src/components/ui/button.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web/src/components/ui/button.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/web/src/components/ui/card.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web/src/components/ui/card.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/web/src/components/ui/input.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web/src/components/ui/input.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/web/src/components/ui/label.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web/src/components/ui/label.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/web/src/lib/utils.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web/src/lib/utils.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/api-client/src/auth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/api-client/src/auth.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/api-client/src/config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/api-client/src/config.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/api-client/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/api-client/src/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/api-client/src/types/auth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/api-client/src/types/auth.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/api-client/src/types/common.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/api-client/src/types/common.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/api-client/src/user.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/api-client/src/user.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -98,47 +52,47 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHELLCHECK.PATH": "I do mind",
-    "git-widget-placeholder": "main",
-    "javascript.nodejs.core.library.configured.version": "20.17.0",
-    "javascript.nodejs.core.library.typings.version": "20.17.58",
-    "junie.onboarding.icon.badge.shown": "true",
-    "last_opened_file_path": "/Users/romanmaksimov/WebstormProjects/knifes-shop/apps/web/src/components/signin-components",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "npm.api > dev.executor": "Run",
-    "npm.api-client > build.executor": "Run",
-    "npm.build.executor": "Run",
-    "npm.database > build.executor": "Run",
-    "npm.database > db:build.executor": "Run",
-    "npm.database > db:generate.executor": "Run",
-    "npm.database > db:migrate:deploy.executor": "Run",
-    "npm.database > db:migrate:dev.executor": "Run",
-    "npm.database > db:studio.executor": "Run",
-    "npm.database > generate.executor": "Run",
-    "npm.dev.executor": "Run",
-    "npm.format.executor": "Run",
-    "npm.shared > build.executor": "Run",
-    "npm.ui > build:libs.executor": "Run",
-    "prettierjs.PrettierConfiguration.Package": "/Users/romanmaksimov/WebstormProjects/knifes-shop/node_modules/prettier",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "ts.external.directory.path": "/Users/romanmaksimov/WebstormProjects/knifes-shop/node_modules/typescript/lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHELLCHECK.PATH&quot;: &quot;I do mind&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;20.17.0&quot;,
+    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;20.17.58&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/romanmaksimov/WebstormProjects/knifes-shop/apps/web/src/components/signin-components&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;npm.api &gt; dev.executor&quot;: &quot;Run&quot;,
+    &quot;npm.api-client &gt; build.executor&quot;: &quot;Run&quot;,
+    &quot;npm.build.executor&quot;: &quot;Run&quot;,
+    &quot;npm.database &gt; build.executor&quot;: &quot;Run&quot;,
+    &quot;npm.database &gt; db:build.executor&quot;: &quot;Run&quot;,
+    &quot;npm.database &gt; db:generate.executor&quot;: &quot;Run&quot;,
+    &quot;npm.database &gt; db:migrate:deploy.executor&quot;: &quot;Run&quot;,
+    &quot;npm.database &gt; db:migrate:dev.executor&quot;: &quot;Run&quot;,
+    &quot;npm.database &gt; db:studio.executor&quot;: &quot;Run&quot;,
+    &quot;npm.database &gt; generate.executor&quot;: &quot;Run&quot;,
+    &quot;npm.dev.executor&quot;: &quot;Run&quot;,
+    &quot;npm.format.executor&quot;: &quot;Run&quot;,
+    &quot;npm.shared &gt; build.executor&quot;: &quot;Run&quot;,
+    &quot;npm.ui &gt; build:libs.executor&quot;: &quot;Run&quot;,
+    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;/Users/romanmaksimov/WebstormProjects/knifes-shop/node_modules/prettier&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Users/romanmaksimov/WebstormProjects/knifes-shop/node_modules/typescript/lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "postgresql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;postgresql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/apps/web/src/components/signin-components" />
@@ -262,7 +216,8 @@
       <workItem from="1751907297188" duration="26000" />
       <workItem from="1751916818311" duration="1164000" />
       <workItem from="1752007921484" duration="124000" />
-      <workItem from="1752008053744" duration="13117000" />
+      <workItem from="1752008053744" duration="13191000" />
+      <workItem from="1752033774624" duration="3801000" />
     </task>
     <task id="LOCAL-00001" summary=".">
       <option name="closed" value="true" />
@@ -368,7 +323,15 @@
       <option name="project" value="LOCAL" />
       <updated>1752016341811</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="*исправил ui свагера &#10;* Перевел нужные участики документации &#10;* создал базовый пример для демонстрации">
+      <option name="closed" value="true" />
+      <created>1752023480854</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1752023480854</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -402,6 +365,7 @@
     <MESSAGE value="куки логика почти готова на беке" />
     <MESSAGE value="исправленая куки логика почти готова на беке" />
     <MESSAGE value="поправил клиент" />
-    <option name="LAST_COMMIT_MESSAGE" value="поправил клиент" />
+    <MESSAGE value="*исправил ui свагера &#10;* Перевел нужные участики документации &#10;* создал базовый пример для демонстрации" />
+    <option name="LAST_COMMIT_MESSAGE" value="*исправил ui свагера &#10;* Перевел нужные участики документации &#10;* создал базовый пример для демонстрации" />
   </component>
 </project>

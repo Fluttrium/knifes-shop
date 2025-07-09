@@ -7,10 +7,11 @@ import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { PrismaModule } from 'src/prisma/prisma.module';
 import { CookieService } from './cookie/cookie.service';
+import { RefreshJwtStrategy } from './strategies/refreshJwt.strategy';
 
 @Module({
   controllers: [AuthController],
-  providers: [AuthService, JwtStrategy, CookieService],
+  providers: [AuthService, JwtStrategy, CookieService, RefreshJwtStrategy],
   imports: [
     ConfigModule,
     PassportModule.register({ defaultStrategy: 'jwt' }),
