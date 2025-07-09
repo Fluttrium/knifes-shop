@@ -6,9 +6,8 @@ import { UserRoleGuard } from '../guards/user-role/user-role.guard';
 import { Role } from '@prisma/client';
 
 export function Auth(...roles: Role[]) {
-
   return applyDecorators(
     RolProtected(...roles),
-    UseGuards(AuthGuard(), UserRoleGuard)
+    UseGuards(AuthGuard(), UserRoleGuard),
   );
 }

@@ -1,26 +1,20 @@
-
-import { AuthResponse, RegisterRequest, User } from "./types/auth";
+import {
+  ApiError,
+  AuthResponse,
+  LoginRequest,
+  RegisterRequest,
+  User,
+} from "./types/auth";
 import instance from "./config";
 
 export class AuthService {
-  /**
-   * Логин пользователя
-   * Токен автоматически сохраняется в httpOnly куки
-   */
-  async login(email: string, password: string): Promise<AuthResponse> {
-    const response = await instance.post<AuthResponse>("/auth/login", {
-      email,
-      password,
-    });
+  async login(userData: LoginRequest): Promise<AuthResponse> {
+    const response = await instance.post<AuthResponse>("/auth/login", userData);
 
     console.log("✅ Login successful");
     return response.data;
   }
 
-  /**
-   * Регистрация пользователя
-   * После регистрации пользователь автоматически авторизован
-   */
   async register(userData: RegisterRequest): Promise<AuthResponse> {
     const response = await instance.post<AuthResponse>(
       "/auth/register",
@@ -31,17 +25,12 @@ export class AuthService {
     return response.data;
   }
 
-  /**
-   * Логаут пользователя
-   * Куки автоматически очищаются на сервере
-   */
   async logout(): Promise<void> {
     try {
       await instance.post("/auth/logout");
       console.log("✅ Logout successful");
     } catch (error) {
       console.error("❌ Logout error:", error);
-      // Даже если запрос failed, считаем что пользователь разлогинился
     }
   }
 
