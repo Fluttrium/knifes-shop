@@ -10,7 +10,6 @@ import { RegisterUserDto } from './dto/register-user.dto';
 import { JwtPayload } from './interfaces';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { User } from 'src/user/entities/user.entity';
-import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthService {
@@ -19,7 +18,6 @@ export class AuthService {
   constructor(
     private prisma: PrismaService,
     private readonly jwtService: JwtService,
-    private configService: ConfigService,
   ) {}
 
   async registerUser(dto: RegisterUserDto): Promise<any> {

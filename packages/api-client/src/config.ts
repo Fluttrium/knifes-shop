@@ -5,6 +5,13 @@ import axios, {
 } from "axios";
 import { ApiError, ApiErrorResponse } from "./types/auth";
 
+// Расширяем интерфейс для добавления _retry
+declare module 'axios' {
+  interface InternalAxiosRequestConfig {
+    _retry?: boolean;
+  }
+}
+
 const instance: AxiosInstance = axios.create({
   baseURL: process.env.API_BASE_URL || "http://localhost:1488/api/v1",
   timeout: 10000,
@@ -15,6 +22,27 @@ const instance: AxiosInstance = axios.create({
   withCredentials: true,
 });
 
+// Флаг для предотвращения множественных refresh запросов
+let isRefreshing = false;
+let failedQueue: Array<{
+  resolve: (value?: any) => void;
+  reject: (reason?: any) => void;
+}> = [];
+
+// Используем WeakSet для отслеживания повторных попыток
+const retriedRequests = new WeakSet();
+
+const processQueue = (error: any, token: string | null = null) => {
+  failedQueue.forEach(({ resolve, reject }) => {
+    if (error) {
+      reject(error);
+    } else {
+      resolve(token);
+    }
+  });
+
+  failedQueue = [];
+};
 
 instance.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
@@ -39,31 +67,61 @@ instance.interceptors.response.use(
     return response;
   },
   async (error: AxiosError<ApiErrorResponse>) => {
+    const originalRequest = error.config;
     const status = error.response?.status;
 
     console.error(
-      `❌ API Error: ${status} ${error.config?.url}`,
+      `❌ API Error: ${status} ${originalRequest?.url}`,
       error.response?.data,
     );
 
-
-    if (status === 401) {
-      console.log("🔄 Trying to refresh token...");
-
-      try {
-
-        await instance.post("/auth/refresh-token");
-        console.log("✅ Token refreshed successfully");
-
-        if (error.config) {
-          return instance.request(error.config);
-        }
-      } catch (refreshError) {
-        console.error("❌ Token refresh failed:", refreshError);
+    if (status === 401 && originalRequest && !retriedRequests.has(originalRequest)) {
+      // Исключаем refresh endpoint из повторных попыток
+      if (originalRequest.url === '/auth/refresh') {
+        console.log("🚫 Refresh token expired, redirecting to login");
 
         if (typeof window !== "undefined") {
           window.location.href = "/signin";
         }
+
+        return Promise.reject(error);
+      }
+
+      // Если уже идет процесс refresh, добавляем запрос в очередь
+      if (isRefreshing) {
+        return new Promise((resolve, reject) => {
+          failedQueue.push({ resolve, reject });
+        }).then(() => {
+          return instance(originalRequest);
+        }).catch(err => {
+          return Promise.reject(err);
+        });
+      }
+
+      retriedRequests.add(originalRequest);
+      isRefreshing = true;
+
+      try {
+        console.log("🔄 Trying to refresh token...");
+
+        await instance.post("/auth/refresh");
+        console.log("✅ Token refreshed successfully");
+
+        isRefreshing = false;
+        processQueue(null, 'success');
+
+        return instance(originalRequest);
+      } catch (refreshError) {
+        console.error("❌ Token refresh failed:", refreshError);
+
+        isRefreshing = false;
+        processQueue(refreshError, null);
+
+        if (typeof window !== "undefined") {
+          window.location.href = "/signin";
+        }
+
+        return Promise.reject(refreshError);
       }
     }
 

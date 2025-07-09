@@ -48,7 +48,7 @@ export class AuthService {
    * Автоматически обновляет куки с новым токеном
    */
   async refreshToken(): Promise<AuthResponse> {
-    const response = await instance.get<AuthResponse>("/auth/refresh-token");
+    const response = await instance.get<AuthResponse>("/auth/refresh");
     console.log("✅ Token refreshed");
     return response.data;
   }

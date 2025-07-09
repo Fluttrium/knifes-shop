@@ -4,18 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4176361d-84bf-49e8-bfd1-9c64d1c7c2d7" name="Changes" comment="*исправил ui свагера &#10;* Перевел нужные участики документации &#10;* создал базовый пример для демонстрации">
-      <change afterPath="$PROJECT_DIR$/apps/api/src/auth/guards/refresh-jwt.guard.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/api/src/auth/strategies/refreshJwt.strategy.ts" afterDir="false" />
+    <list default="true" id="4176361d-84bf-49e8-bfd1-9c64d1c7c2d7" name="Changes" comment="написал рефреш токен &#10;чуть не обосрался">
+      <change afterPath="$PROJECT_DIR$/apps/web/src/components/admin-components/table-componet/table-component.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/web/src/components/admin-components/ui/userInfo-table-button.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/api-client/src/types/index.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/LICENSE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/dev" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/auth/auth.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/auth/auth.controller.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/auth/auth.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/auth/auth.module.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/api/src/auth/auth.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/auth/auth.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/auth/config/cookie.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/auth/config/cookie.config.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/auth/cookie/cookie.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/auth/cookie/cookie.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/auth/decorators/get-user.decorator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/auth/decorators/get-user.decorator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/api-client/src/auth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/api-client/src/auth.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/api-client/src/config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/api-client/src/config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/api-client/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/api-client/src/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/api-client/src/types/auth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/api-client/src/types/auth.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,14 +102,14 @@
       <recent name="$PROJECT_DIR$/packages/shared/src/dto/user/entities" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/apps/web/src/components/admin-components/ui" />
       <recent name="$PROJECT_DIR$/apps/web/src/app/signin" />
       <recent name="$PROJECT_DIR$/packages/shared/src" />
       <recent name="$PROJECT_DIR$/apps/api/src/user/entities" />
       <recent name="$PROJECT_DIR$/packages/database" />
-      <recent name="$PROJECT_DIR$/apps/web" />
     </key>
   </component>
-  <component name="RunManager" selected="npm.format">
+  <component name="RunManager" selected="npm.api-client &gt; build">
     <configuration name="api-client &gt; build" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/packages/api-client/package.json" />
       <command value="run" />
@@ -162,8 +162,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="npm.format" />
         <item itemvalue="npm.api-client &gt; build" />
+        <item itemvalue="npm.format" />
         <item itemvalue="npm.dev" />
         <item itemvalue="npm.database &gt; db:generate" />
         <item itemvalue="npm.shared &gt; build" />
@@ -217,7 +217,7 @@
       <workItem from="1751916818311" duration="1164000" />
       <workItem from="1752007921484" duration="124000" />
       <workItem from="1752008053744" duration="13191000" />
-      <workItem from="1752033774624" duration="3801000" />
+      <workItem from="1752033774624" duration="9197000" />
     </task>
     <task id="LOCAL-00001" summary=".">
       <option name="closed" value="true" />
@@ -331,7 +331,15 @@
       <option name="project" value="LOCAL" />
       <updated>1752023480854</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="написал рефреш токен &#10;чуть не обосрался">
+      <option name="closed" value="true" />
+      <created>1752037697378</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1752037697379</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -366,6 +374,7 @@
     <MESSAGE value="исправленая куки логика почти готова на беке" />
     <MESSAGE value="поправил клиент" />
     <MESSAGE value="*исправил ui свагера &#10;* Перевел нужные участики документации &#10;* создал базовый пример для демонстрации" />
-    <option name="LAST_COMMIT_MESSAGE" value="*исправил ui свагера &#10;* Перевел нужные участики документации &#10;* создал базовый пример для демонстрации" />
+    <MESSAGE value="написал рефреш токен &#10;чуть не обосрался" />
+    <option name="LAST_COMMIT_MESSAGE" value="написал рефреш токен &#10;чуть не обосрался" />
   </component>
 </project>
