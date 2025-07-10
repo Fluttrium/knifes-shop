@@ -10,14 +10,13 @@ export async function bootstrap() {
 
   app.use(cookieParser());
 
-
   app.setGlobalPrefix('api/v1');
 
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
       forbidNonWhitelisted: true,
-    })
+    }),
   );
 
   // Swagger Configuration --------------------------------
@@ -34,18 +33,13 @@ export async function bootstrap() {
 
   // End Swagger Configurations --------------------------------
 
-
   //Enable CORS
   app.enableCors({
     origin: ['http://localhost:3000', 'http://localhost:3001'],
     credentials: true,
   });
 
-
   await app.listen(1488);
-  Logger.log(`App running on Port 3000`);
-
+  Logger.log(`App running on Port 1488`);
 }
 bootstrap();
-
-

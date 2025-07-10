@@ -1,59 +1,96 @@
-import {Controller, Get, Post, Body, Patch, Param, Delete, Res, HttpStatus} from '@nestjs/common';
-
-import {RegisterUserDto} from './dto/register-user.dto';
-import {AuthService} from './auth.service';
-import {LoginResponse} from './interfaces';
-import {Auth, GetUser} from './decorators';
-
-import {ApiBearerAuth, ApiOperation, ApiResponse, ApiTags} from '@nestjs/swagger';
-import {LoginUserDto} from './dto/login-user.dto';
-import {User} from 'src/user/entities/user.entity';
+import { Controller, Post, Body, Res, UseGuards } from '@nestjs/common';
+import { Response } from 'express';
+import { RegisterUserDto } from './dto/register-user.dto';
+import { AuthService } from './auth.service';
+import { LoginResponse } from './interfaces';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { LoginUserDto } from './dto/login-user.dto';
+import { CookieService } from './cookie/cookie.service';
+import { RefreshJwtGuard } from './guards/refresh-jwt.guard';
+import { GetUser } from './decorators';
+import { User } from '../user/entities/user.entity';
 
 @ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
-    constructor(private readonly authService: AuthService) {
-    }
+  constructor(
+    private readonly authService: AuthService,
+    private cookieService: CookieService,
+  ) {}
 
-    @Post('register')
-    @ApiOperation({
-        summary: 'REGISTER',
-        description: 'Публичный endpoint для регистаици с ролью "User".'
-    })
-    @ApiResponse({status: 201, description: 'Ok', type: LoginResponse})
-    @ApiResponse({status: 400, description: 'Bad request'})
-    @ApiResponse({status: 500, description: 'Server error'})
-    register(@Body() createUserDto: RegisterUserDto, @Res({ passthrough: true }) res) {
-        return this.authService.registerUser(createUserDto, res);
-    }
+  @Post('register')
+  @ApiOperation({
+    summary: 'REGISTER',
+    description: 'Публичный endpoint для регистрации с ролью "User".',
+  })
+  @ApiResponse({ status: 201, description: 'Ok', type: LoginResponse })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 500, description: 'Server error' })
+  async register(
+    @Body() createUserDto: RegisterUserDto,
+    @Res({ passthrough: true }) res: Response,
+  ) {
+    const result = await this.authService.registerUser(createUserDto);
 
-    @Post('login')
-    @ApiOperation({
-        summary: 'LOGIN',
-        description: 'Public endpoint to login and get the Access Token'
-    })
-    @ApiResponse({status: 200, description: 'Ok', type: LoginResponse})
-    @ApiResponse({status: 400, description: 'Bad request'})
-    @ApiResponse({status: 500, description: 'Server error'})
-    async login(@Res() response, @Body() loginUserDto: LoginUserDto) {
-        const data = await this.authService.loginUser(loginUserDto.email, loginUserDto.password);
-        response.status(HttpStatus.OK).send(data);
-    }
+    const token = result.token;
+    const refreshToken = result.refreshToken;
 
-    @Get('refresh-token')
-    @ApiOperation({
-        summary: 'REFRESH TOKEN',
-        description: 'Private endpoint allowed for logged in users to refresh the Access Token before it expires.'
-    })
-    @ApiBearerAuth()
-    @ApiResponse({status: 200, description: 'Ok', type: LoginResponse})
-    @ApiResponse({status: 401, description: 'Unauthorized'})
-    @Auth()
-    refreshToken(
-        @GetUser() user: User
-    ) {
-        return this.authService.refreshToken(user);
-    }
+    this.cookieService.setAuthCookie(res, token);
+    this.cookieService.setRefreshCookie(res, refreshToken);
 
+    return {
+      user: result.user,
+      message: 'Регистрация успешна',
+    };
+  }
 
+  @Post('login')
+  @ApiOperation({
+    summary: 'LOGIN',
+    description: 'Публичный endpoint для логина и получения токена',
+  })
+  @ApiResponse({ status: 200, description: 'Ok', type: LoginResponse })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 500, description: 'Server error' })
+  async login(
+    @Body() loginUserDto: LoginUserDto,
+    @Res({ passthrough: true }) res: Response,
+  ) {
+    const result = await this.authService.loginUser(
+      loginUserDto.email,
+      loginUserDto.password,
+    );
+
+    this.cookieService.setAuthCookie(res, result.token);
+
+    return result;
+  }
+
+  @Post('logout')
+  @ApiOperation({
+    summary: 'LOGOUT',
+    description: 'Выход из системы - удаление токена из куки',
+  })
+  @ApiResponse({ status: 200, description: 'Ok' })
+  logout(@Res({ passthrough: true }) res: Response) {
+    this.cookieService.clearAuthCookie(res);
+    return { message: 'Выход выполнен успешно' };
+  }
+
+  @Post('refresh')
+  @UseGuards(RefreshJwtGuard) // Используем refresh guard
+  async refresh(
+    @GetUser() user: User,
+    @Res({ passthrough: true }) res: Response,
+  ) {
+    const tokens = await this.authService.refreshTokens(user);
+
+    this.cookieService.setAuthCookie(res, tokens.token);
+    this.cookieService.setRefreshCookie(res, tokens.refToken);
+
+    return {
+      message: 'Tokens refreshed successfully',
+      user: tokens.user,
+    };
+  }
 }

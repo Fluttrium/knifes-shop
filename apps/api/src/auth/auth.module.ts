@@ -6,12 +6,13 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { PrismaModule } from 'src/prisma/prisma.module';
-
+import { CookieService } from './cookie/cookie.service';
+import { RefreshJwtStrategy } from './strategies/refreshJwt.strategy';
 
 @Module({
   controllers: [AuthController],
-  providers: [AuthService, JwtStrategy],
-  imports:[
+  providers: [AuthService, JwtStrategy, CookieService, RefreshJwtStrategy],
+  imports: [
     ConfigModule,
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.registerAsync({
@@ -22,12 +23,12 @@ import { PrismaModule } from 'src/prisma/prisma.module';
           secret: configService.get('JWT_SECRET'),
           signOptions: {
             expiresIn: configService.get('JWT_EXP'),
-          }
-        }
-      }
+          },
+        };
+      },
     }),
     PrismaModule,
   ],
-  exports:[JwtStrategy, PassportModule, JwtModule]
+  exports: [JwtStrategy, PassportModule, JwtModule, CookieService],
 })
 export class AuthModule {}
