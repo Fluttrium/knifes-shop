@@ -4,18 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4176361d-84bf-49e8-bfd1-9c64d1c7c2d7" name="Changes" comment="написал рефреш токен &#10;чуть не обосрался">
-      <change afterPath="$PROJECT_DIR$/apps/web/src/components/admin-components/table-componet/table-component.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/web/src/components/admin-components/ui/userInfo-table-button.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/packages/api-client/src/types/index.ts" afterDir="false" />
+    <list default="true" id="4176361d-84bf-49e8-bfd1-9c64d1c7c2d7" name="Changes" comment="плотная работа">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/auth/auth.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/auth/auth.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/web/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/prisma/schema.prisma" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/prisma/schema.prisma" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/src/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/app.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/api-client/eslintrc.js" beforeDir="false" afterPath="$PROJECT_DIR$/packages/api-client/eslintrc.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/api-client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/packages/api-client/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/packages/api-client/src/auth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/api-client/src/auth.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/packages/api-client/src/config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/api-client/src/config.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/packages/api-client/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/api-client/src/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/api-client/src/types/auth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/api-client/src/types/auth.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/api-client/src/types/common.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/api-client/src/types/common.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/api-client/src/types/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/api-client/src/types/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/eslint-config/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/packages/eslint-config/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/turbo.json" beforeDir="false" afterPath="$PROJECT_DIR$/turbo.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,6 +58,7 @@
   &quot;keyToString&quot;: {
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;SHELLCHECK.PATH&quot;: &quot;I do mind&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
@@ -83,8 +86,8 @@
     &quot;npm.shared &gt; build.executor&quot;: &quot;Run&quot;,
     &quot;npm.ui &gt; build:libs.executor&quot;: &quot;Run&quot;,
     &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;/Users/romanmaksimov/WebstormProjects/knifes-shop/node_modules/prettier&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/Users/romanmaksimov/WebstormProjects/knifes-shop/node_modules/typescript/lib&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;Settings.JavaScript&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Applications/WebStorm.app/Contents/plugins/javascript-plugin/jsLanguageServicesImpl/external&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
   &quot;keyToStringList&quot;: {
@@ -173,7 +176,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-b26f3e71634d-JavaScript-WS-251.26094.131" />
+        <option value="bundled-js-predefined-d6986cc7102b-6be00b7b0f42-JavaScript-WS-252.23591.33" />
       </set>
     </attachedChunks>
   </component>
@@ -217,7 +220,10 @@
       <workItem from="1751916818311" duration="1164000" />
       <workItem from="1752007921484" duration="124000" />
       <workItem from="1752008053744" duration="13191000" />
-      <workItem from="1752033774624" duration="9197000" />
+      <workItem from="1752033774624" duration="10018000" />
+      <workItem from="1752076455291" duration="1862000" />
+      <workItem from="1752154684996" duration="10000" />
+      <workItem from="1752154704098" duration="5578000" />
     </task>
     <task id="LOCAL-00001" summary=".">
       <option name="closed" value="true" />
@@ -339,7 +345,15 @@
       <option name="project" value="LOCAL" />
       <updated>1752037697379</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="плотная работа">
+      <option name="closed" value="true" />
+      <created>1752044435393</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1752044435393</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -375,6 +389,7 @@
     <MESSAGE value="поправил клиент" />
     <MESSAGE value="*исправил ui свагера &#10;* Перевел нужные участики документации &#10;* создал базовый пример для демонстрации" />
     <MESSAGE value="написал рефреш токен &#10;чуть не обосрался" />
-    <option name="LAST_COMMIT_MESSAGE" value="написал рефреш токен &#10;чуть не обосрался" />
+    <MESSAGE value="плотная работа" />
+    <option name="LAST_COMMIT_MESSAGE" value="плотная работа" />
   </component>
 </project>
