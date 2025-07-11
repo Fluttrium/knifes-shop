@@ -10,6 +10,7 @@ import {
   UseGuards,
   ParseUUIDPipe,
   ParseIntPipe,
+  Res,
 } from '@nestjs/common';
 import {
   ApiTags,
@@ -54,14 +55,17 @@ export class ProductAdminController {
     status: 409,
     description: 'Товар с таким slug или SKU уже существует',
   })
-  async create(@Body() createProductDto: CreateProductDto): Promise<ProductEntity> {
+  async create(
+    @Body() createProductDto: CreateProductDto,
+  ): Promise<ProductEntity> {
     return this.productAdminService.create(createProductDto);
   }
 
   @Get()
   @ApiOperation({
     summary: 'Получить список товаров',
-    description: 'Получение списка товаров для администраторов с расширенной информацией',
+    description:
+      'Получение списка товаров для администраторов с расширенной информацией',
   })
   @ApiQuery({
     name: 'page',
@@ -110,7 +114,16 @@ export class ProductAdminController {
       },
     },
   })
-  async findAll(@Query() query: any): Promise<{ products: ProductEntity[]; total: number }> {
+  async findAll(
+    @Query() query: any,
+    @Res({ passthrough: true }) res: any,
+  ): Promise<{ products: ProductEntity[]; total: number }> {
+    // Отключаем кэширование
+    res.set({
+      'Cache-Control': 'no-cache, no-store, must-revalidate',
+      'Pragma': 'no-cache',
+      'Expires': '0',
+    });
     return this.productAdminService.findAll(query);
   }
 
@@ -172,7 +185,9 @@ export class ProductAdminController {
     status: 404,
     description: 'Товар не найден',
   })
-  async findOne(@Param('id', ParseUUIDPipe) id: string): Promise<ProductEntity> {
+  async findOne(
+    @Param('id', ParseUUIDPipe) id: string,
+  ): Promise<ProductEntity> {
     return this.productAdminService.findOne(id);
   }
 
@@ -209,7 +224,8 @@ export class ProductAdminController {
   @Patch(':id/stock')
   @ApiOperation({
     summary: 'Обновить количество товара на складе',
-    description: 'Обновление количества товара на складе (только для администраторов)',
+    description:
+      'Обновление количества товара на складе (только для администраторов)',
   })
   @ApiParam({
     name: 'id',
@@ -239,7 +255,8 @@ export class ProductAdminController {
   @Patch(':id/toggle/:field')
   @ApiOperation({
     summary: 'Переключить статус товара',
-    description: 'Переключение статуса товара (активность, рекомендуемый, новый, распродажа)',
+    description:
+      'Переключение статуса товара (активность, рекомендуемый, новый, распродажа)',
   })
   @ApiParam({
     name: 'id',
@@ -271,7 +288,8 @@ export class ProductAdminController {
   @Delete(':id')
   @ApiOperation({
     summary: 'Удалить товар',
-    description: 'Удаление товара (только для администраторов). Товар не может быть удален, если используется в заказах.',
+    description:
+      'Удаление товара (только для администраторов). Товар не может быть удален, если используется в заказах.',
   })
   @ApiParam({
     name: 'id',
@@ -293,4 +311,4 @@ export class ProductAdminController {
   async remove(@Param('id', ParseUUIDPipe) id: string): Promise<void> {
     return this.productAdminService.remove(id);
   }
-} 
+}

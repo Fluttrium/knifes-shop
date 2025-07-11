@@ -17,7 +17,10 @@ import {
   ApiQuery,
 } from '@nestjs/swagger';
 import { AdminPaymentService } from './admin-payment.service';
-import { AdminPaymentFilterDto, AdminUpdatePaymentStatusDto } from '../dto/admin-payment.dto';
+import {
+  AdminPaymentFilterDto,
+  AdminUpdatePaymentStatusDto,
+} from '../dto/admin-payment.dto';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { UserRoleGuard } from 'src/auth/guards/user-role/user-role.guard';
 import { RolProtected } from 'src/auth/decorators/rol-protected.decorator';
@@ -32,7 +35,10 @@ export class AdminPaymentController {
   constructor(private readonly paymentService: AdminPaymentService) {}
 
   @Get()
-  @ApiOperation({ summary: 'Список платежей', description: 'Получить список платежей с фильтрацией' })
+  @ApiOperation({
+    summary: 'Список платежей',
+    description: 'Получить список платежей с фильтрацией',
+  })
   @ApiQuery({ name: 'orderId', required: false, description: 'ID заказа' })
   @ApiQuery({ name: 'userId', required: false, description: 'ID пользователя' })
   @ApiQuery({ name: 'status', required: false, description: 'Статус платежа' })
@@ -43,8 +49,15 @@ export class AdminPaymentController {
   }
 
   @Get(':id')
-  @ApiOperation({ summary: 'Детали платежа', description: 'Получить детали платежа по ID' })
-  @ApiParam({ name: 'id', description: 'ID платежа', example: 'uuid-payment-id' })
+  @ApiOperation({
+    summary: 'Детали платежа',
+    description: 'Получить детали платежа по ID',
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'ID платежа',
+    example: 'uuid-payment-id',
+  })
   @ApiResponse({ status: 200, description: 'Детали платежа' })
   @ApiResponse({ status: 404, description: 'Платеж не найден' })
   async findOne(@Param('id', ParseUUIDPipe) id: string) {
@@ -52,8 +65,15 @@ export class AdminPaymentController {
   }
 
   @Patch(':id/status')
-  @ApiOperation({ summary: 'Изменить статус платежа', description: 'Изменить статус и комментарий платежа' })
-  @ApiParam({ name: 'id', description: 'ID платежа', example: 'uuid-payment-id' })
+  @ApiOperation({
+    summary: 'Изменить статус платежа',
+    description: 'Изменить статус и комментарий платежа',
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'ID платежа',
+    example: 'uuid-payment-id',
+  })
   @ApiResponse({ status: 200, description: 'Статус платежа обновлен' })
   @ApiResponse({ status: 404, description: 'Платеж не найден' })
   async updateStatus(
@@ -64,10 +84,17 @@ export class AdminPaymentController {
   }
 
   @Get('order/:orderId')
-  @ApiOperation({ summary: 'История платежей заказа', description: 'Получить историю платежей по заказу' })
-  @ApiParam({ name: 'orderId', description: 'ID заказа', example: 'uuid-order-id' })
+  @ApiOperation({
+    summary: 'История платежей заказа',
+    description: 'Получить историю платежей по заказу',
+  })
+  @ApiParam({
+    name: 'orderId',
+    description: 'ID заказа',
+    example: 'uuid-order-id',
+  })
   @ApiResponse({ status: 200, description: 'История платежей' })
   async getHistoryByOrder(@Param('orderId', ParseUUIDPipe) orderId: string) {
     return this.paymentService.getHistoryByOrder(orderId);
   }
-} 
+}

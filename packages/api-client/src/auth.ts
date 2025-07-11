@@ -38,7 +38,7 @@ export class AuthService {
    * Использует токен из куки автоматически
    */
   async getCurrentUser(): Promise<User> {
-    const response = await instance.get<User>("/auth/refresh-token");
+    const response = await instance.get<User>("/auth/me");
     return response.data;
   }
 

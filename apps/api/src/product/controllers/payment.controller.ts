@@ -45,7 +45,9 @@ export class PaymentController {
     status: 404,
     description: 'Пользователь, адрес или товар не найден',
   })
-  async createPayment(@Body() createPaymentDto: CreatePaymentDto): Promise<PaymentResponseDto> {
+  async createPayment(
+    @Body() createPaymentDto: CreatePaymentDto,
+  ): Promise<PaymentResponseDto> {
     return this.paymentService.createOrder(createPaymentDto);
   }
 
@@ -120,4 +122,4 @@ export class PaymentController {
   async handleWebhook(@Body() webhookData: any): Promise<void> {
     return this.paymentService.handlePaymentWebhook(webhookData);
   }
-} 
+}

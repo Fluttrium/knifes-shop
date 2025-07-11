@@ -12,10 +12,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
-import api from "@repo/api-client";
+import { useAuth } from "@/hooks/use-auth";
+import { useRouter } from "next/navigation";
 import { notify } from "@/components/ui/toats/basic-toats";
 
-interface SignInFromData {
+interface SignInFormData {
   email: string;
   password: string;
 }
@@ -24,14 +25,16 @@ export function SignInForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
-  const [formData, setFormData] = useState<SignInFromData>({
+  const [formData, setFormData] = useState<SignInFormData>({
     email: "",
     password: "",
   });
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState(false);
+  
+  const { login } = useAuth();
+  const router = useRouter();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
@@ -66,16 +69,18 @@ export function SignInForm({
     setError(null);
 
     try {
-      const response = await api.auth.login({
-        email: formData.email,
-        password: formData.password,
-      });
-
-      notify("Вы вощли в аккаунт!", "success");
-      setSuccess(true);
+      const success = await login(formData.email, formData.password);
+      
+      if (success) {
+        notify("Вы вошли в аккаунт!", "success");
+        router.push("/dashboard");
+      } else {
+        setError("Неверный email или пароль");
+        notify("Ошибка входа", "error");
+      }
     } catch (err: any) {
-      notify("Пиздец что-то не так ", "error");
-      setError(err.message || "Произошла ошибка при регистрации");
+      setError(err.message || "Произошла ошибка при входе");
+      notify("Ошибка входа", "error");
     } finally {
       setIsLoading(false);
     }
@@ -124,18 +129,20 @@ export function SignInForm({
                   disabled={isLoading}
                 />
               </div>
+              {error && (
+                <div className="text-sm text-red-600 bg-red-50 p-3 rounded-md">
+                  {error}
+                </div>
+              )}
               <div className="flex flex-col gap-3">
                 <Button type="submit" className="w-full" disabled={isLoading}>
                   {isLoading ? "Вход..." : "Войти"}
                 </Button>
-                {/*<Button variant="outline" className="w-full">*/}
-                {/*  Login with Google*/}
-                {/*</Button>*/}
               </div>
             </div>
             <div className="mt-4 text-center text-sm">
               Еще нет аккаунта?{" "}
-              <a href="#" className="underline underline-offset-4">
+              <a href="/signup" className="underline underline-offset-4">
                 Создать аккаунт
               </a>
             </div>

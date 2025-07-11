@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { ProductQueryDto } from './dto/product-query.dto';
 import { ProductEntity, ProductListResponse } from './entities/product.entity';
@@ -287,7 +291,10 @@ export class ProductService {
     return products as ProductEntity[];
   }
 
-  async getRelatedProducts(productId: string, limit: number = 4): Promise<ProductEntity[]> {
+  async getRelatedProducts(
+    productId: string,
+    limit: number = 4,
+  ): Promise<ProductEntity[]> {
     const product = await this.prisma.product.findUnique({
       where: { id: productId },
       select: { categoryId: true },
@@ -322,7 +329,10 @@ export class ProductService {
     return relatedProducts as ProductEntity[];
   }
 
-  async checkStockAvailability(productId: string, quantity: number): Promise<boolean> {
+  async checkStockAvailability(
+    productId: string,
+    quantity: number,
+  ): Promise<boolean> {
     const product = await this.prisma.product.findUnique({
       where: { id: productId },
       select: { stockQuantity: true },
@@ -335,7 +345,11 @@ export class ProductService {
     return product.stockQuantity >= quantity;
   }
 
-  async updateStockQuantity(productId: string, quantity: number, operation: 'add' | 'subtract'): Promise<void> {
+  async updateStockQuantity(
+    productId: string,
+    quantity: number,
+    operation: 'add' | 'subtract',
+  ): Promise<void> {
     const product = await this.prisma.product.findUnique({
       where: { id: productId },
       select: { stockQuantity: true },
@@ -345,9 +359,10 @@ export class ProductService {
       throw new NotFoundException('Товар не найден');
     }
 
-    const newQuantity = operation === 'add' 
-      ? product.stockQuantity + quantity 
-      : product.stockQuantity - quantity;
+    const newQuantity =
+      operation === 'add'
+        ? product.stockQuantity + quantity
+        : product.stockQuantity - quantity;
 
     if (newQuantity < 0) {
       throw new BadRequestException('Недостаточно товара на складе');
@@ -358,4 +373,4 @@ export class ProductService {
       data: { stockQuantity: newQuantity },
     });
   }
-} 
+}

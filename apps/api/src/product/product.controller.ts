@@ -18,7 +18,6 @@ import { ProductQueryDto } from './dto/product-query.dto';
 import { ProductEntity, ProductListResponse } from './entities/product.entity';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 
-
 @ApiTags('Товары (Пользователь)')
 @Controller('products')
 export class ProductController {
@@ -54,7 +53,9 @@ export class ProductController {
     description: 'Рекомендуемые товары получены',
     type: [ProductEntity],
   })
-  async getFeaturedProducts(@Query('limit') limit?: number): Promise<ProductEntity[]> {
+  async getFeaturedProducts(
+    @Query('limit') limit?: number,
+  ): Promise<ProductEntity[]> {
     return this.productService.getFeaturedProducts(limit);
   }
 
@@ -74,7 +75,9 @@ export class ProductController {
     description: 'Новые товары получены',
     type: [ProductEntity],
   })
-  async getNewProducts(@Query('limit') limit?: number): Promise<ProductEntity[]> {
+  async getNewProducts(
+    @Query('limit') limit?: number,
+  ): Promise<ProductEntity[]> {
     return this.productService.getNewProducts(limit);
   }
 
@@ -94,31 +97,10 @@ export class ProductController {
     description: 'Товары на распродаже получены',
     type: [ProductEntity],
   })
-  async getOnSaleProducts(@Query('limit') limit?: number): Promise<ProductEntity[]> {
+  async getOnSaleProducts(
+    @Query('limit') limit?: number,
+  ): Promise<ProductEntity[]> {
     return this.productService.getOnSaleProducts(limit);
-  }
-
-  @Get(':id')
-  @ApiOperation({
-    summary: 'Получить товар по ID',
-    description: 'Получение подробной информации о товаре по его ID',
-  })
-  @ApiParam({
-    name: 'id',
-    description: 'ID товара',
-    example: 'uuid-product-id',
-  })
-  @ApiResponse({
-    status: 200,
-    description: 'Товар успешно найден',
-    type: ProductEntity,
-  })
-  @ApiResponse({
-    status: 404,
-    description: 'Товар не найден',
-  })
-  async findOne(@Param('id', ParseUUIDPipe) id: string): Promise<ProductEntity> {
-    return this.productService.findOne(id);
   }
 
   @Get('slug/:slug')
@@ -218,11 +200,39 @@ export class ProductController {
     @Param('id', ParseUUIDPipe) id: string,
     @Query('quantity') quantity: number,
   ): Promise<{ available: boolean; stockQuantity: number }> {
-    const available = await this.productService.checkStockAvailability(id, quantity);
+    const available = await this.productService.checkStockAvailability(
+      id,
+      quantity,
+    );
     const product = await this.productService.findOne(id);
     return {
       available,
       stockQuantity: product.stockQuantity,
     };
   }
-} 
+
+  @Get(':id')
+  @ApiOperation({
+    summary: 'Получить товар по ID',
+    description: 'Получение подробной информации о товаре по его ID',
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'ID товара',
+    example: 'uuid-product-id',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Товар успешно найден',
+    type: ProductEntity,
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Товар не найден',
+  })
+  async findOne(
+    @Param('id', ParseUUIDPipe) id: string,
+  ): Promise<ProductEntity> {
+    return this.productService.findOne(id);
+  }
+}

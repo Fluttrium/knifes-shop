@@ -38,63 +38,69 @@ export interface ProductVariant {
 export interface Product {
   id: string;
   name: string;
-  description: string;
+  description?: string;
   shortDescription?: string;
   slug: string;
-  categoryId: string;
-  category: Category;
-  brand?: string;
-  model?: string;
-  bladeLength?: number;
-  bladeWidth?: number;
-  bladeThickness?: number;
-  handleLength?: number;
-  totalLength?: number;
-  weight?: number;
-  steelType?: string;
-  hardness?: string;
-  handleMaterial?: string;
-  sheathIncluded?: boolean;
-  countryOfOrigin?: string;
+  sku: string;
   price: number;
-  salePrice?: number;
+  comparePrice?: number;
+  costPrice?: number;
+  weight?: number;
+  dimensions?: string;
+  stockQuantity: number;
+  minStockLevel?: number;
+  maxStockLevel?: number;
+  productType: 'knife' | 'sharpener' | 'sheath' | 'accessory' | 'gift_set';
+  material?: 'stainless_steel' | 'carbon_steel' | 'damascus_steel' | 'ceramic' | 'titanium' | 'wood' | 'plastic' | 'leather' | 'synthetic';
+  handleType?: 'fixed' | 'folding' | 'multi_tool';
+  bladeLength?: number;
+  totalLength?: number;
+  bladeHardness?: number;
   isActive: boolean;
   isFeatured: boolean;
-  rating?: number;
-  reviewCount: number;
+  isNew?: boolean;
+  isOnSale?: boolean;
+  sortOrder?: number;
+  metaTitle?: string;
+  metaDescription?: string;
+  categoryId: string;
+  category: Category;
   images: ProductImage[];
-  variants: ProductVariant[];
   createdAt: Date;
   updatedAt: Date;
 }
 
 export interface CreateProductDto {
   name: string;
-  description: string;
+  slug: string;
+  description?: string;
   shortDescription?: string;
-  categoryId: string;
-  brand?: string;
-  model?: string;
-  bladeLength?: number;
-  bladeWidth?: number;
-  bladeThickness?: number;
-  handleLength?: number;
-  totalLength?: number;
-  weight?: number;
-  steelType?: string;
-  hardness?: string;
-  handleMaterial?: string;
-  sheathIncluded?: boolean;
-  countryOfOrigin?: string;
+  sku: string;
   price: number;
-  salePrice?: number;
+  comparePrice?: number;
+  costPrice?: number;
+  weight?: number;
+  dimensions?: string;
+  stockQuantity: number;
+  minStockLevel?: number;
+  maxStockLevel?: number;
+  productType: 'knife' | 'sharpener' | 'sheath' | 'accessory' | 'gift_set';
+  material?: 'stainless_steel' | 'carbon_steel' | 'damascus_steel' | 'ceramic' | 'titanium' | 'wood' | 'plastic' | 'leather' | 'synthetic';
+  handleType?: 'fixed' | 'folding' | 'multi_tool';
+  bladeLength?: number;
+  totalLength?: number;
+  bladeHardness?: number;
   isActive?: boolean;
   isFeatured?: boolean;
+  isNew?: boolean;
+  isOnSale?: boolean;
+  sortOrder?: number;
+  metaTitle?: string;
+  metaDescription?: string;
+  categoryId: string;
 }
 
-export interface UpdateProductDto extends Partial<CreateProductDto> {
-  id: string;
-}
+export interface UpdateProductDto extends Partial<Omit<CreateProductDto, 'id'>> {}
 
 export interface ProductQueryDto {
   page?: number;
@@ -110,7 +116,7 @@ export interface ProductQueryDto {
 }
 
 export interface ProductResponse {
-  data: Product[];
+  products: Product[];
   total: number;
   page: number;
   limit: number;

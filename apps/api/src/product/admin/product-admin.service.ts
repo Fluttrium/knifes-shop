@@ -46,9 +46,11 @@ export class ProductAdminService {
     const product = await this.prisma.product.create({
       data: {
         ...productData,
-        images: images ? {
-          create: images,
-        } : undefined,
+        images: images
+          ? {
+              create: images,
+            }
+          : undefined,
       },
       include: {
         category: {
@@ -67,7 +69,9 @@ export class ProductAdminService {
     return product as ProductEntity;
   }
 
-  async findAll(query: any): Promise<{ products: ProductEntity[]; total: number }> {
+  async findAll(
+    query: any,
+  ): Promise<{ products: ProductEntity[]; total: number }> {
     const { page = 1, limit = 20, search, categoryId, isActive } = query;
     const skip = (page - 1) * limit;
 
@@ -158,7 +162,10 @@ export class ProductAdminService {
     return product as ProductEntity;
   }
 
-  async update(id: string, updateProductDto: UpdateProductDto): Promise<ProductEntity> {
+  async update(
+    id: string,
+    updateProductDto: UpdateProductDto,
+  ): Promise<ProductEntity> {
     const product = await this.prisma.product.findUnique({
       where: { id },
     });
@@ -261,7 +268,9 @@ export class ProductAdminService {
 
     // Проверка, что товар не используется в заказах
     if (product._count.orderItems > 0) {
-      throw new BadRequestException('Нельзя удалить товар, который используется в заказах');
+      throw new BadRequestException(
+        'Нельзя удалить товар, который используется в заказах',
+      );
     }
 
     // Удаление связанных записей
@@ -320,7 +329,10 @@ export class ProductAdminService {
     return updatedProduct as ProductEntity;
   }
 
-  async toggleStatus(id: string, field: 'isActive' | 'isFeatured' | 'isNew' | 'isOnSale'): Promise<ProductEntity> {
+  async toggleStatus(
+    id: string,
+    field: 'isActive' | 'isFeatured' | 'isNew' | 'isOnSale',
+  ): Promise<ProductEntity> {
     const product = await this.prisma.product.findUnique({
       where: { id },
     });
@@ -385,4 +397,4 @@ export class ProductAdminService {
       outOfStockProducts,
     };
   }
-} 
+}

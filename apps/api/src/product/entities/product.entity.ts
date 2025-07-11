@@ -98,19 +98,19 @@ export class ProductEntity {
 
   @ApiProperty({
     description: 'Цена товара',
-    example: 4500.00,
+    example: 4500.0,
   })
   price: any; // Prisma Decimal type
 
   @ApiPropertyOptional({
     description: 'Цена для сравнения (зачеркнутая цена)',
-    example: 5500.00,
+    example: 5500.0,
   })
   comparePrice?: any; // Prisma Decimal type
 
   @ApiPropertyOptional({
     description: 'Себестоимость товара',
-    example: 3000.00,
+    example: 3000.0,
   })
   costPrice?: any; // Prisma Decimal type
 
@@ -280,4 +280,4 @@ export class ProductListResponse {
     example: 5,
   })
   totalPages: number;
-} 
+}

@@ -1,5 +1,11 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsString, IsEnum, IsNumber, IsOptional, IsUUID } from 'class-validator';
+import {
+  IsString,
+  IsEnum,
+  IsNumber,
+  IsOptional,
+  IsUUID,
+} from 'class-validator';
 import { PaymentStatus, PaymentMethod } from '@prisma/client';
 
 export class AdminPaymentFilterDto {
@@ -8,7 +14,10 @@ export class AdminPaymentFilterDto {
   @IsUUID()
   orderId?: string;
 
-  @ApiPropertyOptional({ description: 'ID пользователя', example: 'uuid-user-id' })
+  @ApiPropertyOptional({
+    description: 'ID пользователя',
+    example: 'uuid-user-id',
+  })
   @IsOptional()
   @IsUUID()
   userId?: string;
@@ -29,8 +38,11 @@ export class AdminUpdatePaymentStatusDto {
   @IsEnum(PaymentStatus)
   status: PaymentStatus;
 
-  @ApiPropertyOptional({ description: 'Комментарий администратора', example: 'Оплата подтверждена вручную' })
+  @ApiPropertyOptional({
+    description: 'Комментарий администратора',
+    example: 'Оплата подтверждена вручную',
+  })
   @IsOptional()
   @IsString()
   comment?: string;
-} 
+}

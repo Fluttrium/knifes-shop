@@ -1,5 +1,12 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsString, IsNumber, IsOptional, IsUUID, IsArray, ValidateNested } from 'class-validator';
+import {
+  IsString,
+  IsNumber,
+  IsOptional,
+  IsUUID,
+  IsArray,
+  ValidateNested,
+} from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class PaymentItemDto {
@@ -27,7 +34,7 @@ export class PaymentItemDto {
 
   @ApiProperty({
     description: 'Цена за единицу товара',
-    example: 4500.00,
+    example: 4500.0,
   })
   @IsNumber()
   unitPrice: number;
@@ -172,4 +179,4 @@ export class PaymentResponseDto {
     example: 'uuid-order-id',
   })
   orderId: string;
-} 
+}

@@ -4,20 +4,28 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4176361d-84bf-49e8-bfd1-9c64d1c7c2d7" name="Changes" comment="плотная работа">
+    <list default="true" id="4176361d-84bf-49e8-bfd1-9c64d1c7c2d7" name="Changes" comment="очень плотная работа">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/prisma/schema.prisma" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/prisma/schema.prisma" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/api/src/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/app.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/api-client/eslintrc.js" beforeDir="false" afterPath="$PROJECT_DIR$/packages/api-client/eslintrc.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/api-client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/packages/api-client/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/api-client/src/auth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/api-client/src/auth.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/api-client/src/config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/api-client/src/config.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/api-client/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/api-client/src/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/api-client/src/types/common.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/api-client/src/types/common.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/api-client/src/types/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/api-client/src/types/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/eslint-config/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/packages/eslint-config/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/turbo.json" beforeDir="false" afterPath="$PROJECT_DIR$/turbo.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/src/auth/guards/jwt-auth.guard.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/auth/guards/jwt-auth.guard.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/src/product/admin/admin-parcel.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/product/admin/admin-parcel.controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/src/product/admin/admin-parcel.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/product/admin/admin-parcel.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/src/product/admin/admin-payment.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/product/admin/admin-payment.controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/src/product/admin/admin-payment.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/product/admin/admin-payment.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/src/product/admin/product-admin.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/product/admin/product-admin.controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/src/product/admin/product-admin.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/product/admin/product-admin.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/src/product/controllers/payment.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/product/controllers/payment.controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/src/product/dto/admin-parcel.dto.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/product/dto/admin-parcel.dto.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/src/product/dto/admin-payment.dto.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/product/dto/admin-payment.dto.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/src/product/dto/create-product.dto.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/product/dto/create-product.dto.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/src/product/dto/payment.dto.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/product/dto/payment.dto.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/src/product/dto/product-query.dto.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/product/dto/product-query.dto.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/src/product/dto/update-product.dto.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/product/dto/update-product.dto.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/src/product/entities/product.entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/product/entities/product.entity.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/src/product/product.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/product/product.controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/src/product/product.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/product/product.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/src/product/product.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/product/product.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/src/product/services/payment.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/product/services/payment.service.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,7 +95,7 @@
     &quot;npm.ui &gt; build:libs.executor&quot;: &quot;Run&quot;,
     &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;/Users/romanmaksimov/WebstormProjects/knifes-shop/node_modules/prettier&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;Settings.JavaScript&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/Applications/WebStorm.app/Contents/plugins/javascript-plugin/jsLanguageServicesImpl/external&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Users/romanmaksimov/WebstormProjects/knifes-shop/node_modules/typescript/lib&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
   &quot;keyToStringList&quot;: {
@@ -223,7 +231,7 @@
       <workItem from="1752033774624" duration="10018000" />
       <workItem from="1752076455291" duration="1862000" />
       <workItem from="1752154684996" duration="10000" />
-      <workItem from="1752154704098" duration="5578000" />
+      <workItem from="1752154704098" duration="6271000" />
     </task>
     <task id="LOCAL-00001" summary=".">
       <option name="closed" value="true" />
@@ -353,7 +361,15 @@
       <option name="project" value="LOCAL" />
       <updated>1752044435393</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="очень плотная работа">
+      <option name="closed" value="true" />
+      <created>1752185832711</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1752185832711</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -390,6 +406,7 @@
     <MESSAGE value="*исправил ui свагера &#10;* Перевел нужные участики документации &#10;* создал базовый пример для демонстрации" />
     <MESSAGE value="написал рефреш токен &#10;чуть не обосрался" />
     <MESSAGE value="плотная работа" />
-    <option name="LAST_COMMIT_MESSAGE" value="плотная работа" />
+    <MESSAGE value="очень плотная работа" />
+    <option name="LAST_COMMIT_MESSAGE" value="очень плотная работа" />
   </component>
 </project>

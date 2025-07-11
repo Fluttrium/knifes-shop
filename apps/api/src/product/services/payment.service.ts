@@ -1,7 +1,15 @@
-import { Injectable, BadRequestException, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  BadRequestException,
+  NotFoundException,
+} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { CreatePaymentDto, YooKassaPaymentDto, PaymentResponseDto } from '../dto/payment.dto';
+import {
+  CreatePaymentDto,
+  YooKassaPaymentDto,
+  PaymentResponseDto,
+} from '../dto/payment.dto';
 
 @Injectable()
 export class PaymentService {
@@ -14,11 +22,18 @@ export class PaymentService {
     private readonly configService: ConfigService,
   ) {
     this.yooKassaShopId = this.configService.get<string>('YOO_KASSA_SHOP_ID');
-    this.yooKassaSecretKey = this.configService.get<string>('YOO_KASSA_SECRET_KEY');
-    this.yooKassaApiUrl = this.configService.get<string>('YOO_KASSA_API_URL', 'https://api.yookassa.ru/v3');
+    this.yooKassaSecretKey = this.configService.get<string>(
+      'YOO_KASSA_SECRET_KEY',
+    );
+    this.yooKassaApiUrl = this.configService.get<string>(
+      'YOO_KASSA_API_URL',
+      'https://api.yookassa.ru/v3',
+    );
   }
 
-  async createOrder(paymentData: CreatePaymentDto): Promise<PaymentResponseDto> {
+  async createOrder(
+    paymentData: CreatePaymentDto,
+  ): Promise<PaymentResponseDto> {
     // Проверка существования пользователя
     const user = await this.prisma.user.findUnique({
       where: { id: paymentData.userId },
@@ -62,7 +77,9 @@ export class PaymentService {
         }
 
         if (product.stockQuantity < item.quantity) {
-          throw new BadRequestException(`Недостаточно товара ${product.name} на складе`);
+          throw new BadRequestException(
+            `Недостаточно товара ${product.name} на складе`,
+          );
         }
 
         const variant = item.variantId
@@ -72,7 +89,9 @@ export class PaymentService {
           : null;
 
         if (item.variantId && !variant) {
-          throw new NotFoundException(`Вариант товара с ID ${item.variantId} не найден`);
+          throw new NotFoundException(
+            `Вариант товара с ID ${item.variantId} не найден`,
+          );
         }
 
         const unitPrice = variant?.price || product.price;
@@ -161,13 +180,17 @@ export class PaymentService {
     };
   }
 
-  private async createYooKassaPayment(paymentData: YooKassaPaymentDto): Promise<any> {
-    const auth = Buffer.from(`${this.yooKassaShopId}:${this.yooKassaSecretKey}`).toString('base64');
+  private async createYooKassaPayment(
+    paymentData: YooKassaPaymentDto,
+  ): Promise<any> {
+    const auth = Buffer.from(
+      `${this.yooKassaShopId}:${this.yooKassaSecretKey}`,
+    ).toString('base64');
 
     const response = await fetch(`${this.yooKassaApiUrl}/payments`, {
       method: 'POST',
       headers: {
-        'Authorization': `Basic ${auth}`,
+        Authorization: `Basic ${auth}`,
         'Content-Type': 'application/json',
         'Idempotence-Key': this.generateIdempotenceKey(),
       },
@@ -191,7 +214,9 @@ export class PaymentService {
 
     if (!response.ok) {
       const error = await response.json();
-      throw new BadRequestException(`Ошибка создания платежа: ${error.description || 'Неизвестная ошибка'}`);
+      throw new BadRequestException(
+        `Ошибка создания платежа: ${error.description || 'Неизвестная ошибка'}`,
+      );
     }
 
     return response.json();
@@ -270,7 +295,9 @@ export class PaymentService {
 
   private generateOrderNumber(): string {
     const timestamp = Date.now().toString();
-    const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+    const random = Math.floor(Math.random() * 1000)
+      .toString()
+      .padStart(3, '0');
     return `ORDER-${timestamp}-${random}`;
   }
 
@@ -279,15 +306,20 @@ export class PaymentService {
   }
 
   async getPaymentStatus(paymentId: string): Promise<any> {
-    const auth = Buffer.from(`${this.yooKassaShopId}:${this.yooKassaSecretKey}`).toString('base64');
+    const auth = Buffer.from(
+      `${this.yooKassaShopId}:${this.yooKassaSecretKey}`,
+    ).toString('base64');
 
-    const response = await fetch(`${this.yooKassaApiUrl}/payments/${paymentId}`, {
-      method: 'GET',
-      headers: {
-        'Authorization': `Basic ${auth}`,
-        'Content-Type': 'application/json',
+    const response = await fetch(
+      `${this.yooKassaApiUrl}/payments/${paymentId}`,
+      {
+        method: 'GET',
+        headers: {
+          Authorization: `Basic ${auth}`,
+          'Content-Type': 'application/json',
+        },
       },
-    });
+    );
 
     if (!response.ok) {
       throw new BadRequestException('Ошибка получения статуса платежа');
@@ -295,4 +327,4 @@ export class PaymentService {
 
     return response.json();
   }
-} 
+}

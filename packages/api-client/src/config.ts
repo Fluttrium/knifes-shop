@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, InternalAxiosRequestConfig, AxiosResponse } from "axios";
 
 // Переменные окружения для API
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:1488/api/v1";
 
 // Создание экземпляра axios с базовой конфигурацией
 const instance: AxiosInstance = axios.create({
@@ -10,6 +10,9 @@ const instance: AxiosInstance = axios.create({
   timeout: 10000, // Таймаут 10 секунд
   headers: {
     "Content-Type": "application/json",
+    "Cache-Control": "no-cache, no-store, must-revalidate",
+    "Pragma": "no-cache",
+    "Expires": "0",
   },
 });
 

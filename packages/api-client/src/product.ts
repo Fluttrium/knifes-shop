@@ -40,12 +40,12 @@ export class ProductService {
   }
 
   async getCategories(): Promise<Category[]> {
-    const response = await instance.get<Category[]>("/products/categories");
+    const response = await instance.get<Category[]>("/categories");
     return response.data;
   }
 
   async getCategoryById(id: string): Promise<Category> {
-    const response = await instance.get<Category>(`/products/categories/${id}`);
+    const response = await instance.get<Category>(`/categories/${id}`);
     return response.data;
   }
 
@@ -59,7 +59,7 @@ export class ProductService {
       });
     }
     
-    const response = await instance.get<ProductResponse>(`/products/categories/${categoryId}/products?${params.toString()}`);
+    const response = await instance.get<ProductResponse>(`/categories/${categoryId}/products?${params.toString()}`);
     return response.data;
   }
 
@@ -97,19 +97,19 @@ export class ProductService {
   }
 
   async createCategory(categoryData: Omit<Category, 'id' | 'createdAt' | 'updatedAt'>): Promise<Category> {
-    const response = await instance.post<Category>("/admin/products/categories", categoryData);
+    const response = await instance.post<Category>("/admin/categories", categoryData);
     console.log("✅ Category created successfully");
     return response.data;
   }
 
   async updateCategory(id: string, categoryData: Partial<Category>): Promise<Category> {
-    const response = await instance.patch<Category>(`/admin/products/categories/${id}`, categoryData);
+    const response = await instance.patch<Category>(`/admin/categories/${id}`, categoryData);
     console.log("✅ Category updated successfully");
     return response.data;
   }
 
   async deleteCategory(id: string): Promise<{ message: string }> {
-    const response = await instance.delete(`/admin/products/categories/${id}`);
+    const response = await instance.delete(`/admin/categories/${id}`);
     console.log("✅ Category deleted successfully");
     return response.data;
   }

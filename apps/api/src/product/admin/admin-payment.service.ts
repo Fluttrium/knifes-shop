@@ -1,6 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { AdminPaymentFilterDto, AdminUpdatePaymentStatusDto } from '../dto/admin-payment.dto';
+import {
+  AdminPaymentFilterDto,
+  AdminUpdatePaymentStatusDto,
+} from '../dto/admin-payment.dto';
 import { PaymentStatus } from '@prisma/client';
 
 @Injectable()
@@ -53,4 +56,4 @@ export class AdminPaymentService {
       orderBy: { createdAt: 'desc' },
     });
   }
-} 
+}

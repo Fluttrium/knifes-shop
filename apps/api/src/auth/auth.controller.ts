@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Res, UseGuards } from '@nestjs/common';
+import { Controller, Post, Body, Res, UseGuards, Get } from '@nestjs/common';
 import { Response } from 'express';
 import { RegisterUserDto } from './dto/register-user.dto';
 import { AuthService } from './auth.service';
@@ -9,6 +9,7 @@ import { CookieService } from './cookie/cookie.service';
 import { RefreshJwtGuard } from './guards/refresh-jwt.guard';
 import { GetUser } from './decorators';
 import { User } from '../user/entities/user.entity';
+import { JwtAuthGuard } from './guards/jwt-auth.guard';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -75,6 +76,18 @@ export class AuthController {
   logout(@Res({ passthrough: true }) res: Response) {
     this.cookieService.clearAuthCookie(res);
     return { message: 'Выход выполнен успешно' };
+  }
+
+  @Get('me')
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({
+    summary: 'GET CURRENT USER',
+    description: 'Получение информации о текущем пользователе',
+  })
+  @ApiResponse({ status: 200, description: 'Ok', type: User })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  async getCurrentUser(@GetUser() user: User) {
+    return user;
   }
 
   @Post('refresh')

@@ -88,7 +88,7 @@ export class CreateProductDto {
 
   @ApiProperty({
     description: 'Цена товара',
-    example: 4500.00,
+    example: 4500.0,
   })
   @IsNumber()
   @Min(0)
@@ -96,7 +96,7 @@ export class CreateProductDto {
 
   @ApiPropertyOptional({
     description: 'Цена для сравнения (зачеркнутая цена)',
-    example: 5500.00,
+    example: 5500.0,
   })
   @IsOptional()
   @IsNumber()
@@ -105,7 +105,7 @@ export class CreateProductDto {
 
   @ApiPropertyOptional({
     description: 'Себестоимость товара',
-    example: 3000.00,
+    example: 3000.0,
   })
   @IsOptional()
   @IsNumber()
@@ -281,4 +281,4 @@ export class CreateProductDto {
   @ValidateNested({ each: true })
   @Type(() => CreateProductImageDto)
   images?: CreateProductImageDto[];
-} 
+}

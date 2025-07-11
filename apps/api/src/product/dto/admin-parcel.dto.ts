@@ -8,7 +8,10 @@ export class AdminParcelFilterDto {
   @IsUUID()
   orderId?: string;
 
-  @ApiPropertyOptional({ description: 'Статус отправления', enum: ParcelStatus })
+  @ApiPropertyOptional({
+    description: 'Статус отправления',
+    enum: ParcelStatus,
+  })
   @IsOptional()
   @IsEnum(ParcelStatus)
   status?: ParcelStatus;
@@ -24,8 +27,11 @@ export class AdminUpdateParcelStatusDto {
   @IsString()
   trackingNumber?: string;
 
-  @ApiPropertyOptional({ description: 'Комментарий администратора', example: 'Отправлено через СДЭК' })
+  @ApiPropertyOptional({
+    description: 'Комментарий администратора',
+    example: 'Отправлено через СДЭК',
+  })
   @IsOptional()
   @IsString()
   comment?: string;
-} 
+}
