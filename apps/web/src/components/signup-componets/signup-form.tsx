@@ -78,8 +78,8 @@ export function SignUpForm({
         name: formData.name,
         email: formData.email,
         password: formData.password,
-        passwordconf: formData.passwordConfirm, // изменено
-        image: "", // добавлено, можно пустую строку
+        passwordconf: formData.passwordConfirm,
+        image: "",
       });
 
       console.log("Регистрация успешна:", response);
@@ -188,7 +188,7 @@ export function SignUpForm({
 
             <div className="mt-4 text-center text-sm">
               Уже есть аккаунт?{" "}
-              <a href="/login" className="underline underline-offset-4">
+              <a href="/signin" className="underline underline-offset-4">
                 Войти
               </a>
             </div>

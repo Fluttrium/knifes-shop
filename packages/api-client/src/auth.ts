@@ -1,5 +1,4 @@
 import {
-  ApiError,
   AuthResponse,
   LoginRequest,
   RegisterRequest,
@@ -29,8 +28,8 @@ export class AuthService {
     try {
       await instance.post("/auth/logout");
       console.log("✅ Logout successful");
-    } catch (error) {
-      console.error("❌ Logout error:", error);
+    } catch {
+      console.error("❌ Logout error");
     }
   }
 
@@ -39,7 +38,7 @@ export class AuthService {
    * Использует токен из куки автоматически
    */
   async getCurrentUser(): Promise<User> {
-    const response = await instance.get<User>("/auth/refresh-token");
+    const response = await instance.get<User>("/auth/me");
     return response.data;
   }
 
@@ -61,7 +60,7 @@ export class AuthService {
     try {
       await this.getCurrentUser();
       return true;
-    } catch (error) {
+    } catch {
       return false;
     }
   }
@@ -73,7 +72,7 @@ export class AuthService {
     try {
       const user = await this.getCurrentUser();
       return user.role;
-    } catch (error) {
+    } catch {
       return null;
     }
   }

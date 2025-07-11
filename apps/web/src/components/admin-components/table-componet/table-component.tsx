@@ -10,8 +10,8 @@ import {
 } from "@/components/ui/table";
 import { UserInfoTableButton } from "@/components/admin-components/ui/userInfo-table-button";
 import { useEffect, useState } from "react";
-import api from "@repo/api-client";
-import { User } from "@repo/api-client";
+
+import api, { User } from "@repo/api-client";
 import { notify } from "@/components/ui/toats/basic-toats";
 
 export function UserTableComponent() {

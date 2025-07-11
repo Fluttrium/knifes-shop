@@ -5,48 +5,30 @@ import {
   SidebarGroup,
   SidebarGroupContent,
   SidebarHeader,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  SidebarRail
 } from "@/components/ui/sidebar";
-
-// This is sample data.
-const data = {
-  items: [
-    {
-      title: "Installation",
-      url: "#",
-      isActive: false
-    },
-    {
-      title: "Project Structure",
-      url: "#",
-      isActive: false
-    }
-  ]
-};
+import { AdminNav } from "../navigation/admin-nav";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar {...props}>
-      <SidebarHeader></SidebarHeader>
+      <SidebarHeader className="border-b px-6 py-4">
+        <div className="flex items-center gap-2">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
+            <span className="text-sm font-semibold text-primary-foreground">A</span>
+          </div>
+          <div className="flex flex-col">
+            <h2 className="text-lg font-semibold">Админ-панель</h2>
+            <p className="text-xs text-muted-foreground">Управление магазином</p>
+          </div>
+        </div>
+      </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupContent>
-            <SidebarMenu>
-              {data.items.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild isActive={item.isActive}>
-                    <a href={item.url}>{item.title}</a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
+            <AdminNav />
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarRail />
     </Sidebar>
   );
 }
