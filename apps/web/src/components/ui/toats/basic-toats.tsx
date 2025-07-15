@@ -3,7 +3,27 @@
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-export const ToastProvider = () => <ToastContainer />;
+interface ToastProviderProps {
+  children: React.ReactNode;
+}
+
+export const ToastProvider = ({ children }: ToastProviderProps) => (
+  <>
+    {children}
+    <ToastContainer
+      position="top-right"
+      autoClose={3000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      theme="light"
+    />
+  </>
+);
 
 export const notify = (
   message: string,

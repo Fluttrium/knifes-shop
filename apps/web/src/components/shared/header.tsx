@@ -123,7 +123,11 @@ export const Header: React.FC<Props> = ({ hasSearch = true, hasCart = true, clas
           {/* Правая часть: Корзина и Профиль */}
           <div className="flex items-center gap-3">
             {hasCart && <CartButton />}
-            <ProfileButton onClickSignIn={handleAuthModalOpen} />
+            <ProfileButton
+              isAuthenticated={false}
+              isLoading={false}
+              onClickSignIn={handleAuthModalOpen}
+            />
           </div>
         </Container>
 
@@ -218,7 +222,11 @@ export const Header: React.FC<Props> = ({ hasSearch = true, hasCart = true, clas
           {/* Правая часть */}
           <div className="flex items-center gap-3">
             {/*<AuthModal open={openAuthModal} onClose={handleAuthModalClose} />*/}
-            <ProfileButton onClickSignIn={handleAuthModalOpen} />
+            <ProfileButton
+              isAuthenticated={false}
+              isLoading={false}
+              onClickSignIn={handleAuthModalOpen}
+            />
             {hasCart && <CartButton />}
           </div>
         </Container>

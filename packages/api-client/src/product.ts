@@ -63,6 +63,11 @@ export class ProductService {
     return response.data;
   }
 
+  async getBrands(): Promise<string[]> {
+    const response = await instance.get<string[]>("/products/brands");
+    return response.data;
+  }
+
   // Админские методы
   async createProduct(productData: CreateProductDto): Promise<Product> {
     const response = await instance.post<Product>("/admin/products", productData);

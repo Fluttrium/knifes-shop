@@ -5,6 +5,14 @@ const prisma = new PrismaClient();
 async function main() {
   console.log('🌱 Starting database seed...');
 
+  await prisma.product.deleteMany({});
+  await prisma.category.deleteMany({});
+  await prisma.shippingMethod.deleteMany({});
+  await prisma.taxRate.deleteMany({});
+  await prisma.coupon.deleteMany({});
+
+  console.log('✅ Cleared existing data');
+
   // ==================== CATEGORIES ====================
   console.log('📂 Creating categories...');
 
@@ -50,7 +58,8 @@ async function main() {
         name: 'Аксессуары',
         slug: 'accessories',
         description: 'Чехлы, подставки и другие аксессуары для ножей',
-        image: 'https://images.unsplash.com/photo-1588668214407-6ea9a6d8c272?w=400',
+        image:
+          'https://images.unsplash.com/photo-1588668214407-6ea9a6d8c272?w=400',
         sortOrder: 5,
       },
     }),
@@ -71,9 +80,10 @@ async function main() {
         shortDescription: 'Профессиональный шеф-нож для кухни',
         sku: 'KNIFE-001',
         price: 4500.00,
-        comparePrice: 5500.00,
+        comparePrice: 5500.0,
         costPrice: 3000.00,
         weight: 250.0,
+        brand: 'Zwilling',
         dimensions: '18x3x2',
         stockQuantity: 15,
         productType: 'knife',
@@ -112,6 +122,7 @@ async function main() {
         sku: 'KNIFE-002',
         price: 3200.00,
         comparePrice: 3800.00,
+        brand: 'Wüsthof',
         costPrice: 2200.00,
         weight: 180.0,
         dimensions: '20x2.5x1.5',
@@ -147,6 +158,7 @@ async function main() {
         comparePrice: 9500.00,
         costPrice: 6000.00,
         weight: 350.0,
+        brand: 'Buck Knives',
         dimensions: '25x4x3',
         stockQuantity: 8,
         productType: 'knife',
@@ -181,6 +193,7 @@ async function main() {
         comparePrice: 3200.00,
         costPrice: 1900.00,
         weight: 120.0,
+        brand: 'Spyderco',
         dimensions: '8x2x1',
         stockQuantity: 25,
         productType: 'knife',
@@ -217,6 +230,7 @@ async function main() {
         weight: 500.0,
         dimensions: '25x8x3',
         stockQuantity: 20,
+        brand: 'Condor Tool & Knife',
         productType: 'sharpener',
         categoryId: categories[3].id,
         images: {
@@ -360,4 +374,4 @@ main()
   })
   .finally(async () => {
     await prisma.$disconnect();
-  }); 
+  });
