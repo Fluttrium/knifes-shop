@@ -4,28 +4,30 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4176361d-84bf-49e8-bfd1-9c64d1c7c2d7" name="Changes" comment="очень плотная работа">
+    <list default="true" id="4176361d-84bf-49e8-bfd1-9c64d1c7c2d7" name="Changes" comment="Merge remote-tracking branch 'origin/main'">
+      <change afterPath="$PROJECT_DIR$/apps/api/src/product/all-products.controller.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/web/src/app/(main)/layout.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/web/src/components/shared/container.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/web/src/components/shared/count-button.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/web/src/components/shared/count-icon-button.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/web/src/components/shared/footer.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/web/src/components/shared/header.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/web/src/components/shared/product-card.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/web/src/components/shared/product-form.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/web/src/components/shared/products-group-list.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/web/src/components/shared/profile-button.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/web/src/components/shared/providers.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/web/src/components/shared/search-input.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/web/src/components/shared/store/category.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/web/src/components/shared/title.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/web/src/components/ui/card-button.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/project.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/app.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/auth/guards/jwt-auth.guard.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/auth/guards/jwt-auth.guard.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/product/admin/admin-parcel.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/product/admin/admin-parcel.controller.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/product/admin/admin-parcel.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/product/admin/admin-parcel.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/product/admin/admin-payment.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/product/admin/admin-payment.controller.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/product/admin/admin-payment.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/product/admin/admin-payment.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/product/admin/product-admin.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/product/admin/product-admin.controller.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/product/admin/product-admin.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/product/admin/product-admin.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/product/controllers/payment.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/product/controllers/payment.controller.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/product/dto/admin-parcel.dto.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/product/dto/admin-parcel.dto.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/product/dto/admin-payment.dto.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/product/dto/admin-payment.dto.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/product/dto/create-product.dto.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/product/dto/create-product.dto.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/product/dto/payment.dto.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/product/dto/payment.dto.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/product/dto/product-query.dto.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/product/dto/product-query.dto.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/product/dto/update-product.dto.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/product/dto/update-product.dto.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/product/entities/product.entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/product/entities/product.entity.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/product/product.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/product/product.controller.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/product/product.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/product/product.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/product/product.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/product/product.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/product/services/payment.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/product/services/payment.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/prisma/schema.prisma" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/prisma/schema.prisma" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web/src/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web/src/app/layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web/src/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web/src/app/(main)/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,11 +47,11 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/Fluttrium/knifes-shop.git&quot;,
-    &quot;accountId&quot;: &quot;e33ad7c9-7ea0-4a9a-81dc-ce0357a0b854&quot;
+    &quot;accountId&quot;: &quot;aa0312fe-f4a9-40f7-b20a-a8a0599d64eb&quot;
   }
 }</component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
+    <option name="selectedTabId" value="ProjectErrors" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
@@ -69,9 +71,10 @@
     &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;SHELLCHECK.PATH&quot;: &quot;I do mind&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;20.17.0&quot;,
-    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;20.17.58&quot;,
+    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;20.18.1&quot;,
+    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;20.19.7&quot;,
     &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;/Users/romanmaksimov/WebstormProjects/knifes-shop/apps/web/src/components/signin-components&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
@@ -93,9 +96,9 @@
     &quot;npm.format.executor&quot;: &quot;Run&quot;,
     &quot;npm.shared &gt; build.executor&quot;: &quot;Run&quot;,
     &quot;npm.ui &gt; build:libs.executor&quot;: &quot;Run&quot;,
-    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;/Users/romanmaksimov/WebstormProjects/knifes-shop/node_modules/prettier&quot;,
+    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;/Users/franzlarionov/WebstormProjects/knifes-shop/node_modules/prettier&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;Settings.JavaScript&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/Users/romanmaksimov/WebstormProjects/knifes-shop/node_modules/typescript/lib&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Users/franzlarionov/WebstormProjects/knifes-shop/node_modules/typescript/lib&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
   &quot;keyToStringList&quot;: {
@@ -113,11 +116,11 @@
       <recent name="$PROJECT_DIR$/packages/shared/src/dto/user/entities" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/apps/web/src/app/(main)" />
+      <recent name="$PROJECT_DIR$/apps/web/public" />
       <recent name="$PROJECT_DIR$/apps/web/src/components/admin-components/ui" />
       <recent name="$PROJECT_DIR$/apps/web/src/app/signin" />
       <recent name="$PROJECT_DIR$/packages/shared/src" />
-      <recent name="$PROJECT_DIR$/apps/api/src/user/entities" />
-      <recent name="$PROJECT_DIR$/packages/database" />
     </key>
   </component>
   <component name="RunManager" selected="npm.api-client &gt; build">
@@ -184,7 +187,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-6be00b7b0f42-JavaScript-WS-252.23591.33" />
+        <option value="bundled-js-predefined-d6986cc7102b-09060db00ec0-JavaScript-WS-251.26927.40" />
       </set>
     </attachedChunks>
   </component>
@@ -232,6 +235,8 @@
       <workItem from="1752076455291" duration="1862000" />
       <workItem from="1752154684996" duration="10000" />
       <workItem from="1752154704098" duration="6271000" />
+      <workItem from="1752317536780" duration="9232000" />
+      <workItem from="1752335186108" duration="6570000" />
     </task>
     <task id="LOCAL-00001" summary=".">
       <option name="closed" value="true" />
@@ -369,7 +374,15 @@
       <option name="project" value="LOCAL" />
       <updated>1752185832711</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="Merge remote-tracking branch 'origin/main'">
+      <option name="closed" value="true" />
+      <created>1752229351855</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1752229351855</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -407,6 +420,19 @@
     <MESSAGE value="написал рефреш токен &#10;чуть не обосрался" />
     <MESSAGE value="плотная работа" />
     <MESSAGE value="очень плотная работа" />
-    <option name="LAST_COMMIT_MESSAGE" value="очень плотная работа" />
+    <MESSAGE value="Merge remote-tracking branch 'origin/main'" />
+    <option name="LAST_COMMIT_MESSAGE" value="Merge remote-tracking branch 'origin/main'" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/apps/web/src/app/dashboard/products/page.tsx</url>
+          <line>2</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
