@@ -328,6 +328,64 @@ export class ProductService {
 
     return relatedProducts as ProductEntity[];
   }
+  async getBrands(): Promise<string[]> {
+    const result = await this.prisma.product.findMany({
+      where: {
+        isActive: true,
+        brand: {
+          not: null,
+        },
+      },
+      select: {
+        brand: true,
+      },
+      distinct: ['brand'],
+      orderBy: {
+        brand: 'asc',
+      },
+    });
+
+    return result
+      .map((item) => item.brand)
+      .filter((brand): brand is string => brand !== null);
+  }
+
+  async searchProducts(
+    searchQuery: string,
+    limit: number = 10,
+  ): Promise<ProductEntity[]> {
+    const products = await this.prisma.product.findMany({
+      where: {
+        isActive: true,
+        OR: [
+          { name: { contains: searchQuery, mode: 'insensitive' } },
+          { description: { contains: searchQuery, mode: 'insensitive' } },
+          { shortDescription: { contains: searchQuery, mode: 'insensitive' } },
+          { brand: { contains: searchQuery, mode: 'insensitive' } },
+        ],
+      },
+      include: {
+        category: {
+          select: {
+            id: true,
+            name: true,
+            slug: true,
+          },
+        },
+        images: {
+          where: { isPrimary: true },
+        },
+      },
+      orderBy: [
+        { isFeatured: 'desc' },
+        { isNew: 'desc' },
+        { createdAt: 'desc' },
+      ],
+      take: limit,
+    });
+
+    return products as ProductEntity[];
+  }
 
   async checkStockAvailability(
     productId: string,
