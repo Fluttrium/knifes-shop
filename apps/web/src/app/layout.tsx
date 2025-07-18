@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { Providers } from "@/components/shared/providers";
+import { ToastProvider } from "@/components/ui/toats/basic-toats";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,12 +30,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ru" className={`${geistSans.variable} ${geistMono.variable}`}>
-    <body className="min-h-screen">
-    <Providers>
-      {children}
-    </Providers>
-    </body>
-    </html>
+      <html lang="ru" className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body className="min-h-screen">
+      <ToastProvider>
+        {children}
+      </ToastProvider>
+      </body>
+      </html>
   );
 }

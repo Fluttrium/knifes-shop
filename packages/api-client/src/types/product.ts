@@ -41,6 +41,7 @@ export interface Product {
   description?: string;
   shortDescription?: string;
   slug: string;
+  brand?: string;
   sku: string;
   price: number;
   comparePrice?: number;
@@ -77,6 +78,7 @@ export interface CreateProductDto {
   shortDescription?: string;
   sku: string;
   price: number;
+  brand?: string;
   comparePrice?: number;
   costPrice?: number;
   weight?: number;
@@ -109,6 +111,7 @@ export interface ProductQueryDto {
   categoryId?: string;
   minPrice?: number;
   maxPrice?: number;
+  brand?: string;
   isActive?: boolean;
   isFeatured?: boolean;
   sortBy?: 'name' | 'price' | 'createdAt' | 'rating';

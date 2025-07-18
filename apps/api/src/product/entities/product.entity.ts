@@ -103,6 +103,12 @@ export class ProductEntity {
   price: any; // Prisma Decimal type
 
   @ApiPropertyOptional({
+    description: 'Бренд товара',
+    example: 'Zwilling',
+  })
+  brand?: string;
+
+  @ApiPropertyOptional({
     description: 'Цена для сравнения (зачеркнутая цена)',
     example: 5500.0,
   })
