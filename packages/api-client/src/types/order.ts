@@ -21,8 +21,14 @@ export interface Payment {
   orderId: string;
   amount: number;
   currency: string;
-  status: 'pending' | 'processing' | 'completed' | 'failed' | 'cancelled' | 'refunded';
-  paymentMethod: 'yookassa' | 'card' | 'cash';
+  status:
+    | "pending"
+    | "processing"
+    | "completed"
+    | "failed"
+    | "cancelled"
+    | "refunded";
+  paymentMethod: "yookassa" | "card" | "cash";
   transactionId?: string;
   paymentUrl?: string;
   description?: string;
@@ -36,7 +42,7 @@ export interface Parcel {
   orderId: string;
   trackingNumber?: string;
   carrier: string;
-  status: 'pending' | 'shipped' | 'delivered' | 'returned' | 'lost';
+  status: "pending" | "shipped" | "delivered" | "returned" | "lost";
   shippedAt?: Date;
   deliveredAt?: Date;
   estimatedDelivery?: Date;
@@ -65,7 +71,14 @@ export interface Order {
   id: string;
   userId: string;
   orderNumber: string;
-  status: 'pending' | 'confirmed' | 'processing' | 'shipped' | 'delivered' | 'cancelled' | 'refunded';
+  status:
+    | "pending"
+    | "confirmed"
+    | "processing"
+    | "shipped"
+    | "delivered"
+    | "cancelled"
+    | "refunded";
   subtotal: number;
   taxAmount: number;
   shippingAmount: number;
@@ -76,7 +89,7 @@ export interface Order {
   billingAddressId: string;
   shippingAddress: Address;
   billingAddress: Address;
-  paymentMethod: 'yookassa' | 'card' | 'cash';
+  paymentMethod: "yookassa" | "card" | "cash";
   notes?: string;
   items: OrderItem[];
   payment?: Payment;
@@ -93,7 +106,7 @@ export interface CreateOrderDto {
   }>;
   shippingAddressId: string;
   billingAddressId: string;
-  paymentMethod: 'yookassa' | 'card' | 'cash';
+  paymentMethod: "yookassa" | "card" | "cash";
   notes?: string;
 }
 
@@ -105,8 +118,8 @@ export interface OrderQueryDto {
   orderNumber?: string;
   startDate?: string;
   endDate?: string;
-  sortBy?: 'createdAt' | 'totalAmount' | 'orderNumber';
-  sortOrder?: 'asc' | 'desc';
+  sortBy?: "createdAt" | "totalAmount" | "orderNumber";
+  sortOrder?: "asc" | "desc";
 }
 
 export interface OrderResponse {
@@ -125,8 +138,8 @@ export interface PaymentQueryDto {
   paymentMethod?: string;
   startDate?: string;
   endDate?: string;
-  sortBy?: 'createdAt' | 'amount';
-  sortOrder?: 'asc' | 'desc';
+  sortBy?: "createdAt" | "amount";
+  sortOrder?: "asc" | "desc";
 }
 
 export interface ParcelQueryDto {
@@ -137,12 +150,18 @@ export interface ParcelQueryDto {
   carrier?: string;
   startDate?: string;
   endDate?: string;
-  sortBy?: 'createdAt' | 'shippedAt';
-  sortOrder?: 'asc' | 'desc';
+  sortBy?: "createdAt" | "shippedAt";
+  sortOrder?: "asc" | "desc";
 }
 
 export interface UpdatePaymentDto {
-  status: 'pending' | 'processing' | 'completed' | 'failed' | 'cancelled' | 'refunded';
+  status:
+    | "pending"
+    | "processing"
+    | "completed"
+    | "failed"
+    | "cancelled"
+    | "refunded";
   transactionId?: string;
   notes?: string;
 }
@@ -150,11 +169,11 @@ export interface UpdatePaymentDto {
 export interface UpdateParcelDto {
   trackingNumber?: string;
   carrier?: string;
-  status: 'pending' | 'shipped' | 'delivered' | 'returned' | 'lost';
+  status: "pending" | "shipped" | "delivered" | "returned" | "lost";
   shippedAt?: Date;
   deliveredAt?: Date;
   estimatedDelivery?: Date;
   weight?: number;
   dimensions?: string;
   notes?: string;
-} 
+}

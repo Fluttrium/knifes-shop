@@ -6,7 +6,14 @@ import { AddProductDialog } from "@/components/admin-components/products/add-pro
 import api, { Product, Category } from "@repo/api-client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Search, RefreshCw, Filter, Package, Star, TrendingUp } from "lucide-react";
+import {
+  Search,
+  RefreshCw,
+  Filter,
+  Package,
+  Star,
+  TrendingUp,
+} from "lucide-react";
 import { notify } from "@/components/ui/toats/basic-toats";
 import {
   Select,
@@ -66,14 +73,20 @@ export default function ProductsPage() {
       filtered = filtered.filter(
         (product) =>
           product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          (product.description && product.description.toLowerCase().includes(searchTerm.toLowerCase())) ||
-          (product.sku && product.sku.toLowerCase().includes(searchTerm.toLowerCase()))
+          (product.description &&
+            product.description
+              .toLowerCase()
+              .includes(searchTerm.toLowerCase())) ||
+          (product.sku &&
+            product.sku.toLowerCase().includes(searchTerm.toLowerCase())),
       );
     }
 
     // Фильтр по категории
     if (selectedCategory && selectedCategory !== "all") {
-      filtered = filtered.filter((product) => product.categoryId === selectedCategory);
+      filtered = filtered.filter(
+        (product) => product.categoryId === selectedCategory,
+      );
     }
 
     // Фильтр по статусу
@@ -89,7 +102,10 @@ export default function ProductsPage() {
           filtered = filtered.filter((product) => product.isFeatured);
           break;
         case "sale":
-          filtered = filtered.filter((product) => product.comparePrice && product.comparePrice < product.price);
+          filtered = filtered.filter(
+            (product) =>
+              product.comparePrice && product.comparePrice < product.price,
+          );
           break;
       }
     }
@@ -103,9 +119,11 @@ export default function ProductsPage() {
 
   const getStatistics = () => {
     const total = products.length;
-    const active = products.filter(p => p.isActive).length;
-    const featured = products.filter(p => p.isFeatured).length;
-    const onSale = products.filter(p => p.comparePrice && p.comparePrice < p.price).length;
+    const active = products.filter((p) => p.isActive).length;
+    const featured = products.filter((p) => p.isFeatured).length;
+    const onSale = products.filter(
+      (p) => p.comparePrice && p.comparePrice < p.price,
+    ).length;
 
     return { total, active, featured, onSale };
   };
@@ -135,9 +153,7 @@ export default function ProductsPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold tracking-tight">Товары</h1>
-          <p className="text-muted-foreground">
-            Управление товарами магазина
-          </p>
+          <p className="text-muted-foreground">Управление товарами магазина</p>
         </div>
         <Button onClick={fetchProducts} variant="outline" size="sm">
           <RefreshCw className="mr-2 h-4 w-4" />
@@ -221,18 +237,18 @@ export default function ProductsPage() {
             <h3 className="text-lg font-semibold">
               Список товаров ({filteredProducts.length})
             </h3>
-            <AddProductDialog 
+            <AddProductDialog
               categories={categories}
               onProductCreated={handleProductUpdated}
             />
           </div>
-          <ProductsTable 
-            products={filteredProducts} 
+          <ProductsTable
+            products={filteredProducts}
             categories={categories}
-            onProductUpdated={handleProductUpdated} 
+            onProductUpdated={handleProductUpdated}
           />
         </div>
       </div>
     </div>
   );
-} 
+}

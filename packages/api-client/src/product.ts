@@ -19,8 +19,10 @@ export class ProductService {
         }
       });
     }
-    
-    const response = await instance.get<ProductResponse>(`/products?${params.toString()}`);
+
+    const response = await instance.get<ProductResponse>(
+      `/products?${params.toString()}`,
+    );
     return response.data;
   }
 
@@ -49,7 +51,10 @@ export class ProductService {
     return response.data;
   }
 
-  async getProductsByCategory(categoryId: string, query?: ProductQueryDto): Promise<ProductResponse> {
+  async getProductsByCategory(
+    categoryId: string,
+    query?: ProductQueryDto,
+  ): Promise<ProductResponse> {
     const params = new URLSearchParams();
     if (query) {
       Object.entries(query).forEach(([key, value]) => {
@@ -58,8 +63,10 @@ export class ProductService {
         }
       });
     }
-    
-    const response = await instance.get<ProductResponse>(`/categories/${categoryId}/products?${params.toString()}`);
+
+    const response = await instance.get<ProductResponse>(
+      `/categories/${categoryId}/products?${params.toString()}`,
+    );
     return response.data;
   }
 
@@ -70,13 +77,22 @@ export class ProductService {
 
   // Админские методы
   async createProduct(productData: CreateProductDto): Promise<Product> {
-    const response = await instance.post<Product>("/admin/products", productData);
+    const response = await instance.post<Product>(
+      "/admin/products",
+      productData,
+    );
     console.log("✅ Product created successfully");
     return response.data;
   }
 
-  async updateProduct(id: string, productData: UpdateProductDto): Promise<Product> {
-    const response = await instance.patch<Product>(`/admin/products/${id}`, productData);
+  async updateProduct(
+    id: string,
+    productData: UpdateProductDto,
+  ): Promise<Product> {
+    const response = await instance.patch<Product>(
+      `/admin/products/${id}`,
+      productData,
+    );
     console.log("✅ Product updated successfully");
     return response.data;
   }
@@ -96,19 +112,32 @@ export class ProductService {
         }
       });
     }
-    
-    const response = await instance.get<ProductResponse>(`/admin/products?${params.toString()}`);
+
+    const response = await instance.get<ProductResponse>(
+      `/admin/products?${params.toString()}`,
+    );
     return response.data;
   }
 
-  async createCategory(categoryData: Omit<Category, 'id' | 'createdAt' | 'updatedAt'>): Promise<Category> {
-    const response = await instance.post<Category>("/admin/categories", categoryData);
+  async createCategory(
+    categoryData: Omit<Category, "id" | "createdAt" | "updatedAt">,
+  ): Promise<Category> {
+    const response = await instance.post<Category>(
+      "/admin/categories",
+      categoryData,
+    );
     console.log("✅ Category created successfully");
     return response.data;
   }
 
-  async updateCategory(id: string, categoryData: Partial<Category>): Promise<Category> {
-    const response = await instance.patch<Category>(`/admin/categories/${id}`, categoryData);
+  async updateCategory(
+    id: string,
+    categoryData: Partial<Category>,
+  ): Promise<Category> {
+    const response = await instance.patch<Category>(
+      `/admin/categories/${id}`,
+      categoryData,
+    );
     console.log("✅ Category updated successfully");
     return response.data;
   }
@@ -118,4 +147,4 @@ export class ProductService {
     console.log("✅ Category deleted successfully");
     return response.data;
   }
-} 
+}

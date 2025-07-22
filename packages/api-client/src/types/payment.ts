@@ -6,7 +6,7 @@ export interface YooKassaPaymentRequest {
   returnUrl: string;
   capture: boolean;
   confirmation: {
-    type: 'redirect';
+    type: "redirect";
     returnUrl: string;
   };
   receipt?: {
@@ -29,7 +29,7 @@ export interface YooKassaPaymentRequest {
 
 export interface YooKassaPaymentResponse {
   id: string;
-  status: 'pending' | 'waiting_for_capture' | 'succeeded' | 'canceled';
+  status: "pending" | "waiting_for_capture" | "succeeded" | "canceled";
   amount: {
     value: string;
     currency: string;
@@ -62,7 +62,13 @@ export interface YooKassaPaymentResponse {
 
 export interface PaymentStatusResponse {
   id: string;
-  status: 'pending' | 'processing' | 'completed' | 'failed' | 'cancelled' | 'refunded';
+  status:
+    | "pending"
+    | "processing"
+    | "completed"
+    | "failed"
+    | "cancelled"
+    | "refunded";
   amount: number;
   currency: string;
   paymentMethod: string;
@@ -96,4 +102,4 @@ export interface PaymentHistoryItem {
   transactionId?: string;
   createdAt: string;
   updatedAt: string;
-} 
+}

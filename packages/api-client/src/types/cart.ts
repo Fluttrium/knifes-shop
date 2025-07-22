@@ -67,4 +67,4 @@ export interface CartResponse {
 export interface WishlistResponse {
   items: WishlistItem[];
   totalItems: number;
-} 
+}

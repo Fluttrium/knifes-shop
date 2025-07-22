@@ -66,9 +66,18 @@ interface EditProductData {
   stockQuantity: number;
   minStockLevel?: number;
   maxStockLevel?: number;
-  productType: 'knife' | 'sharpener' | 'sheath' | 'accessory' | 'gift_set';
-  material?: 'stainless_steel' | 'carbon_steel' | 'damascus_steel' | 'ceramic' | 'titanium' | 'wood' | 'plastic' | 'leather' | 'synthetic';
-  handleType?: 'fixed' | 'folding' | 'multi_tool';
+  productType: "knife" | "sharpener" | "sheath" | "accessory" | "gift_set";
+  material?:
+    | "stainless_steel"
+    | "carbon_steel"
+    | "damascus_steel"
+    | "ceramic"
+    | "titanium"
+    | "wood"
+    | "plastic"
+    | "leather"
+    | "synthetic";
+  handleType?: "fixed" | "folding" | "multi_tool";
   bladeLength?: number;
   totalLength?: number;
   bladeHardness?: number;
@@ -81,7 +90,11 @@ interface EditProductData {
   metaDescription?: string;
 }
 
-export function ProductsTable({ products, categories, onProductUpdated }: ProductsTableProps) {
+export function ProductsTable({
+  products,
+  categories,
+  onProductUpdated,
+}: ProductsTableProps) {
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [editData, setEditData] = useState<EditProductData>({
     name: "",
@@ -197,19 +210,31 @@ export function ProductsTable({ products, categories, onProductUpdated }: Produc
         shortDescription: editData.shortDescription,
         categoryId: editData.categoryId,
         price: Number(editData.price),
-        comparePrice: editData.comparePrice ? Number(editData.comparePrice) : undefined,
+        comparePrice: editData.comparePrice
+          ? Number(editData.comparePrice)
+          : undefined,
         costPrice: editData.costPrice ? Number(editData.costPrice) : undefined,
         weight: editData.weight ? Number(editData.weight) : undefined,
         dimensions: editData.dimensions,
         stockQuantity: Number(editData.stockQuantity),
-        minStockLevel: editData.minStockLevel ? Number(editData.minStockLevel) : undefined,
-        maxStockLevel: editData.maxStockLevel ? Number(editData.maxStockLevel) : undefined,
+        minStockLevel: editData.minStockLevel
+          ? Number(editData.minStockLevel)
+          : undefined,
+        maxStockLevel: editData.maxStockLevel
+          ? Number(editData.maxStockLevel)
+          : undefined,
         productType: editData.productType,
         material: editData.material,
         handleType: editData.handleType,
-        bladeLength: editData.bladeLength ? Number(editData.bladeLength) : undefined,
-        totalLength: editData.totalLength ? Number(editData.totalLength) : undefined,
-        bladeHardness: editData.bladeHardness ? Number(editData.bladeHardness) : undefined,
+        bladeLength: editData.bladeLength
+          ? Number(editData.bladeLength)
+          : undefined,
+        totalLength: editData.totalLength
+          ? Number(editData.totalLength)
+          : undefined,
+        bladeHardness: editData.bladeHardness
+          ? Number(editData.bladeHardness)
+          : undefined,
         isActive: editData.isActive,
         isFeatured: editData.isFeatured,
         isNew: editData.isNew,
@@ -235,26 +260,42 @@ export function ProductsTable({ products, categories, onProductUpdated }: Produc
 
   const getStatusBadge = (product: Product) => {
     const badges = [];
-    
+
     if (product.isActive) {
-      badges.push(<Badge key="active" variant="default">Активен</Badge>);
+      badges.push(
+        <Badge key="active" variant="default">
+          Активен
+        </Badge>,
+      );
     } else {
-      badges.push(<Badge key="inactive" variant="secondary">Неактивен</Badge>);
+      badges.push(
+        <Badge key="inactive" variant="secondary">
+          Неактивен
+        </Badge>,
+      );
     }
-    
+
     if (product.isFeatured) {
-      badges.push(<Badge key="featured" variant="destructive">Рекомендуемый</Badge>);
+      badges.push(
+        <Badge key="featured" variant="destructive">
+          Рекомендуемый
+        </Badge>,
+      );
     }
-    
+
     if (product.comparePrice && product.comparePrice < product.price) {
-      badges.push(<Badge key="sale" variant="outline">Распродажа</Badge>);
+      badges.push(
+        <Badge key="sale" variant="outline">
+          Распродажа
+        </Badge>,
+      );
     }
-    
+
     return <div className="flex gap-1 flex-wrap">{badges}</div>;
   };
 
   const getCategoryName = (categoryId: string) => {
-    const category = categories.find(cat => cat.id === categoryId);
+    const category = categories.find((cat) => cat.id === categoryId);
     return category?.name || "Неизвестная категория";
   };
 
@@ -294,11 +335,12 @@ export function ProductsTable({ products, categories, onProductUpdated }: Produc
                     <span className="font-medium">
                       {formatPrice(product.price)}
                     </span>
-                    {product.comparePrice && product.comparePrice < product.price && (
-                      <span className="text-sm text-muted-foreground line-through">
-                        {formatPrice(product.comparePrice)}
-                      </span>
-                    )}
+                    {product.comparePrice &&
+                      product.comparePrice < product.price && (
+                        <span className="text-sm text-muted-foreground line-through">
+                          {formatPrice(product.comparePrice)}
+                        </span>
+                      )}
                   </div>
                 </TableCell>
                 <TableCell>{getStatusBadge(product)}</TableCell>
@@ -314,11 +356,15 @@ export function ProductsTable({ products, categories, onProductUpdated }: Produc
                     <DropdownMenuContent align="end">
                       <DropdownMenuLabel>Действия</DropdownMenuLabel>
                       <DropdownMenuSeparator />
-                      <DropdownMenuItem onClick={() => handleViewProduct(product)}>
+                      <DropdownMenuItem
+                        onClick={() => handleViewProduct(product)}
+                      >
                         <Eye className="mr-2 h-4 w-4" />
                         Просмотр
                       </DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => handleEditProduct(product)}>
+                      <DropdownMenuItem
+                        onClick={() => handleEditProduct(product)}
+                      >
                         <Edit className="mr-2 h-4 w-4" />
                         Редактировать
                       </DropdownMenuItem>
@@ -352,26 +398,35 @@ export function ProductsTable({ products, categories, onProductUpdated }: Produc
             <div className="grid gap-4 py-4">
               <div className="grid grid-cols-4 items-center gap-4">
                 <Label className="text-right">Название</Label>
-                <div className="col-span-3 font-medium">{viewingProduct.name}</div>
+                <div className="col-span-3 font-medium">
+                  {viewingProduct.name}
+                </div>
               </div>
               <div className="grid grid-cols-4 items-center gap-4">
                 <Label className="text-right">Категория</Label>
-                <div className="col-span-3">{getCategoryName(viewingProduct.categoryId)}</div>
+                <div className="col-span-3">
+                  {getCategoryName(viewingProduct.categoryId)}
+                </div>
               </div>
               <div className="grid grid-cols-4 items-center gap-4">
                 <Label className="text-right">Цена</Label>
                 <div className="col-span-3">
-                  <span className="font-medium">{formatPrice(viewingProduct.price)}</span>
-                  {viewingProduct.comparePrice && viewingProduct.comparePrice < viewingProduct.price && (
-                    <span className="ml-2 text-sm text-muted-foreground line-through">
-                      {formatPrice(viewingProduct.comparePrice)}
-                    </span>
-                  )}
+                  <span className="font-medium">
+                    {formatPrice(viewingProduct.price)}
+                  </span>
+                  {viewingProduct.comparePrice &&
+                    viewingProduct.comparePrice < viewingProduct.price && (
+                      <span className="ml-2 text-sm text-muted-foreground line-through">
+                        {formatPrice(viewingProduct.comparePrice)}
+                      </span>
+                    )}
                 </div>
               </div>
               <div className="grid grid-cols-4 items-center gap-4">
                 <Label className="text-right">Статус</Label>
-                <div className="col-span-3">{getStatusBadge(viewingProduct)}</div>
+                <div className="col-span-3">
+                  {getStatusBadge(viewingProduct)}
+                </div>
               </div>
               {viewingProduct.weight && (
                 <div className="grid grid-cols-4 items-center gap-4">
@@ -388,7 +443,9 @@ export function ProductsTable({ products, categories, onProductUpdated }: Produc
               {viewingProduct.stockQuantity !== undefined && (
                 <div className="grid grid-cols-4 items-center gap-4">
                   <Label className="text-right">Количество на складе</Label>
-                  <div className="col-span-3">{viewingProduct.stockQuantity}</div>
+                  <div className="col-span-3">
+                    {viewingProduct.stockQuantity}
+                  </div>
                 </div>
               )}
               {viewingProduct.productType && (
@@ -412,33 +469,46 @@ export function ProductsTable({ products, categories, onProductUpdated }: Produc
               {viewingProduct.bladeLength && (
                 <div className="grid grid-cols-4 items-center gap-4">
                   <Label className="text-right">Длина лезвия</Label>
-                  <div className="col-span-3">{viewingProduct.bladeLength}см</div>
+                  <div className="col-span-3">
+                    {viewingProduct.bladeLength}см
+                  </div>
                 </div>
               )}
               {viewingProduct.totalLength && (
                 <div className="grid grid-cols-4 items-center gap-4">
                   <Label className="text-right">Общая длина</Label>
-                  <div className="col-span-3">{viewingProduct.totalLength}см</div>
+                  <div className="col-span-3">
+                    {viewingProduct.totalLength}см
+                  </div>
                 </div>
               )}
               {viewingProduct.bladeHardness && (
                 <div className="grid grid-cols-4 items-center gap-4">
                   <Label className="text-right">Твердость лезвия</Label>
-                  <div className="col-span-3">{viewingProduct.bladeHardness} HRC</div>
+                  <div className="col-span-3">
+                    {viewingProduct.bladeHardness} HRC
+                  </div>
                 </div>
               )}
               <div className="grid grid-cols-4 items-center gap-4">
                 <Label className="text-right">Описание</Label>
-                <div className="col-span-3 text-sm">{viewingProduct.description || "Нет описания"}</div>
+                <div className="col-span-3 text-sm">
+                  {viewingProduct.description || "Нет описания"}
+                </div>
               </div>
               <div className="grid grid-cols-4 items-center gap-4">
                 <Label className="text-right">Дата создания</Label>
-                <div className="col-span-3">{formatDate(viewingProduct.createdAt)}</div>
+                <div className="col-span-3">
+                  {formatDate(viewingProduct.createdAt)}
+                </div>
               </div>
             </div>
           )}
           <DialogFooter>
-            <Button variant="outline" onClick={() => setIsViewDialogOpen(false)}>
+            <Button
+              variant="outline"
+              onClick={() => setIsViewDialogOpen(false)}
+            >
               Закрыть
             </Button>
           </DialogFooter>
@@ -497,7 +567,10 @@ export function ProductsTable({ products, categories, onProductUpdated }: Produc
                 type="number"
                 value={editData.price}
                 onChange={(e) =>
-                  setEditData({ ...editData, price: parseFloat(e.target.value) || 0 })
+                  setEditData({
+                    ...editData,
+                    price: parseFloat(e.target.value) || 0,
+                  })
                 }
                 className="col-span-3"
               />
@@ -511,7 +584,10 @@ export function ProductsTable({ products, categories, onProductUpdated }: Produc
                 type="number"
                 value={editData.comparePrice}
                 onChange={(e) =>
-                  setEditData({ ...editData, comparePrice: parseFloat(e.target.value) || 0 })
+                  setEditData({
+                    ...editData,
+                    comparePrice: parseFloat(e.target.value) || 0,
+                  })
                 }
                 className="col-span-3"
               />
@@ -525,7 +601,10 @@ export function ProductsTable({ products, categories, onProductUpdated }: Produc
                 type="number"
                 value={editData.costPrice}
                 onChange={(e) =>
-                  setEditData({ ...editData, costPrice: parseFloat(e.target.value) || 0 })
+                  setEditData({
+                    ...editData,
+                    costPrice: parseFloat(e.target.value) || 0,
+                  })
                 }
                 className="col-span-3"
               />
@@ -539,7 +618,10 @@ export function ProductsTable({ products, categories, onProductUpdated }: Produc
                 type="number"
                 value={editData.stockQuantity}
                 onChange={(e) =>
-                  setEditData({ ...editData, stockQuantity: parseInt(e.target.value) || 0 })
+                  setEditData({
+                    ...editData,
+                    stockQuantity: parseInt(e.target.value) || 0,
+                  })
                 }
                 className="col-span-3"
               />
@@ -553,7 +635,10 @@ export function ProductsTable({ products, categories, onProductUpdated }: Produc
                 type="number"
                 value={editData.weight}
                 onChange={(e) =>
-                  setEditData({ ...editData, weight: parseFloat(e.target.value) || 0 })
+                  setEditData({
+                    ...editData,
+                    weight: parseFloat(e.target.value) || 0,
+                  })
                 }
                 className="col-span-3"
               />
@@ -645,4 +730,4 @@ export function ProductsTable({ products, categories, onProductUpdated }: Produc
       </Dialog>
     </>
   );
-} 
+}

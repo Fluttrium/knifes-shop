@@ -36,7 +36,7 @@ export default function UsersPage() {
     const filtered = users.filter(
       (user) =>
         user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        user.email.toLowerCase().includes(searchTerm.toLowerCase())
+        user.email.toLowerCase().includes(searchTerm.toLowerCase()),
     );
     setFilteredUsers(filtered);
   }, [searchTerm, users]);
@@ -102,4 +102,4 @@ export default function UsersPage() {
       </div>
     </div>
   );
-} 
+}

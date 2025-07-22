@@ -1,44 +1,52 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { Title } from './title';
-import { Input } from '../ui/input';
-import { RangeSlider } from '../ui/range-slider';
-import { CheckboxFiltersGroup } from './checkbox-filters-group';
+import React from "react";
+import { Title } from "./title";
+import { Input } from "../ui/input";
+import { RangeSlider } from "../ui/range-slider";
+import { CheckboxFiltersGroup } from "./checkbox-filters-group";
 
 interface Props {
   className?: string;
 }
 
 export const Filters: React.FC<Props> = ({ className }) => {
-  const [priceRange, setPriceRange] = React.useState<[number, number]>([0, 50000]);
-  const [selectedBrands, setSelectedBrands] = React.useState<Set<string>>(new Set());
-  const [selectedMaterials, setSelectedMaterials] = React.useState<Set<string>>(new Set());
-  const [selectedTypes, setSelectedTypes] = React.useState<Set<string>>(new Set());
+  const [priceRange, setPriceRange] = React.useState<[number, number]>([
+    0, 50000,
+  ]);
+  const [selectedBrands, setSelectedBrands] = React.useState<Set<string>>(
+    new Set(),
+  );
+  const [selectedMaterials, setSelectedMaterials] = React.useState<Set<string>>(
+    new Set(),
+  );
+  const [selectedTypes, setSelectedTypes] = React.useState<Set<string>>(
+    new Set(),
+  );
 
   const brands = [
-    { text: 'Zwilling', value: 'zwilling' },
-    { text: 'Wüsthof', value: 'wusthof' },
-    { text: 'Buck Knives', value: 'buck' },
-    { text: 'Spyderco', value: 'spyderco' },
-    { text: "Chef's Choice", value: 'chefs_choice' },
-    { text: 'Condor', value: 'condor' },
+    { text: "Zwilling", value: "zwilling" },
+    { text: "Wüsthof", value: "wusthof" },
+    { text: "Buck Knives", value: "buck" },
+    { text: "Spyderco", value: "spyderco" },
+    { text: "Chef's Choice", value: "chefs_choice" },
+    { text: "Condor", value: "condor" },
   ];
 
   const materials = [
-    { text: 'Нержавеющая сталь', value: 'stainless_steel' },
-    { text: 'Углеродистая сталь', value: 'carbon_steel' },
-    { text: 'Дамасская сталь', value: 'damascus_steel' },
-    { text: 'Керамика', value: 'ceramic' },
-    { text: 'Титан', value: 'titanium' },
+    { text: "Нержавеющая сталь", value: "stainless_steel" },
+    { text: "Углеродистая сталь", value: "carbon_steel" },
+    { text: "Дамасская сталь", value: "damascus_steel" },
+    { text: "Керамика", value: "ceramic" },
+    { text: "Титан", value: "titanium" },
   ];
 
   const types = [
-    { text: 'Ножи', value: 'knife' },
-    { text: 'Точилки', value: 'sharpener' },
-    { text: 'Ножны', value: 'sheath' },
-    { text: 'Аксессуары', value: 'accessory' },
-    { text: 'Подарочные наборы', value: 'gift_set' },
+    { text: "Ножи", value: "knife" },
+    { text: "Точилки", value: "sharpener" },
+    { text: "Ножны", value: "sheath" },
+    { text: "Аксессуары", value: "accessory" },
+    { text: "Подарочные наборы", value: "gift_set" },
   ];
 
   const handlePriceChange = (values: [number, number]) => {
@@ -89,7 +97,9 @@ export const Filters: React.FC<Props> = ({ className }) => {
             min={0}
             max={50000}
             value={priceRange[0]}
-            onChange={(e) => setPriceRange([Number(e.target.value), priceRange[1]])}
+            onChange={(e) =>
+              setPriceRange([Number(e.target.value), priceRange[1]])
+            }
           />
           <Input
             type="number"
@@ -97,7 +107,9 @@ export const Filters: React.FC<Props> = ({ className }) => {
             min={100}
             max={50000}
             value={priceRange[1]}
-            onChange={(e) => setPriceRange([priceRange[0], Number(e.target.value)])}
+            onChange={(e) =>
+              setPriceRange([priceRange[0], Number(e.target.value)])
+            }
           />
         </div>
         <RangeSlider

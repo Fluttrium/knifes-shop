@@ -4,18 +4,18 @@ import { ProductsGroupList } from "@/components/shared/products-group-list";
 import { TopBar } from "@/components/shared/top-bar";
 import { Stories } from "@/components/shared/stories";
 import { Filters } from "@/components/shared/filters";
-import { Suspense } from 'react';
-import api, { Category } from '@repo/api-client';
+import { Suspense } from "react";
+import api, { Category } from "@repo/api-client";
 
 // Функция для получения категорий через API клиент
 async function getAllCategories(): Promise<Category[]> {
   try {
-    console.log('📂 Fetching categories via API client...');
+    console.log("📂 Fetching categories via API client...");
     const categories = await api.products.getCategories();
     console.log(`✅ Fetched ${categories.length} categories via API client`);
     return categories;
   } catch (error) {
-    console.error('❌ Error fetching categories via API client:', error);
+    console.error("❌ Error fetching categories via API client:", error);
     return [];
   }
 }
@@ -31,25 +31,28 @@ async function getCategoriesWithCounts(): Promise<Category[]> {
         try {
           const response = await api.products.getProducts({
             categoryId: category.id,
-            limit: 1
+            limit: 1,
           });
           return {
             ...category,
-            productsCount: response.total || 0
+            productsCount: response.total || 0,
           };
         } catch (error) {
-          console.error(`Error fetching count for category ${category.id}:`, error);
+          console.error(
+            `Error fetching count for category ${category.id}:`,
+            error,
+          );
           return {
             ...category,
-            productsCount: 0
+            productsCount: 0,
           };
         }
-      })
+      }),
     );
 
-    return categoriesWithCounts.filter(cat => cat.productsCount > 0);
+    return categoriesWithCounts.filter((cat) => cat.productsCount > 0);
   } catch (error) {
-    console.error('❌ Error fetching categories with counts:', error);
+    console.error("❌ Error fetching categories with counts:", error);
     return [];
   }
 }
@@ -87,7 +90,11 @@ export default async function Home() {
         <div className="flex flex-col lg:flex-row gap-[80px]">
           {/* Фильтрация с отступом слева и справа для мобильных */}
           <div className="w-full lg:w-[250px] pl-4 pr-4 md:pl-0 md:pr-0">
-            <Suspense fallback={<div className="h-96 bg-gray-100 animate-pulse rounded-lg" />}>
+            <Suspense
+              fallback={
+                <div className="h-96 bg-gray-100 animate-pulse rounded-lg" />
+              }
+            >
               <Filters />
             </Suspense>
           </div>

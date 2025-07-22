@@ -1,8 +1,8 @@
-import Link from 'next/link';
-import React from 'react';
-import { Button } from '../ui/button';
-import { Badge } from '../ui/badge';
-import { ShoppingCart, Star } from 'lucide-react';
+import Link from "next/link";
+import React from "react";
+import { Button } from "../ui/button";
+import { Badge } from "../ui/badge";
+import { ShoppingCart, Star } from "lucide-react";
 
 interface Props {
   id: string;
@@ -20,25 +20,28 @@ interface Props {
 }
 
 export const ProductCard: React.FC<Props> = ({
-                                               id,
-                                               name,
-                                               slug,
-                                               price,
-                                               comparePrice,
-                                               brand,
-                                               imageUrl,
-                                               isNew,
-                                               isFeatured,
-                                               isOnSale,
-                                               stockQuantity,
-                                               className,
-                                             }) => {
-  const discountPercent = comparePrice && comparePrice > price
-    ? Math.round(((comparePrice - price) / comparePrice) * 100)
-    : 0;
+  id,
+  name,
+  slug,
+  price,
+  comparePrice,
+  brand,
+  imageUrl,
+  isNew,
+  isFeatured,
+  isOnSale,
+  stockQuantity,
+  className,
+}) => {
+  const discountPercent =
+    comparePrice && comparePrice > price
+      ? Math.round(((comparePrice - price) / comparePrice) * 100)
+      : 0;
 
   return (
-    <div className={`${className} w-[280px] bg-white rounded-lg border shadow-sm hover:shadow-md transition-shadow`}>
+    <div
+      className={`${className} w-[280px] bg-white rounded-lg border shadow-sm hover:shadow-md transition-shadow`}
+    >
       <Link href={`/product/${slug}`}>
         <div className="relative">
           {/* Изображение */}
@@ -72,7 +75,10 @@ export const ProductCard: React.FC<Props> = ({
             {/* Статус наличия */}
             {stockQuantity === 0 && (
               <div className="absolute top-2 right-2">
-                <Badge variant="outline" className="bg-red-50 text-red-600 text-xs">
+                <Badge
+                  variant="outline"
+                  className="bg-red-50 text-red-600 text-xs"
+                >
                   Нет в наличии
                 </Badge>
               </div>
@@ -82,14 +88,10 @@ export const ProductCard: React.FC<Props> = ({
           {/* Информация */}
           <div className="p-4">
             {brand && (
-              <p className="text-xs text-gray-500 mb-1 uppercase">
-                {brand}
-              </p>
+              <p className="text-xs text-gray-500 mb-1 uppercase">{brand}</p>
             )}
 
-            <h3 className="font-semibold text-sm mb-2 line-clamp-2">
-              {name}
-            </h3>
+            <h3 className="font-semibold text-sm mb-2 line-clamp-2">{name}</h3>
 
             <div className="flex justify-between items-center">
               <div className="flex flex-col">
@@ -108,8 +110,7 @@ export const ProductCard: React.FC<Props> = ({
                 size="sm"
                 disabled={stockQuantity === 0}
               >
-                <ShoppingCart size={14} className="mr-1" />
-                В корзину
+                <ShoppingCart size={14} className="mr-1" />В корзину
               </Button>
             </div>
           </div>

@@ -30,8 +30,10 @@ export class OrderService {
         }
       });
     }
-    
-    const response = await instance.get<OrderResponse>(`/orders?${params.toString()}`);
+
+    const response = await instance.get<OrderResponse>(
+      `/orders?${params.toString()}`,
+    );
     return response.data;
   }
 
@@ -62,14 +64,25 @@ export class OrderService {
     return response.data;
   }
 
-  async createAddress(addressData: Omit<Address, 'id' | 'userId' | 'createdAt' | 'updatedAt'>): Promise<Address> {
-    const response = await instance.post<Address>("/orders/addresses", addressData);
+  async createAddress(
+    addressData: Omit<Address, "id" | "userId" | "createdAt" | "updatedAt">,
+  ): Promise<Address> {
+    const response = await instance.post<Address>(
+      "/orders/addresses",
+      addressData,
+    );
     console.log("✅ Address created successfully");
     return response.data;
   }
 
-  async updateAddress(id: string, addressData: Partial<Address>): Promise<Address> {
-    const response = await instance.patch<Address>(`/orders/addresses/${id}`, addressData);
+  async updateAddress(
+    id: string,
+    addressData: Partial<Address>,
+  ): Promise<Address> {
+    const response = await instance.patch<Address>(
+      `/orders/addresses/${id}`,
+      addressData,
+    );
     console.log("✅ Address updated successfully");
     return response.data;
   }
@@ -90,19 +103,25 @@ export class OrderService {
         }
       });
     }
-    
-    const response = await instance.get<OrderResponse>(`/admin/orders?${params.toString()}`);
+
+    const response = await instance.get<OrderResponse>(
+      `/admin/orders?${params.toString()}`,
+    );
     return response.data;
   }
 
-  async updateOrderStatus(id: string, status: Order['status']): Promise<Order> {
-    const response = await instance.patch<Order>(`/admin/orders/${id}/status`, { status });
+  async updateOrderStatus(id: string, status: Order["status"]): Promise<Order> {
+    const response = await instance.patch<Order>(`/admin/orders/${id}/status`, {
+      status,
+    });
     console.log("✅ Order status updated successfully");
     return response.data;
   }
 
   // Платежи (админ)
-  async getPayments(query?: PaymentQueryDto): Promise<{ data: Payment[]; total: number; page: number; limit: number }> {
+  async getPayments(
+    query?: PaymentQueryDto,
+  ): Promise<{ data: Payment[]; total: number; page: number; limit: number }> {
     const params = new URLSearchParams();
     if (query) {
       Object.entries(query).forEach(([key, value]) => {
@@ -111,7 +130,7 @@ export class OrderService {
         }
       });
     }
-    
+
     const response = await instance.get(`/admin/payments?${params.toString()}`);
     return response.data;
   }
@@ -121,19 +140,29 @@ export class OrderService {
     return response.data;
   }
 
-  async updatePayment(id: string, paymentData: UpdatePaymentDto): Promise<Payment> {
-    const response = await instance.patch<Payment>(`/admin/payments/${id}`, paymentData);
+  async updatePayment(
+    id: string,
+    paymentData: UpdatePaymentDto,
+  ): Promise<Payment> {
+    const response = await instance.patch<Payment>(
+      `/admin/payments/${id}`,
+      paymentData,
+    );
     console.log("✅ Payment updated successfully");
     return response.data;
   }
 
   async getPaymentHistory(orderId: string): Promise<Payment[]> {
-    const response = await instance.get<Payment[]>(`/admin/payments/order/${orderId}/history`);
+    const response = await instance.get<Payment[]>(
+      `/admin/payments/order/${orderId}/history`,
+    );
     return response.data;
   }
 
   // Посылки (админ)
-  async getParcels(query?: ParcelQueryDto): Promise<{ data: Parcel[]; total: number; page: number; limit: number }> {
+  async getParcels(
+    query?: ParcelQueryDto,
+  ): Promise<{ data: Parcel[]; total: number; page: number; limit: number }> {
     const params = new URLSearchParams();
     if (query) {
       Object.entries(query).forEach(([key, value]) => {
@@ -142,7 +171,7 @@ export class OrderService {
         }
       });
     }
-    
+
     const response = await instance.get(`/admin/parcels?${params.toString()}`);
     return response.data;
   }
@@ -152,14 +181,23 @@ export class OrderService {
     return response.data;
   }
 
-  async createParcel(orderId: string, parcelData: Omit<Parcel, 'id' | 'orderId' | 'createdAt' | 'updatedAt'>): Promise<Parcel> {
-    const response = await instance.post<Parcel>(`/admin/parcels`, { ...parcelData, orderId });
+  async createParcel(
+    orderId: string,
+    parcelData: Omit<Parcel, "id" | "orderId" | "createdAt" | "updatedAt">,
+  ): Promise<Parcel> {
+    const response = await instance.post<Parcel>(`/admin/parcels`, {
+      ...parcelData,
+      orderId,
+    });
     console.log("✅ Parcel created successfully");
     return response.data;
   }
 
   async updateParcel(id: string, parcelData: UpdateParcelDto): Promise<Parcel> {
-    const response = await instance.patch<Parcel>(`/admin/parcels/${id}`, parcelData);
+    const response = await instance.patch<Parcel>(
+      `/admin/parcels/${id}`,
+      parcelData,
+    );
     console.log("✅ Parcel updated successfully");
     return response.data;
   }
@@ -171,7 +209,9 @@ export class OrderService {
   }
 
   async getParcelHistory(orderId: string): Promise<Parcel[]> {
-    const response = await instance.get<Parcel[]>(`/admin/parcels/order/${orderId}/history`);
+    const response = await instance.get<Parcel[]>(
+      `/admin/parcels/order/${orderId}/history`,
+    );
     return response.data;
   }
-} 
+}

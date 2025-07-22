@@ -29,7 +29,7 @@ export type {
   RegisterRequest,
   ApiError,
   ApiErrorResponse,
-  
+
   // Product types
   Product,
   Category,
@@ -39,7 +39,7 @@ export type {
   UpdateProductDto,
   ProductQueryDto,
   ProductResponse,
-  
+
   // Order types
   Order,
   OrderItem,
@@ -53,7 +53,7 @@ export type {
   ParcelQueryDto,
   UpdatePaymentDto,
   UpdateParcelDto,
-  
+
   // Cart types
   CartItem,
   WishlistItem,
@@ -61,20 +61,20 @@ export type {
   UpdateCartItemDto,
   CartResponse,
   WishlistResponse,
-  
+
   // Payment types
   YooKassaPaymentRequest,
   YooKassaPaymentResponse,
   PaymentStatusResponse,
   CreatePaymentDto,
   PaymentHistoryItem,
-  
+
   // Common types
   ApiResponse,
   PaginatedResponse,
 } from "./types";
 
-export { 
+export {
   AuthService,
   UserService,
   ProductService,

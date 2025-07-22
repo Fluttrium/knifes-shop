@@ -14,7 +14,6 @@ export class ProductAdminService {
   constructor(private prisma: PrismaService) {}
 
   async create(createProductDto: CreateProductDto): Promise<ProductEntity> {
-    // Проверка уникальности slug
     const existingProduct = await this.prisma.product.findUnique({
       where: { slug: createProductDto.slug },
     });
@@ -23,7 +22,6 @@ export class ProductAdminService {
       throw new ConflictException('Товар с таким slug уже существует');
     }
 
-    // Проверка уникальности SKU
     const existingSku = await this.prisma.product.findUnique({
       where: { sku: createProductDto.sku },
     });
@@ -32,7 +30,6 @@ export class ProductAdminService {
       throw new ConflictException('Товар с таким SKU уже существует');
     }
 
-    // Проверка существования категории
     const category = await this.prisma.category.findUnique({
       where: { id: createProductDto.categoryId },
     });
@@ -174,7 +171,6 @@ export class ProductAdminService {
       throw new NotFoundException('Товар не найден');
     }
 
-    // Проверка уникальности slug если он изменяется
     if (updateProductDto.slug && updateProductDto.slug !== product.slug) {
       const existingProduct = await this.prisma.product.findUnique({
         where: { slug: updateProductDto.slug },
@@ -185,7 +181,6 @@ export class ProductAdminService {
       }
     }
 
-    // Проверка уникальности SKU если он изменяется
     if (updateProductDto.sku && updateProductDto.sku !== product.sku) {
       const existingSku = await this.prisma.product.findUnique({
         where: { sku: updateProductDto.sku },
@@ -196,7 +191,6 @@ export class ProductAdminService {
       }
     }
 
-    // Проверка существования категории если она изменяется
     if (updateProductDto.categoryId) {
       const category = await this.prisma.category.findUnique({
         where: { id: updateProductDto.categoryId },
@@ -266,14 +260,12 @@ export class ProductAdminService {
       throw new NotFoundException('Товар не найден');
     }
 
-    // Проверка, что товар не используется в заказах
     if (product._count.orderItems > 0) {
       throw new BadRequestException(
         'Нельзя удалить товар, который используется в заказах',
       );
     }
 
-    // Удаление связанных записей
     await this.prisma.$transaction([
       this.prisma.cartItem.deleteMany({
         where: { productId: id },

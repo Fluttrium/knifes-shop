@@ -1,7 +1,20 @@
 "use client";
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Users, Package, ShoppingCart, DollarSign, TrendingUp, TrendingDown } from "lucide-react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Users,
+  Package,
+  ShoppingCart,
+  DollarSign,
+  TrendingUp,
+  TrendingDown,
+} from "lucide-react";
 
 export default function DashboardPage() {
   return (
@@ -107,7 +120,9 @@ export default function DashboardPage() {
                     </p>
                   </div>
                   <div className="text-xs text-muted-foreground">
-                    {new Date(Date.now() - i * 86400000).toLocaleDateString("ru-RU")}
+                    {new Date(Date.now() - i * 86400000).toLocaleDateString(
+                      "ru-RU",
+                    )}
                   </div>
                 </div>
               ))}

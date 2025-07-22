@@ -51,9 +51,18 @@ export interface Product {
   stockQuantity: number;
   minStockLevel?: number;
   maxStockLevel?: number;
-  productType: 'knife' | 'sharpener' | 'sheath' | 'accessory' | 'gift_set';
-  material?: 'stainless_steel' | 'carbon_steel' | 'damascus_steel' | 'ceramic' | 'titanium' | 'wood' | 'plastic' | 'leather' | 'synthetic';
-  handleType?: 'fixed' | 'folding' | 'multi_tool';
+  productType: "knife" | "sharpener" | "sheath" | "accessory" | "gift_set";
+  material?:
+    | "stainless_steel"
+    | "carbon_steel"
+    | "damascus_steel"
+    | "ceramic"
+    | "titanium"
+    | "wood"
+    | "plastic"
+    | "leather"
+    | "synthetic";
+  handleType?: "fixed" | "folding" | "multi_tool";
   bladeLength?: number;
   totalLength?: number;
   bladeHardness?: number;
@@ -86,9 +95,18 @@ export interface CreateProductDto {
   stockQuantity: number;
   minStockLevel?: number;
   maxStockLevel?: number;
-  productType: 'knife' | 'sharpener' | 'sheath' | 'accessory' | 'gift_set';
-  material?: 'stainless_steel' | 'carbon_steel' | 'damascus_steel' | 'ceramic' | 'titanium' | 'wood' | 'plastic' | 'leather' | 'synthetic';
-  handleType?: 'fixed' | 'folding' | 'multi_tool';
+  productType: "knife" | "sharpener" | "sheath" | "accessory" | "gift_set";
+  material?:
+    | "stainless_steel"
+    | "carbon_steel"
+    | "damascus_steel"
+    | "ceramic"
+    | "titanium"
+    | "wood"
+    | "plastic"
+    | "leather"
+    | "synthetic";
+  handleType?: "fixed" | "folding" | "multi_tool";
   bladeLength?: number;
   totalLength?: number;
   bladeHardness?: number;
@@ -102,7 +120,8 @@ export interface CreateProductDto {
   categoryId: string;
 }
 
-export interface UpdateProductDto extends Partial<Omit<CreateProductDto, 'id'>> {}
+export interface UpdateProductDto
+  extends Partial<Omit<CreateProductDto, "id">> {}
 
 export interface ProductQueryDto {
   page?: number;
@@ -114,8 +133,8 @@ export interface ProductQueryDto {
   brand?: string;
   isActive?: boolean;
   isFeatured?: boolean;
-  sortBy?: 'name' | 'price' | 'createdAt' | 'rating';
-  sortOrder?: 'asc' | 'desc';
+  sortBy?: "name" | "price" | "createdAt" | "rating";
+  sortOrder?: "asc" | "desc";
 }
 
 export interface ProductResponse {
@@ -124,4 +143,4 @@ export interface ProductResponse {
   page: number;
   limit: number;
   totalPages: number;
-} 
+}

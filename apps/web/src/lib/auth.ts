@@ -32,12 +32,12 @@ class AuthService {
   subscribe(listener: (state: AuthState) => void) {
     this.listeners.push(listener);
     return () => {
-      this.listeners = this.listeners.filter(l => l !== listener);
+      this.listeners = this.listeners.filter((l) => l !== listener);
     };
   }
 
   private notifyListeners() {
-    this.listeners.forEach(listener => listener(this.authState));
+    this.listeners.forEach((listener) => listener(this.authState));
   }
 
   async login(email: string, password: string): Promise<boolean> {
@@ -121,4 +121,4 @@ class AuthService {
   }
 }
 
-export const authService = AuthService.getInstance(); 
+export const authService = AuthService.getInstance();

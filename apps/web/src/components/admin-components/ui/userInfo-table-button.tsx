@@ -16,11 +16,11 @@ interface UserInfoButtonProps {
 }
 
 export function UserInfoTableButton({
-                                      id,
-                                      emailVerified,
-                                      createdAt,
-                                      updatedAt
-                                    }: UserInfoButtonProps) {
+  id,
+  emailVerified,
+  createdAt,
+  updatedAt,
+}: UserInfoButtonProps) {
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -44,7 +44,9 @@ export function UserInfoTableButton({
             <div>
               <label className="text-sm font-medium">Email подтвержден:</label>
               <p className="text-sm text-muted-foreground">
-                {emailVerified ? new Date(emailVerified).toLocaleDateString() : "Не подтвержден"}
+                {emailVerified
+                  ? new Date(emailVerified).toLocaleDateString()
+                  : "Не подтвержден"}
               </p>
             </div>
             <div>
@@ -54,7 +56,9 @@ export function UserInfoTableButton({
               </p>
             </div>
             <div>
-              <label className="text-sm font-medium">Последнее обновление:</label>
+              <label className="text-sm font-medium">
+                Последнее обновление:
+              </label>
               <p className="text-sm text-muted-foreground">
                 {new Date(updatedAt).toLocaleDateString()}
               </p>
