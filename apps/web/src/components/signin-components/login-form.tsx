@@ -32,7 +32,7 @@ export function SignInForm({
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  
+
   const { login } = useAuth();
   const router = useRouter();
 
@@ -70,7 +70,7 @@ export function SignInForm({
 
     try {
       const success = await login(formData.email, formData.password);
-      
+
       if (success) {
         notify("Вы вошли в аккаунт!", "success");
         router.push("/dashboard");

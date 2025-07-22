@@ -222,7 +222,9 @@ export function UsersTable({ users, onUserUpdated }: UsersTableProps) {
                 <Label htmlFor="role" className="text-right">
                   Роль
                 </Label>
-                <div className="col-span-3">{getRoleBadge(viewingUser.role)}</div>
+                <div className="col-span-3">
+                  {getRoleBadge(viewingUser.role)}
+                </div>
               </div>
               <div className="grid grid-cols-4 items-center gap-4">
                 <Label htmlFor="createdAt" className="text-right">
@@ -245,7 +247,10 @@ export function UsersTable({ users, onUserUpdated }: UsersTableProps) {
             </div>
           )}
           <DialogFooter>
-            <Button variant="outline" onClick={() => setIsViewDialogOpen(false)}>
+            <Button
+              variant="outline"
+              onClick={() => setIsViewDialogOpen(false)}
+            >
               Закрыть
             </Button>
           </DialogFooter>
@@ -325,4 +330,4 @@ export function UsersTable({ users, onUserUpdated }: UsersTableProps) {
       </Dialog>
     </>
   );
-} 
+}

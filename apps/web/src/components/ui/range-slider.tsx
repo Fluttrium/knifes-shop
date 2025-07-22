@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { cn } from '@/lib/utils';
+import React from "react";
+import { cn } from "@/lib/utils";
 
 interface Props {
   min: number;
@@ -13,13 +13,13 @@ interface Props {
 }
 
 export const RangeSlider: React.FC<Props> = ({
-                                               min,
-                                               max,
-                                               step,
-                                               value,
-                                               onValueChange,
-                                               className,
-                                             }) => {
+  min,
+  max,
+  step,
+  value,
+  onValueChange,
+  className,
+}) => {
   const [minValue, maxValue] = value;
   const minPercent = ((minValue - min) / (max - min)) * 100;
   const maxPercent = ((maxValue - min) / (max - min)) * 100;
@@ -35,7 +35,7 @@ export const RangeSlider: React.FC<Props> = ({
   };
 
   return (
-    <div className={cn('relative', className)}>
+    <div className={cn("relative", className)}>
       <div className="relative h-2 bg-gray-200 rounded-lg">
         <div
           className="absolute h-2 bg-primary rounded-lg"

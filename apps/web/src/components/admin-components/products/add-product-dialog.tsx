@@ -39,9 +39,18 @@ interface CreateProductData {
   stockQuantity: number;
   minStockLevel?: number;
   maxStockLevel?: number;
-  productType: 'knife' | 'sharpener' | 'sheath' | 'accessory' | 'gift_set';
-  material?: 'stainless_steel' | 'carbon_steel' | 'damascus_steel' | 'ceramic' | 'titanium' | 'wood' | 'plastic' | 'leather' | 'synthetic';
-  handleType?: 'fixed' | 'folding' | 'multi_tool';
+  productType: "knife" | "sharpener" | "sheath" | "accessory" | "gift_set";
+  material?:
+    | "stainless_steel"
+    | "carbon_steel"
+    | "damascus_steel"
+    | "ceramic"
+    | "titanium"
+    | "wood"
+    | "plastic"
+    | "leather"
+    | "synthetic";
+  handleType?: "fixed" | "folding" | "multi_tool";
   bladeLength?: number;
   totalLength?: number;
   bladeHardness?: number;
@@ -54,7 +63,10 @@ interface CreateProductData {
   metaDescription?: string;
 }
 
-export function AddProductDialog({ categories, onProductCreated }: AddProductDialogProps) {
+export function AddProductDialog({
+  categories,
+  onProductCreated,
+}: AddProductDialogProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState<CreateProductData>({
@@ -72,9 +84,9 @@ export function AddProductDialog({ categories, onProductCreated }: AddProductDia
     stockQuantity: 0,
     minStockLevel: 5,
     maxStockLevel: 100,
-    productType: 'knife',
-    material: 'stainless_steel',
-    handleType: 'fixed',
+    productType: "knife",
+    material: "stainless_steel",
+    handleType: "fixed",
     bladeLength: 0,
     totalLength: 0,
     bladeHardness: 0,
@@ -91,15 +103,15 @@ export function AddProductDialog({ categories, onProductCreated }: AddProductDia
   const generateSlug = (name: string) => {
     return name
       .toLowerCase()
-      .replace(/[^a-z0-9\s-]/g, '')
-      .replace(/\s+/g, '-')
-      .replace(/-+/g, '-')
+      .replace(/[^a-z0-9\s-]/g, "")
+      .replace(/\s+/g, "-")
+      .replace(/-+/g, "-")
       .trim();
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!formData.name || !formData.categoryId || formData.price <= 0) {
       notify("Пожалуйста, заполните обязательные поля", "error");
       return;
@@ -107,7 +119,7 @@ export function AddProductDialog({ categories, onProductCreated }: AddProductDia
 
     // Generate slug if not provided
     if (!formData.slug) {
-      setFormData(prev => ({ ...prev, slug: generateSlug(formData.name) }));
+      setFormData((prev) => ({ ...prev, slug: generateSlug(formData.name) }));
     }
 
     setIsLoading(true);
@@ -122,17 +134,33 @@ export function AddProductDialog({ categories, onProductCreated }: AddProductDia
         productType: formData.productType,
         description: formData.description || undefined,
         shortDescription: formData.shortDescription || undefined,
-        comparePrice: formData.comparePrice && formData.comparePrice > 0 ? formData.comparePrice : undefined,
-        costPrice: formData.costPrice && formData.costPrice > 0 ? formData.costPrice : undefined,
-        weight: formData.weight && formData.weight > 0 ? formData.weight : undefined,
+        comparePrice:
+          formData.comparePrice && formData.comparePrice > 0
+            ? formData.comparePrice
+            : undefined,
+        costPrice:
+          formData.costPrice && formData.costPrice > 0
+            ? formData.costPrice
+            : undefined,
+        weight:
+          formData.weight && formData.weight > 0 ? formData.weight : undefined,
         dimensions: formData.dimensions || undefined,
         minStockLevel: formData.minStockLevel || undefined,
         maxStockLevel: formData.maxStockLevel || undefined,
         material: formData.material || undefined,
         handleType: formData.handleType || undefined,
-        bladeLength: formData.bladeLength && formData.bladeLength > 0 ? formData.bladeLength : undefined,
-        totalLength: formData.totalLength && formData.totalLength > 0 ? formData.totalLength : undefined,
-        bladeHardness: formData.bladeHardness && formData.bladeHardness > 0 ? formData.bladeHardness : undefined,
+        bladeLength:
+          formData.bladeLength && formData.bladeLength > 0
+            ? formData.bladeLength
+            : undefined,
+        totalLength:
+          formData.totalLength && formData.totalLength > 0
+            ? formData.totalLength
+            : undefined,
+        bladeHardness:
+          formData.bladeHardness && formData.bladeHardness > 0
+            ? formData.bladeHardness
+            : undefined,
         isActive: formData.isActive,
         isFeatured: formData.isFeatured,
         isNew: formData.isNew,
@@ -143,11 +171,11 @@ export function AddProductDialog({ categories, onProductCreated }: AddProductDia
       };
 
       await api.products.createProduct(productData);
-      
+
       notify("Товар успешно создан", "success");
       setIsOpen(false);
       onProductCreated();
-      
+
       // Сброс формы
       setFormData({
         name: "",
@@ -164,9 +192,9 @@ export function AddProductDialog({ categories, onProductCreated }: AddProductDia
         stockQuantity: 0,
         minStockLevel: 5,
         maxStockLevel: 100,
-        productType: 'knife',
-        material: 'stainless_steel',
-        handleType: 'fixed',
+        productType: "knife",
+        material: "stainless_steel",
+        handleType: "fixed",
         bladeLength: 0,
         totalLength: 0,
         bladeHardness: 0,
@@ -212,17 +240,17 @@ export function AddProductDialog({ categories, onProductCreated }: AddProductDia
                 value={formData.name}
                 onChange={(e) => {
                   const name = e.target.value;
-                  setFormData({ 
-                    ...formData, 
+                  setFormData({
+                    ...formData,
                     name,
-                    slug: generateSlug(name)
+                    slug: generateSlug(name),
                   });
                 }}
                 className="col-span-3"
                 required
               />
             </div>
-            
+
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="slug" className="text-right">
                 Slug *
@@ -237,7 +265,7 @@ export function AddProductDialog({ categories, onProductCreated }: AddProductDia
                 required
               />
             </div>
-            
+
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="sku" className="text-right">
                 SKU *
@@ -283,7 +311,10 @@ export function AddProductDialog({ categories, onProductCreated }: AddProductDia
                 id="productType"
                 value={formData.productType}
                 onChange={(e) =>
-                  setFormData({ ...formData, productType: e.target.value as any })
+                  setFormData({
+                    ...formData,
+                    productType: e.target.value as any,
+                  })
                 }
                 className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                 required
@@ -305,7 +336,10 @@ export function AddProductDialog({ categories, onProductCreated }: AddProductDia
                 type="number"
                 value={formData.price}
                 onChange={(e) =>
-                  setFormData({ ...formData, price: parseFloat(e.target.value) || 0 })
+                  setFormData({
+                    ...formData,
+                    price: parseFloat(e.target.value) || 0,
+                  })
                 }
                 className="col-span-3"
                 required
@@ -323,7 +357,10 @@ export function AddProductDialog({ categories, onProductCreated }: AddProductDia
                 type="number"
                 value={formData.comparePrice}
                 onChange={(e) =>
-                  setFormData({ ...formData, comparePrice: parseFloat(e.target.value) || 0 })
+                  setFormData({
+                    ...formData,
+                    comparePrice: parseFloat(e.target.value) || 0,
+                  })
                 }
                 className="col-span-3"
                 min="0"
@@ -340,7 +377,10 @@ export function AddProductDialog({ categories, onProductCreated }: AddProductDia
                 type="number"
                 value={formData.costPrice}
                 onChange={(e) =>
-                  setFormData({ ...formData, costPrice: parseFloat(e.target.value) || 0 })
+                  setFormData({
+                    ...formData,
+                    costPrice: parseFloat(e.target.value) || 0,
+                  })
                 }
                 className="col-span-3"
                 min="0"
@@ -357,7 +397,10 @@ export function AddProductDialog({ categories, onProductCreated }: AddProductDia
                 type="number"
                 value={formData.stockQuantity}
                 onChange={(e) =>
-                  setFormData({ ...formData, stockQuantity: parseInt(e.target.value) || 0 })
+                  setFormData({
+                    ...formData,
+                    stockQuantity: parseInt(e.target.value) || 0,
+                  })
                 }
                 className="col-span-3"
                 min="0"
@@ -373,7 +416,10 @@ export function AddProductDialog({ categories, onProductCreated }: AddProductDia
                 type="number"
                 value={formData.weight}
                 onChange={(e) =>
-                  setFormData({ ...formData, weight: parseFloat(e.target.value) || 0 })
+                  setFormData({
+                    ...formData,
+                    weight: parseFloat(e.target.value) || 0,
+                  })
                 }
                 className="col-span-3"
                 min="0"
@@ -428,7 +474,10 @@ export function AddProductDialog({ categories, onProductCreated }: AddProductDia
                 id="handleType"
                 value={formData.handleType}
                 onChange={(e) =>
-                  setFormData({ ...formData, handleType: e.target.value as any })
+                  setFormData({
+                    ...formData,
+                    handleType: e.target.value as any,
+                  })
                 }
                 className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
               >
@@ -448,7 +497,10 @@ export function AddProductDialog({ categories, onProductCreated }: AddProductDia
                 type="number"
                 value={formData.bladeLength}
                 onChange={(e) =>
-                  setFormData({ ...formData, bladeLength: parseFloat(e.target.value) || 0 })
+                  setFormData({
+                    ...formData,
+                    bladeLength: parseFloat(e.target.value) || 0,
+                  })
                 }
                 className="col-span-3"
                 min="0"
@@ -465,7 +517,10 @@ export function AddProductDialog({ categories, onProductCreated }: AddProductDia
                 type="number"
                 value={formData.totalLength}
                 onChange={(e) =>
-                  setFormData({ ...formData, totalLength: parseFloat(e.target.value) || 0 })
+                  setFormData({
+                    ...formData,
+                    totalLength: parseFloat(e.target.value) || 0,
+                  })
                 }
                 className="col-span-3"
                 min="0"
@@ -482,7 +537,10 @@ export function AddProductDialog({ categories, onProductCreated }: AddProductDia
                 type="number"
                 value={formData.bladeHardness}
                 onChange={(e) =>
-                  setFormData({ ...formData, bladeHardness: parseInt(e.target.value) || 0 })
+                  setFormData({
+                    ...formData,
+                    bladeHardness: parseInt(e.target.value) || 0,
+                  })
                 }
                 className="col-span-3"
                 min="0"
@@ -575,7 +633,11 @@ export function AddProductDialog({ categories, onProductCreated }: AddProductDia
             </div>
           </div>
           <DialogFooter>
-            <Button type="button" variant="outline" onClick={() => setIsOpen(false)}>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => setIsOpen(false)}
+            >
               Отмена
             </Button>
             <Button type="submit" disabled={isLoading}>
@@ -586,4 +648,4 @@ export function AddProductDialog({ categories, onProductCreated }: AddProductDia
       </DialogContent>
     </Dialog>
   );
-} 
+}

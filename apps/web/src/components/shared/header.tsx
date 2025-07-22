@@ -1,17 +1,17 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { Container } from './container';
-import Image from 'next/image';
-import Link from 'next/link';
-import { SearchInput } from './search-input';
-import { useRouter, useSearchParams } from 'next/navigation';
-import toast from 'react-hot-toast';
-import { ProfileButton } from './profile-button';
+import React from "react";
+import { Container } from "./container";
+import Image from "next/image";
+import Link from "next/link";
+import { SearchInput } from "./search-input";
+import { useRouter, useSearchParams } from "next/navigation";
+import toast from "react-hot-toast";
+import { ProfileButton } from "./profile-button";
 // import { AuthModal } from './modals';
-import { FiMenu } from 'react-icons/fi'; // Иконка бургер-меню
-import { IoClose } from 'react-icons/io5'; // Иконка закрытия меню
-import { FaFolderOpen } from 'react-icons/fa';
+import { FiMenu } from "react-icons/fi"; // Иконка бургер-меню
+import { IoClose } from "react-icons/io5"; // Иконка закрытия меню
+import { FaFolderOpen } from "react-icons/fa";
 import { cn } from "@/lib/utils";
 import { CartButton } from "@/components/ui/card-button"; // Иконка для каталога
 
@@ -21,7 +21,11 @@ interface Props {
   className?: string;
 }
 
-export const Header: React.FC<Props> = ({ hasSearch = true, hasCart = true, className }) => {
+export const Header: React.FC<Props> = ({
+  hasSearch = true,
+  hasCart = true,
+  className,
+}) => {
   const router = useRouter();
   const [openAuthModal, setOpenAuthModal] = React.useState(false);
   const [isMenuOpen, setIsMenuOpen] = React.useState(false); // Состояние для бургер-меню
@@ -29,19 +33,19 @@ export const Header: React.FC<Props> = ({ hasSearch = true, hasCart = true, clas
   const searchParams = useSearchParams();
 
   React.useEffect(() => {
-    let toastMessage = '';
+    let toastMessage = "";
 
-    if (searchParams.has('paid')) {
-      toastMessage = 'Заказ успешно оплачен! Информация отправлена на почту.';
+    if (searchParams.has("paid")) {
+      toastMessage = "Заказ успешно оплачен! Информация отправлена на почту.";
     }
 
-    if (searchParams.has('verified')) {
-      toastMessage = 'Почта успешно подтверждена!';
+    if (searchParams.has("verified")) {
+      toastMessage = "Почта успешно подтверждена!";
     }
 
     if (toastMessage) {
       const timeoutId = setTimeout(() => {
-        router.replace('/');
+        router.replace("/");
         toast.success(toastMessage, {
           duration: 3000,
         });
@@ -55,27 +59,27 @@ export const Header: React.FC<Props> = ({ hasSearch = true, hasCart = true, clas
   // Закрытие меню при клике на Escape
   React.useEffect(() => {
     const handleEscape = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
+      if (event.key === "Escape") {
         setIsMenuOpen(false);
       }
     };
 
     if (isMenuOpen) {
-      document.addEventListener('keydown', handleEscape);
+      document.addEventListener("keydown", handleEscape);
       // Блокируем скролл при открытом меню
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     }
 
     return () => {
-      document.removeEventListener('keydown', handleEscape);
-      document.body.style.overflow = 'unset';
+      document.removeEventListener("keydown", handleEscape);
+      document.body.style.overflow = "unset";
     };
   }, [isMenuOpen]);
 
   const handleMenuToggle = React.useCallback(() => {
-    setIsMenuOpen(prev => !prev);
+    setIsMenuOpen((prev) => !prev);
   }, []);
 
   const handleMenuClose = React.useCallback(() => {
@@ -93,14 +97,14 @@ export const Header: React.FC<Props> = ({ hasSearch = true, hasCart = true, clas
   return (
     <>
       {/* Мобильный хедер */}
-      <header className={cn('border-b md:hidden', className)}>
+      <header className={cn("border-b md:hidden", className)}>
         <Container className="flex items-center justify-between py-4">
           {/* Левая часть: Бургер-меню для мобильных устройств */}
           <div className="flex items-center ml-2">
             <button
               className="text-2xl hover:text-red-500 transition-colors duration-200"
               onClick={handleMenuToggle}
-              aria-label={isMenuOpen ? 'Закрыть меню' : 'Открыть меню'}
+              aria-label={isMenuOpen ? "Закрыть меню" : "Открыть меню"}
               aria-expanded={isMenuOpen}
             >
               {isMenuOpen ? <IoClose /> : <FiMenu />}
@@ -155,37 +159,59 @@ export const Header: React.FC<Props> = ({ hasSearch = true, hasCart = true, clas
                   </Link>
                 </li>
                 <li>
-                  <Link href="/company" onClick={handleMenuClose}>О компании</Link>
+                  <Link href="/company" onClick={handleMenuClose}>
+                    О компании
+                  </Link>
                 </li>
                 <li>
-                  <Link href="/dealers" onClick={handleMenuClose}>Дилеры</Link>
+                  <Link href="/dealers" onClick={handleMenuClose}>
+                    Дилеры
+                  </Link>
                 </li>
                 <li>
-                  <Link href="/payment" onClick={handleMenuClose}>Оплата</Link>
+                  <Link href="/payment" onClick={handleMenuClose}>
+                    Оплата
+                  </Link>
                 </li>
                 <li>
-                  <Link href="/delivery" onClick={handleMenuClose}>Доставка</Link>
+                  <Link href="/delivery" onClick={handleMenuClose}>
+                    Доставка
+                  </Link>
                 </li>
                 <li>
-                  <Link href="/garanty" onClick={handleMenuClose}>Гарантия</Link>
+                  <Link href="/garanty" onClick={handleMenuClose}>
+                    Гарантия
+                  </Link>
                 </li>
                 <li>
-                  <Link href="/return" onClick={handleMenuClose}>Возврат и Обмен</Link>
+                  <Link href="/return" onClick={handleMenuClose}>
+                    Возврат и Обмен
+                  </Link>
                 </li>
                 <li>
-                  <Link href="/discounts" onClick={handleMenuClose}>Скидки</Link>
+                  <Link href="/discounts" onClick={handleMenuClose}>
+                    Скидки
+                  </Link>
                 </li>
                 <li>
-                  <Link href="/certificates" onClick={handleMenuClose}>Сертификаты</Link>
+                  <Link href="/certificates" onClick={handleMenuClose}>
+                    Сертификаты
+                  </Link>
                 </li>
                 <li>
-                  <Link href="/contacts" onClick={handleMenuClose}>Контакты</Link>
+                  <Link href="/contacts" onClick={handleMenuClose}>
+                    Контакты
+                  </Link>
                 </li>
                 <li>
-                  <Link href="/blog" onClick={handleMenuClose}>Блог</Link>
+                  <Link href="/blog" onClick={handleMenuClose}>
+                    Блог
+                  </Link>
                 </li>
                 <li>
-                  <Link href="/blogers" onClick={handleMenuClose}>Для Блогеров</Link>
+                  <Link href="/blogers" onClick={handleMenuClose}>
+                    Для Блогеров
+                  </Link>
                 </li>
               </ul>
             </nav>
@@ -194,7 +220,7 @@ export const Header: React.FC<Props> = ({ hasSearch = true, hasCart = true, clas
       </header>
 
       {/* Десктопный хедер */}
-      <header className={cn('border-b hidden md:block', className)}>
+      <header className={cn("border-b hidden md:block", className)}>
         <Container className="flex items-center justify-between py-8">
           {/* Левая часть */}
           <Link href="/" aria-label="Главная страница">
@@ -208,7 +234,9 @@ export const Header: React.FC<Props> = ({ hasSearch = true, hasCart = true, clas
               />
               <div>
                 <h1 className="text-2xl uppercase font-black">Ножи СПБ</h1>
-                <p className="text-sm text-gray-400 leading-3">Доставка по РФ</p>
+                <p className="text-sm text-gray-400 leading-3">
+                  Доставка по РФ
+                </p>
               </div>
             </div>
           </Link>
@@ -233,7 +261,11 @@ export const Header: React.FC<Props> = ({ hasSearch = true, hasCart = true, clas
       </header>
 
       {/* Разделы под хедером для десктопа */}
-      <nav className="border-b py-4 bg-gray-50 hidden md:block" role="navigation" aria-label="Дополнительная навигация">
+      <nav
+        className="border-b py-4 bg-gray-50 hidden md:block"
+        role="navigation"
+        aria-label="Дополнительная навигация"
+      >
         <Container>
           <ul className="flex flex-wrap gap-4 justify-center text-xs font-medium text-gray-700 uppercase">
             {/* Ваши разделы */}

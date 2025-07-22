@@ -18,24 +18,23 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: {
     default: "Ножи СПБ | Главная",
-    template: "%s | Ножи СПБ"
+    template: "%s | Ножи СПБ",
   },
-  description: "Бесплатная доставка по РФ. Качественные ножи и кухонные принадлежности",
+  description:
+    "Бесплатная доставка по РФ. Качественные ножи и кухонные принадлежности",
   keywords: ["ножи", "кухонные ножи", "СПБ", "доставка"],
 };
 
 export default function RootLayout({
-                                     children,
-                                   }: Readonly<{
+  children,
+}: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-      <html lang="ru" className={`${geistSans.variable} ${geistMono.variable}`}>
+    <html lang="ru" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body className="min-h-screen">
-      <ToastProvider>
-        {children}
-      </ToastProvider>
+        <ToastProvider>{children}</ToastProvider>
       </body>
-      </html>
+    </html>
   );
 }

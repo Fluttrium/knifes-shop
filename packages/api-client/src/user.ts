@@ -2,7 +2,6 @@ import { User } from "./types/auth";
 import instance from "./config";
 
 export class UserService {
-
   async getAllUsers(): Promise<User[]> {
     const response = await instance.get<User[]>("/users");
     return response.data;

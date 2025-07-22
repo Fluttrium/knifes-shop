@@ -64,7 +64,7 @@ export class CategoryController {
       orderBy: { sortOrder: 'asc' },
     });
 
-    return categories.map(category => ({
+    return categories.map((category) => ({
       id: category.id,
       name: category.name,
       slug: category.slug,
@@ -90,7 +90,9 @@ export class CategoryController {
     status: 404,
     description: 'Категория не найдена',
   })
-  async findOne(@Param('id', ParseUUIDPipe) id: string): Promise<CategoryEntity> {
+  async findOne(
+    @Param('id', ParseUUIDPipe) id: string,
+  ): Promise<CategoryEntity> {
     const category = await this.prisma.category.findUnique({
       where: { id },
     });
@@ -123,9 +125,9 @@ export class CategoryController {
   })
   async getCategoryProducts(@Param('id', ParseUUIDPipe) id: string) {
     const products = await this.prisma.product.findMany({
-      where: { 
+      where: {
         categoryId: id,
-        isActive: true 
+        isActive: true,
       },
       include: {
         category: {
@@ -164,13 +166,18 @@ export class CategoryAdminController {
     description: 'Категория успешно создана',
     type: CategoryEntity,
   })
-  async create(@Body() createCategoryDto: CreateCategoryDto): Promise<CategoryEntity> {
+  async create(
+    @Body() createCategoryDto: CreateCategoryDto,
+  ): Promise<CategoryEntity> {
     const category = await this.prisma.category.create({
       data: {
         name: createCategoryDto.name,
         slug: createCategoryDto.slug,
         sortOrder: createCategoryDto.sortOrder || 0,
-        isActive: createCategoryDto.isActive !== undefined ? createCategoryDto.isActive : true,
+        isActive:
+          createCategoryDto.isActive !== undefined
+            ? createCategoryDto.isActive
+            : true,
       },
     });
 
@@ -184,7 +191,8 @@ export class CategoryAdminController {
   @Patch(':id')
   @ApiOperation({
     summary: 'Обновить категорию',
-    description: 'Обновление информации о категории (только для администраторов)',
+    description:
+      'Обновление информации о категории (только для администраторов)',
   })
   @ApiParam({
     name: 'id',
@@ -201,7 +209,7 @@ export class CategoryAdminController {
     @Body() updateCategoryDto: UpdateCategoryDto,
   ): Promise<CategoryEntity> {
     const updateData: any = {};
-    
+
     if (updateCategoryDto.name !== undefined) {
       updateData.name = updateCategoryDto.name;
     }
@@ -241,11 +249,13 @@ export class CategoryAdminController {
     status: 200,
     description: 'Категория успешно удалена',
   })
-  async remove(@Param('id', ParseUUIDPipe) id: string): Promise<{ message: string }> {
+  async remove(
+    @Param('id', ParseUUIDPipe) id: string,
+  ): Promise<{ message: string }> {
     await this.prisma.category.delete({
       where: { id },
     });
 
     return { message: 'Категория успешно удалена' };
   }
-} 
+}

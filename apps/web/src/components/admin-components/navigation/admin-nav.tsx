@@ -63,7 +63,7 @@ export function AdminNav() {
               variant={pathname === item.href ? "secondary" : "ghost"}
               className={cn(
                 "w-full justify-start",
-                pathname === item.href && "bg-muted"
+                pathname === item.href && "bg-muted",
               )}
             >
               <Icon className="mr-2 h-4 w-4" />
@@ -74,4 +74,4 @@ export function AdminNav() {
       })}
     </nav>
   );
-} 
+}

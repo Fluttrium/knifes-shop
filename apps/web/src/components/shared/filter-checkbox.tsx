@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { Checkbox } from '../ui/checkbox';
+import React from "react";
+import { Checkbox } from "../ui/checkbox";
 
 export interface FilterChecboxProps {
   text: string;
@@ -13,13 +13,13 @@ export interface FilterChecboxProps {
 }
 
 export const FilterCheckbox: React.FC<FilterChecboxProps> = ({
-                                                               text,
-                                                               value,
-                                                               endAdornment,
-                                                               onCheckedChange,
-                                                               checked,
-                                                               name,
-                                                             }) => {
+  text,
+  value,
+  endAdornment,
+  onCheckedChange,
+  checked,
+  name,
+}) => {
   return (
     <div className="flex items-center space-x-3">
       <Checkbox

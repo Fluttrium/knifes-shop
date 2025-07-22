@@ -3,7 +3,10 @@ import { ConfigModule } from '@nestjs/config';
 import { ProductController } from './product.controller';
 import { ProductAdminController } from './admin/product-admin.controller';
 import { PaymentController } from './controllers/payment.controller';
-import { CategoryController, CategoryAdminController } from './category.controller';
+import {
+  CategoryController,
+  CategoryAdminController,
+} from './category.controller';
 
 import { ProductAdminService } from './admin/product-admin.service';
 import { PaymentService } from './services/payment.service';

@@ -21,8 +21,14 @@ export class CartService {
     return response.data;
   }
 
-  async updateCartItem(id: string, itemData: UpdateCartItemDto): Promise<CartItem> {
-    const response = await instance.patch<CartItem>(`/cart/items/${id}`, itemData);
+  async updateCartItem(
+    id: string,
+    itemData: UpdateCartItemDto,
+  ): Promise<CartItem> {
+    const response = await instance.patch<CartItem>(
+      `/cart/items/${id}`,
+      itemData,
+    );
     console.log("✅ Cart item updated successfully");
     return response.data;
   }
@@ -51,7 +57,9 @@ export class CartService {
   }
 
   async addToWishlist(productId: string): Promise<WishlistItem> {
-    const response = await instance.post<WishlistItem>("/wishlist/items", { productId });
+    const response = await instance.post<WishlistItem>("/wishlist/items", {
+      productId,
+    });
     console.log("✅ Item added to wishlist successfully");
     return response.data;
   }
@@ -69,7 +77,9 @@ export class CartService {
   }
 
   async isInWishlist(productId: string): Promise<{ isInWishlist: boolean }> {
-    const response = await instance.get<{ isInWishlist: boolean }>(`/wishlist/check/${productId}`);
+    const response = await instance.get<{ isInWishlist: boolean }>(
+      `/wishlist/check/${productId}`,
+    );
     return response.data;
   }
 
@@ -77,4 +87,4 @@ export class CartService {
     const response = await instance.get<{ count: number }>("/wishlist/count");
     return response.data;
   }
-} 
+}

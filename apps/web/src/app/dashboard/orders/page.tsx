@@ -3,7 +3,14 @@
 import { useEffect, useState } from "react";
 import { api } from "@repo/api-client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -53,8 +60,11 @@ export default function OrdersPage() {
       cancelled: { label: "Отменен", variant: "destructive" as const },
     };
 
-    const config = statusConfig[status as keyof typeof statusConfig] || { label: status, variant: "secondary" as const };
-    
+    const config = statusConfig[status as keyof typeof statusConfig] || {
+      label: status,
+      variant: "secondary" as const,
+    };
+
     return <Badge variant={config.variant}>{config.label}</Badge>;
   };
 
@@ -107,10 +117,7 @@ export default function OrdersPage() {
           <CardContent className="pt-6">
             <div className="text-center text-red-600">
               <p>{error}</p>
-              <Button 
-                onClick={() => window.location.reload()} 
-                className="mt-4"
-              >
+              <Button onClick={() => window.location.reload()} className="mt-4">
                 Попробовать снова
               </Button>
             </div>
@@ -159,7 +166,8 @@ export default function OrdersPage() {
                     <TableCell>
                       <div>
                         <div className="font-medium">
-                          {order.shippingAddress?.firstName} {order.shippingAddress?.lastName}
+                          {order.shippingAddress?.firstName}{" "}
+                          {order.shippingAddress?.lastName}
                         </div>
                         <div className="text-sm text-muted-foreground">
                           ID: {order.userId}
@@ -173,7 +181,9 @@ export default function OrdersPage() {
                         currency: order.currency || "RUB",
                       }).format(order.totalAmount)}
                     </TableCell>
-                    <TableCell>{formatDate(order.createdAt.toString())}</TableCell>
+                    <TableCell>
+                      {formatDate(order.createdAt.toString())}
+                    </TableCell>
                     <TableCell>
                       <Button variant="outline" size="sm">
                         Просмотр
@@ -188,4 +198,4 @@ export default function OrdersPage() {
       </Card>
     </div>
   );
-} 
+}
