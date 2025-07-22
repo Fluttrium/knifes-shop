@@ -45,6 +45,14 @@ export class ProductQueryDto {
   categoryId?: string;
 
   @ApiPropertyOptional({
+    description: 'Бренд для фильтрации',
+    example: 'Zwilling',
+  })
+  @IsOptional()
+  @IsString()
+  brand?: string;
+
+  @ApiPropertyOptional({
     description: 'Тип товара для фильтрации',
     enum: ProductType,
   })

@@ -102,6 +102,54 @@ export class ProductController {
   ): Promise<ProductEntity[]> {
     return this.productService.getOnSaleProducts(limit);
   }
+  @Get('brands')
+  @ApiOperation({
+    summary: 'Получить список брендов',
+    description: 'Получение списка всех доступных брендов товаров',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Список брендов получен',
+    schema: {
+      type: 'array',
+      items: {
+        type: 'string',
+        example: 'Zwilling',
+      },
+    },
+  })
+  async getBrands(): Promise<string[]> {
+    return this.productService.getBrands();
+  }
+
+  @Get('search')
+  @ApiOperation({
+    summary: 'Поиск товаров',
+    description: 'Быстрый поиск товаров по названию и описанию',
+  })
+  @ApiQuery({
+    name: 'q',
+    required: true,
+    description: 'Поисковый запрос',
+    example: 'нож',
+  })
+  @ApiQuery({
+    name: 'limit',
+    required: false,
+    description: 'Количество результатов',
+    example: 10,
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Результаты поиска получены',
+    type: [ProductEntity],
+  })
+  async searchProducts(
+    @Query('q') searchQuery: string,
+    @Query('limit') limit?: number,
+  ): Promise<ProductEntity[]> {
+    return this.productService.searchProducts(searchQuery, limit);
+  }
 
   @Get('slug/:slug')
   @ApiOperation({
