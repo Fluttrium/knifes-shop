@@ -164,11 +164,6 @@ export const Header: React.FC<Props> = ({
                   </Link>
                 </li>
                 <li>
-                  <Link href="/dealers" onClick={handleMenuClose}>
-                    Дилеры
-                  </Link>
-                </li>
-                <li>
                   <Link href="/payment" onClick={handleMenuClose}>
                     Оплата
                   </Link>
@@ -201,16 +196,6 @@ export const Header: React.FC<Props> = ({
                 <li>
                   <Link href="/contacts" onClick={handleMenuClose}>
                     Контакты
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/blog" onClick={handleMenuClose}>
-                    Блог
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/blogers" onClick={handleMenuClose}>
-                    Для Блогеров
                   </Link>
                 </li>
               </ul>
@@ -273,9 +258,6 @@ export const Header: React.FC<Props> = ({
               <Link href="/company">О компании</Link>
             </li>
             <li className="hover:text-red-500 transition duration-200 ease-in-out">
-              <Link href="/dealers">Дилеры Ножи СПБ</Link>
-            </li>
-            <li className="hover:text-red-500 transition duration-200 ease-in-out">
               <Link href="/payment">Оплата</Link>
             </li>
             <li className="hover:text-red-500 transition duration-200 ease-in-out">
@@ -291,16 +273,7 @@ export const Header: React.FC<Props> = ({
               <Link href="/discounts">Скидки</Link>
             </li>
             <li className="hover:text-red-500 transition duration-200 ease-in-out">
-              <Link href="/certificates">Сертификаты</Link>
-            </li>
-            <li className="hover:text-red-500 transition duration-200 ease-in-out">
               <Link href="/contacts">Контакты</Link>
-            </li>
-            <li className="hover:text-red-500 transition duration-200 ease-in-out">
-              <Link href="/blog">Блог</Link>
-            </li>
-            <li className="hover:text-red-500 transition duration-200 ease-in-out">
-              <Link href="/blogers">Для Блогеров</Link>
             </li>
           </ul>
         </Container>

@@ -1,91 +1,125 @@
-"use client";
+'use client';
 
-import React from "react";
-import { Title } from "./title";
-import { Input } from "../ui/input";
-import { RangeSlider } from "../ui/range-slider";
-import { CheckboxFiltersGroup } from "./checkbox-filters-group";
+import React from 'react';
+import { Title } from './title';
+import { Input } from '../ui/input';
+import { RangeSlider } from '../ui/range-slider';
+import { CheckboxFiltersGroup } from './checkbox-filters-group';
+import { useKnifeFilters } from '@/hooks/use-knife-filters';
+import { useQueryFilters } from '@/hooks/use-query-filters';
+import { Button } from '../ui/button';
+import api from '@repo/api-client';
 
 interface Props {
   className?: string;
 }
 
+interface FilterOptions {
+  brands: Array<{ text: string; value: string }>;
+  materials: Array<{ text: string; value: string }>;
+  productTypes: Array<{ text: string; value: string }>;
+  handleTypes: Array<{ text: string; value: string }>;
+}
+
 export const Filters: React.FC<Props> = ({ className }) => {
-  const [priceRange, setPriceRange] = React.useState<[number, number]>([
-    0, 50000,
-  ]);
-  const [selectedBrands, setSelectedBrands] = React.useState<Set<string>>(
-    new Set(),
-  );
-  const [selectedMaterials, setSelectedMaterials] = React.useState<Set<string>>(
-    new Set(),
-  );
-  const [selectedTypes, setSelectedTypes] = React.useState<Set<string>>(
-    new Set(),
-  );
+  const filters = useKnifeFilters(); // Исправил с useKnifeSort на useKnifeFilters
+  useQueryFilters(filters);
 
-  const brands = [
-    { text: "Zwilling", value: "zwilling" },
-    { text: "Wüsthof", value: "wusthof" },
-    { text: "Buck Knives", value: "buck" },
-    { text: "Spyderco", value: "spyderco" },
-    { text: "Chef's Choice", value: "chefs_choice" },
-    { text: "Condor", value: "condor" },
-  ];
+  const [filterOptions, setFilterOptions] = React.useState<FilterOptions>({
+    brands: [],
+    materials: [],
+    productTypes: [],
+    handleTypes: []
+  });
+  const [loading, setLoading] = React.useState(true);
 
-  const materials = [
-    { text: "Нержавеющая сталь", value: "stainless_steel" },
-    { text: "Углеродистая сталь", value: "carbon_steel" },
-    { text: "Дамасская сталь", value: "damascus_steel" },
-    { text: "Керамика", value: "ceramic" },
-    { text: "Титан", value: "titanium" },
-  ];
+  // Загружаем варианты фильтров из API
+  React.useEffect(() => {
+    const fetchFilterOptions = async () => {
+      try {
+        setLoading(true);
+        console.log('🔍 Fetching filter options...');
 
-  const types = [
-    { text: "Ножи", value: "knife" },
-    { text: "Точилки", value: "sharpener" },
-    { text: "Ножны", value: "sheath" },
-    { text: "Аксессуары", value: "accessory" },
-    { text: "Подарочные наборы", value: "gift_set" },
-  ];
+        // Получаем все товары чтобы извлечь уникальные значения
+        const response = await api.products.getProducts({ limit: 1000 });
+        const products = response.products;
+
+        // Извлекаем уникальные бренды
+        const uniqueBrands = [...new Set(products.map(p => p.brand).filter(Boolean))]
+          .map(brand => ({ text: brand!, value: brand! }))
+          .sort((a, b) => a.text.localeCompare(b.text));
+
+        // Извлекаем уникальные материалы
+        const uniqueMaterials = [...new Set(products.map(p => p.material).filter(Boolean))]
+          .map(material => ({
+            text: getMaterialDisplayName(material!),
+            value: material!
+          }))
+          .sort((a, b) => a.text.localeCompare(b.text));
+
+        // Извлекаем уникальные типы товаров
+        const uniqueProductTypes = [...new Set(products.map(p => p.productType))]
+          .map(type => ({
+            text: getProductTypeDisplayName(type),
+            value: type
+          }))
+          .sort((a, b) => a.text.localeCompare(b.text));
+
+        // Извлекаем уникальные типы рукояток
+        const uniqueHandleTypes = [...new Set(products.map(p => p.handleType).filter(Boolean))]
+          .map(type => ({
+            text: getHandleTypeDisplayName(type!),
+            value: type!
+          }))
+          .sort((a, b) => a.text.localeCompare(b.text));
+
+        setFilterOptions({
+          brands: uniqueBrands,
+          materials: uniqueMaterials,
+          productTypes: uniqueProductTypes,
+          handleTypes: uniqueHandleTypes
+        });
+
+        console.log('✅ Loaded filter options:', {
+          brands: uniqueBrands.length,
+          materials: uniqueMaterials.length,
+          productTypes: uniqueProductTypes.length,
+          handleTypes: uniqueHandleTypes.length
+        });
+
+      } catch (error) {
+        console.error('❌ Error fetching filter options:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchFilterOptions();
+  }, []);
 
   const handlePriceChange = (values: [number, number]) => {
-    setPriceRange(values);
+    const [priceFrom, priceTo] = values;
+    filters.setPrices('priceFrom', priceFrom);
+    filters.setPrices('priceTo', priceTo);
   };
 
-  const handleBrandChange = (value: string) => {
-    const newSelected = new Set(selectedBrands);
-    if (newSelected.has(value)) {
-      newSelected.delete(value);
-    } else {
-      newSelected.add(value);
-    }
-    setSelectedBrands(newSelected);
-  };
-
-  const handleMaterialChange = (value: string) => {
-    const newSelected = new Set(selectedMaterials);
-    if (newSelected.has(value)) {
-      newSelected.delete(value);
-    } else {
-      newSelected.add(value);
-    }
-    setSelectedMaterials(newSelected);
-  };
-
-  const handleTypeChange = (value: string) => {
-    const newSelected = new Set(selectedTypes);
-    if (newSelected.has(value)) {
-      newSelected.delete(value);
-    } else {
-      newSelected.add(value);
-    }
-    setSelectedTypes(newSelected);
-  };
+  const currentPriceRange: [number, number] = [
+    filters.prices.priceFrom || 0,
+    filters.prices.priceTo || 50000,
+  ];
 
   return (
     <div className={className}>
       <Title text="Фильтрация" size="sm" className="mb-5 font-bold" />
+
+      {/* Кнопка сброса */}
+      <Button
+        onClick={filters.resetFilters}
+        variant="outline"
+        className="w-full mb-5"
+      >
+        Сбросить фильтры
+      </Button>
 
       {/* Цена */}
       <div className="mt-5 border-y border-y-neutral-100 py-6 pb-7">
@@ -96,27 +130,20 @@ export const Filters: React.FC<Props> = ({ className }) => {
             placeholder="0"
             min={0}
             max={50000}
-            value={priceRange[0]}
-            onChange={(e) =>
-              setPriceRange([Number(e.target.value), priceRange[1]])
-            }
+
           />
           <Input
             type="number"
             placeholder="50000"
             min={100}
             max={50000}
-            value={priceRange[1]}
-            onChange={(e) =>
-              setPriceRange([priceRange[0], Number(e.target.value)])
-            }
           />
         </div>
         <RangeSlider
           min={0}
           max={50000}
           step={100}
-          value={priceRange}
+          value={currentPriceRange}
           onValueChange={handlePriceChange}
         />
       </div>
@@ -127,10 +154,11 @@ export const Filters: React.FC<Props> = ({ className }) => {
         name="brands"
         className="mt-5"
         limit={6}
-        defaultItems={brands}
-        items={brands}
-        selected={selectedBrands}
-        onClickCheckbox={handleBrandChange}
+        loading={loading}
+        defaultItems={filterOptions.brands}
+        items={filterOptions.brands}
+        selected={filters.brands}
+        onClickCheckbox={filters.setBrands}
       />
 
       {/* Материалы */}
@@ -139,23 +167,74 @@ export const Filters: React.FC<Props> = ({ className }) => {
         name="materials"
         className="mt-5"
         limit={5}
-        defaultItems={materials}
-        items={materials}
-        selected={selectedMaterials}
-        onClickCheckbox={handleMaterialChange}
+        loading={loading}
+        defaultItems={filterOptions.materials}
+        items={filterOptions.materials}
+        selected={filters.materials}
+        onClickCheckbox={filters.setMaterials}
       />
 
       {/* Типы товаров */}
       <CheckboxFiltersGroup
         title="Типы товаров"
-        name="types"
+        name="productTypes"
         className="mt-5"
         limit={5}
-        defaultItems={types}
-        items={types}
-        selected={selectedTypes}
-        onClickCheckbox={handleTypeChange}
+        loading={loading}
+        defaultItems={filterOptions.productTypes}
+        items={filterOptions.productTypes}
+        selected={filters.productTypes}
+        onClickCheckbox={filters.setProductTypes}
+      />
+
+      {/* Типы рукояток */}
+      <CheckboxFiltersGroup
+        title="Типы рукояток"
+        name="handleTypes"
+        className="mt-5"
+        limit={3}
+        loading={loading}
+        defaultItems={filterOptions.handleTypes}
+        items={filterOptions.handleTypes}
+        selected={filters.handleTypes}
+        onClickCheckbox={filters.setHandleTypes}
       />
     </div>
   );
 };
+
+// Функции для преобразования enum значений в читаемые названия
+function getMaterialDisplayName(material: string): string {
+  const materialNames: Record<string, string> = {
+    stainless_steel: 'Нержавеющая сталь',
+    carbon_steel: 'Углеродистая сталь',
+    damascus_steel: 'Дамасская сталь',
+    ceramic: 'Керамика',
+    titanium: 'Титан',
+    wood: 'Дерево',
+    plastic: 'Пластик',
+    leather: 'Кожа',
+    synthetic: 'Синтетика'
+  };
+  return materialNames[material] || material;
+}
+
+function getProductTypeDisplayName(type: string): string {
+  const typeNames: Record<string, string> = {
+    knife: 'Ножи',
+    sharpener: 'Точилки',
+    sheath: 'Ножны',
+    accessory: 'Аксессуары',
+    gift_set: 'Подарочные наборы'
+  };
+  return typeNames[type] || type;
+}
+
+function getHandleTypeDisplayName(type: string): string {
+  const typeNames: Record<string, string> = {
+    fixed: 'Фиксированные',
+    folding: 'Складные',
+    multi_tool: 'Мультитул'
+  };
+  return typeNames[type] || type;
+}

@@ -76,6 +76,7 @@ export interface Product {
   categoryId: string;
   category: Category;
   images: ProductImage[];
+  variants?: ProductVariant[];
   createdAt: Date;
   updatedAt: Date;
 }

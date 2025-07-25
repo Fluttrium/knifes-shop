@@ -1,16 +1,18 @@
-"use client";
+'use client';
 
-import React, { useState } from "react";
-import { Button } from "../ui/button";
-import { Badge } from "../ui/badge";
-import { ShoppingCart, Heart, Star } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { Button } from '../ui/button';
+import { Badge } from '../ui/badge';
+import { ShoppingCart, Heart, Star } from 'lucide-react';
+import { ProductService } from "@repo/api-client";
+import { Props } from "next/script";
 
 interface ProductImage {
   id: string;
   url: string;
   alt?: string;
-  isPrimary: boolean;
-  sortOrder: number;
+  isPrimary?: boolean; // сделал необязательным
+  // убрал sortOrder, т.к. его нет
 }
 
 interface ProductVariant {
@@ -47,57 +49,90 @@ interface Product {
   bladeLength?: number;
   totalLength?: number;
   bladeHardness?: number;
-  isNew: boolean;
-  isFeatured: boolean;
-  isOnSale: boolean;
+  isNew?: boolean;
+  isFeatured?: boolean;
+  isOnSale?: boolean;
   category: Category;
-  images: ProductImage[];
-  variants: ProductVariant[];
+  images?: ProductImage[]; // необязательное
+  variants?: ProductVariant[]; // необязательное
 }
 
-interface Props {
-  product: Product;
+interface ProductFormProps {
+  slug: string;
   onSubmit?: VoidFunction;
 }
 
 export const ProductForm: React.FC<Props> = ({ product, onSubmit }) => {
   const [selectedVariant, setSelectedVariant] = useState<ProductVariant | null>(
-    product.variants.length > 0 ? product.variants[0] : null,
+    product.variants.length > 0 ? product.variants[0] : null
   );
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const sortedImages = product.images.sort((a, b) => a.sortOrder - b.sortOrder);
+  const productService = new ProductService();
 
-  const getCurrentPrice = () => {
-    return selectedVariant?.price || product.price;
-  };
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const data = await productService.getProductBySlug(slug);
+        setProduct(data);
 
-  const getStockQuantity = () => {
-    return selectedVariant?.stockQuantity || product.stockQuantity;
-  };
+        // Защита от undefined variants
+        if (data.variants && data.variants.length > 0) {
+          setSelectedVariant(data.variants[0]);
+        } else {
+          setSelectedVariant(null);
+        }
+      } catch (err) {
+        console.error(err);
+        setError('Ошибка загрузки товара');
+      }
+    };
 
-  const discountPercent =
-    product.comparePrice && product.comparePrice > getCurrentPrice()
-      ? Math.round(
-          ((product.comparePrice - getCurrentPrice()) / product.comparePrice) *
-            100,
-        )
-      : 0;
+    fetchProduct();
+  }, [slug]);
+
+  if (error) {
+    return <div className="text-red-600">{error}</div>;
+  }
+
+  if (!product) {
+    return <div>Загрузка...</div>;
+  }
+
+  // Защита от undefined images — используем пустой массив, если нет
+  const images = product.images ?? [];
+
+  // Сортируем изображения — сортируем так, чтобы primary шло первым, остальное как есть
+  const sortedImages = images.slice().sort((a, b) => {
+    if (a.isPrimary && !b.isPrimary) return -1;
+    if (!a.isPrimary && b.isPrimary) return 1;
+    return 0;
+  });
+
+  // Защита от undefined variants
+  const variants = product.variants ?? [];
+
+  const getCurrentPrice = () => selectedVariant?.price ?? product.price;
+
+  const discountPercent = product.comparePrice && product.comparePrice > getCurrentPrice()
+    ? Math.round(((product.comparePrice - getCurrentPrice()) / product.comparePrice) * 100)
+    : 0;
 
   const formatMaterial = (material: string) => {
-    return material.replace(/_/g, " ").replace(/\b\w/g, (l) => l.toUpperCase());
+    return material.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
   };
 
   const handleAddToCart = async () => {
     setLoading(true);
     try {
       // Логика добавления в корзину
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // Имитация API
+      await new Promise(resolve => setTimeout(resolve, 1000)); // Имитация API
       onSubmit?.();
     } catch (error) {
-      console.error("Error adding to cart:", error);
+      console.error('Error adding to cart:', error);
     } finally {
       setLoading(false);
     }
@@ -109,7 +144,7 @@ export const ProductForm: React.FC<Props> = ({ product, onSubmit }) => {
       <div className="space-y-4">
         <div className="relative bg-gray-50 rounded-lg p-4 h-[400px] flex items-center justify-center">
           <img
-            src={sortedImages[selectedImage]?.url || "/placeholder.jpg"}
+            src={sortedImages[selectedImage]?.url || '/placeholder.jpg'}
             alt={sortedImages[selectedImage]?.alt || product.name}
             className="max-w-full max-h-full object-contain"
           />
@@ -137,9 +172,7 @@ export const ProductForm: React.FC<Props> = ({ product, onSubmit }) => {
                 key={image.id}
                 onClick={() => setSelectedImage(index)}
                 className={`flex-shrink-0 w-16 h-16 bg-gray-50 rounded border-2 p-1 ${
-                  selectedImage === index
-                    ? "border-blue-500"
-                    : "border-gray-200"
+                  selectedImage === index ? 'border-blue-500' : 'border-gray-200'
                 }`}
               >
                 <img
@@ -161,9 +194,7 @@ export const ProductForm: React.FC<Props> = ({ product, onSubmit }) => {
               {product.brand}
             </p>
           )}
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">
-            {product.name}
-          </h1>
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">{product.name}</h1>
           <p className="text-sm text-gray-600">Артикул: {product.sku}</p>
 
           {product.shortDescription && (
@@ -179,9 +210,7 @@ export const ProductForm: React.FC<Props> = ({ product, onSubmit }) => {
               {product.variants.map((variant) => (
                 <Button
                   key={variant.id}
-                  variant={
-                    selectedVariant?.id === variant.id ? "default" : "outline"
-                  }
+                  variant={selectedVariant?.id === variant.id ? "default" : "outline"}
                   size="sm"
                   onClick={() => setSelectedVariant(variant)}
                   disabled={!variant.isActive || variant.stockQuantity === 0}
@@ -199,12 +228,11 @@ export const ProductForm: React.FC<Props> = ({ product, onSubmit }) => {
             <span className="text-3xl font-bold text-gray-900">
               {Number(getCurrentPrice()).toLocaleString()} ₽
             </span>
-            {product.comparePrice &&
-              product.comparePrice > getCurrentPrice() && (
-                <span className="text-lg text-gray-400 line-through">
-                  {Number(product.comparePrice).toLocaleString()} ₽
-                </span>
-              )}
+            {product.comparePrice && product.comparePrice > getCurrentPrice() && (
+              <span className="text-lg text-gray-400 line-through">
+                {Number(product.comparePrice).toLocaleString()} ₽
+              </span>
+            )}
           </div>
         </div>
 
@@ -221,9 +249,7 @@ export const ProductForm: React.FC<Props> = ({ product, onSubmit }) => {
               >
                 -
               </Button>
-              <span className="px-4 py-2 min-w-[50px] text-center">
-                {quantity}
-              </span>
+              <span className="px-4 py-2 min-w-[50px] text-center">{quantity}</span>
               <Button
                 variant="ghost"
                 size="sm"
@@ -246,9 +272,7 @@ export const ProductForm: React.FC<Props> = ({ product, onSubmit }) => {
               size="lg"
             >
               <ShoppingCart className="mr-2 h-4 w-4" />
-              {getStockQuantity() === 0
-                ? "Нет в наличии"
-                : "Добавить в корзину"}
+              {getStockQuantity() === 0 ? 'Нет в наличии' : 'Добавить в корзину'}
             </Button>
             <Button variant="outline" size="lg" className="h-12">
               <Heart className="h-4 w-4" />
@@ -263,25 +287,19 @@ export const ProductForm: React.FC<Props> = ({ product, onSubmit }) => {
             {product.material && (
               <div className="flex justify-between">
                 <span className="text-gray-600">Материал:</span>
-                <span className="font-medium">
-                  {formatMaterial(product.material)}
-                </span>
+                <span className="font-medium">{formatMaterial(product.material)}</span>
               </div>
             )}
             {product.bladeLength && (
               <div className="flex justify-between">
                 <span className="text-gray-600">Длина лезвия:</span>
-                <span className="font-medium">
-                  {Number(product.bladeLength)} см
-                </span>
+                <span className="font-medium">{Number(product.bladeLength)} см</span>
               </div>
             )}
             {product.totalLength && (
               <div className="flex justify-between">
                 <span className="text-gray-600">Общая длина:</span>
-                <span className="font-medium">
-                  {Number(product.totalLength)} см
-                </span>
+                <span className="font-medium">{Number(product.totalLength)} см</span>
               </div>
             )}
             {product.weight && (
