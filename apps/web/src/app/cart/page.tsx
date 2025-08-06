@@ -191,9 +191,11 @@ export default function CartPage() {
                   <span>Итого:</span>
                   <span>{Number(cart.totalPrice).toLocaleString('ru-RU')} ₽</span>
                 </div>
-                <Button className="w-full" size="lg">
-                  Оформить заказ
-                </Button>
+                <Link href="/checkout">
+                  <Button className="w-full" size="lg">
+                    Оформить заказ
+                  </Button>
+                </Link>
               </CardContent>
             </Card>
           </div>

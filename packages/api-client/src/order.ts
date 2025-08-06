@@ -3,7 +3,7 @@ import {
   OrderResponse,
   CreateOrderDto,
   OrderQueryDto,
-  Payment,
+  OrderPayment,
   Parcel,
   PaymentQueryDto,
   ParcelQueryDto,
@@ -110,6 +110,21 @@ export class OrderService {
     return response.data;
   }
 
+  async getOrderStatistics(): Promise<{
+    totalOrders: number;
+    pendingOrders: number;
+    confirmedOrders: number;
+    shippedOrders: number;
+    deliveredOrders: number;
+    cancelledOrders: number;
+    totalRevenue: number;
+    todayOrders: number;
+    todayRevenue: number;
+  }> {
+    const response = await instance.get('/admin/orders/statistics');
+    return response.data;
+  }
+
   async updateOrderStatus(id: string, status: Order["status"]): Promise<Order> {
     const response = await instance.patch<Order>(`/admin/orders/${id}/status`, {
       status,
@@ -121,7 +136,7 @@ export class OrderService {
   // Платежи (админ)
   async getPayments(
     query?: PaymentQueryDto,
-  ): Promise<{ data: Payment[]; total: number; page: number; limit: number }> {
+  ): Promise<{ data: OrderPayment[]; total: number; page: number; limit: number }> {
     const params = new URLSearchParams();
     if (query) {
       Object.entries(query).forEach(([key, value]) => {
@@ -135,16 +150,16 @@ export class OrderService {
     return response.data;
   }
 
-  async getPaymentById(id: string): Promise<Payment> {
-    const response = await instance.get<Payment>(`/admin/payments/${id}`);
+  async getPaymentById(id: string): Promise<OrderPayment> {
+    const response = await instance.get<OrderPayment>(`/admin/payments/${id}`);
     return response.data;
   }
 
   async updatePayment(
     id: string,
     paymentData: UpdatePaymentDto,
-  ): Promise<Payment> {
-    const response = await instance.patch<Payment>(
+  ): Promise<OrderPayment> {
+    const response = await instance.patch<OrderPayment>(
       `/admin/payments/${id}`,
       paymentData,
     );
@@ -152,8 +167,8 @@ export class OrderService {
     return response.data;
   }
 
-  async getPaymentHistory(orderId: string): Promise<Payment[]> {
-    const response = await instance.get<Payment[]>(
+  async getPaymentHistory(orderId: string): Promise<OrderPayment[]> {
+    const response = await instance.get<OrderPayment[]>(
       `/admin/payments/order/${orderId}/history`,
     );
     return response.data;

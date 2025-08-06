@@ -147,4 +147,16 @@ export class ProductService {
     console.log("✅ Category deleted successfully");
     return response.data;
   }
+
+  async getProductStatistics(): Promise<{
+    totalProducts: number;
+    activeProducts: number;
+    outOfStockProducts: number;
+    lowStockProducts: number;
+    totalCategories: number;
+    totalBrands: number;
+  }> {
+    const response = await instance.get('/admin/products/statistics');
+    return response.data;
+  }
 }

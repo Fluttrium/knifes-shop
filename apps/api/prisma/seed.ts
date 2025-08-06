@@ -5,13 +5,36 @@ const prisma = new PrismaClient();
 async function main() {
   console.log('🌱 Starting database seed...');
 
+  // Очищаем данные в правильном порядке из-за внешних ключей
+  await prisma.orderItem.deleteMany({});
+  await prisma.payment.deleteMany({});
+  await prisma.parcel.deleteMany({});
+  await prisma.order.deleteMany({});
+  await prisma.address.deleteMany({});
+  await prisma.cartItem.deleteMany({});
+  await prisma.productImage.deleteMany({});
+  await prisma.productVariant.deleteMany({});
   await prisma.product.deleteMany({});
   await prisma.category.deleteMany({});
   await prisma.shippingMethod.deleteMany({});
   await prisma.taxRate.deleteMany({});
   await prisma.coupon.deleteMany({});
+  await prisma.user.deleteMany({});
 
   console.log('✅ Cleared existing data');
+
+  console.log('👤 Creating admin user...');
+
+  const adminUser = await prisma.user.create({
+    data: {
+      name: 'Admin',
+      email: 'admin@example.com',
+      password: '$2a$10$sRrJJzLfNqIelp.r9rrMn.Tjr/Db8VI5crBtw27nJWNoYSv8.2Dt2',
+      role: 'admin',
+    },
+  });
+
+  console.log(`✅ Created admin user: ${adminUser.email}`);
 
   console.log('📂 Creating categories...');
 

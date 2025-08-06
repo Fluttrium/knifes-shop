@@ -26,4 +26,39 @@ export class UserService {
     const response = await instance.delete(`/users/${id}`);
     return response.data;
   }
+
+  // Admin methods
+  async getAllUsersAdmin(query?: any): Promise<{
+    data: User[];
+    total: number;
+    page: number;
+    limit: number;
+    totalPages: number;
+  }> {
+    const params = new URLSearchParams();
+    if (query) {
+      Object.entries(query).forEach(([key, value]) => {
+        if (value !== undefined && value !== null) {
+          params.append(key, value.toString());
+        }
+      });
+    }
+
+    const response = await instance.get(`/admin/users?${params.toString()}`);
+    return response.data;
+  }
+
+  async getUserStatistics(): Promise<{
+    totalUsers: number;
+    adminUsers: number;
+    regularUsers: number;
+    todayUsers: number;
+    thisWeekUsers: number;
+    thisMonthUsers: number;
+    usersWithOrders: number;
+    averageOrdersPerUser: number;
+  }> {
+    const response = await instance.get('/admin/users/statistics');
+    return response.data;
+  }
 }

@@ -23,20 +23,57 @@ import { RolProtected } from 'src/auth/decorators/rol-protected.decorator';
 import { UserRoleGuard } from 'src/auth/guards/user-role/user-role.guard';
 import { Role } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { IsString, IsOptional, IsNumber, IsBoolean } from 'class-validator';
 
 // DTO для создания категории
 class CreateCategoryDto {
+  @IsString()
   name: string;
+
+  @IsString()
   slug: string;
+
+  @IsOptional()
+  @IsString()
+  description?: string;
+
+  @IsOptional()
+  @IsString()
+  image?: string;
+
+  @IsOptional()
+  @IsNumber()
   sortOrder?: number;
+
+  @IsOptional()
+  @IsBoolean()
   isActive?: boolean;
 }
 
 // DTO для обновления категории
 class UpdateCategoryDto {
+  @IsOptional()
+  @IsString()
   name?: string;
+
+  @IsOptional()
+  @IsString()
   slug?: string;
+
+  @IsOptional()
+  @IsString()
+  description?: string;
+
+  @IsOptional()
+  @IsString()
+  image?: string;
+
+  @IsOptional()
+  @IsNumber()
   sortOrder?: number;
+
+  @IsOptional()
+  @IsBoolean()
   isActive?: boolean;
 }
 
@@ -173,6 +210,8 @@ export class CategoryAdminController {
       data: {
         name: createCategoryDto.name,
         slug: createCategoryDto.slug,
+        description: createCategoryDto.description,
+        image: createCategoryDto.image,
         sortOrder: createCategoryDto.sortOrder || 0,
         isActive:
           createCategoryDto.isActive !== undefined
@@ -215,6 +254,12 @@ export class CategoryAdminController {
     }
     if (updateCategoryDto.slug !== undefined) {
       updateData.slug = updateCategoryDto.slug;
+    }
+    if (updateCategoryDto.description !== undefined) {
+      updateData.description = updateCategoryDto.description;
+    }
+    if (updateCategoryDto.image !== undefined) {
+      updateData.image = updateCategoryDto.image;
     }
     if (updateCategoryDto.sortOrder !== undefined) {
       updateData.sortOrder = updateCategoryDto.sortOrder;

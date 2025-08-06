@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import { api } from "@repo/api-client";
 import {
   Card,
   CardContent,
@@ -14,9 +16,114 @@ import {
   DollarSign,
   TrendingUp,
   TrendingDown,
+  Skeleton,
 } from "lucide-react";
 
+interface DashboardStats {
+  orders: {
+    totalOrders: number;
+    totalRevenue: number;
+    todayOrders: number;
+    todayRevenue: number;
+  };
+  products: {
+    totalProducts: number;
+    activeProducts: number;
+    outOfStockProducts: number;
+  };
+  users: {
+    totalUsers: number;
+    todayUsers: number;
+    thisWeekUsers: number;
+  };
+}
+
 export default function DashboardPage() {
+  const [stats, setStats] = useState<DashboardStats | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    fetchDashboardStats();
+  }, []);
+
+  const fetchDashboardStats = async () => {
+    try {
+      console.log("📊 Fetching dashboard stats...");
+      const [orderStats, productStats, userStats] = await Promise.all([
+        api.orders.getOrderStatistics(),
+        api.products.getProductStatistics(),
+        api.users.getUserStatistics(),
+      ]);
+
+      setStats({
+        orders: orderStats,
+        products: productStats,
+        users: userStats,
+      });
+    } catch (err) {
+      console.error("❌ Error fetching dashboard stats:", err);
+      setError("Ошибка при загрузке статистики");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const formatCurrency = (amount: number) => {
+    return new Intl.NumberFormat("ru-RU", {
+      style: "currency",
+      currency: "RUB",
+    }).format(amount);
+  };
+
+  if (loading) {
+    return (
+      <div className="flex flex-col gap-4 p-4">
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl font-bold tracking-tight">Обзор</h1>
+            <p className="text-muted-foreground">
+              Статистика и аналитика магазина
+            </p>
+          </div>
+        </div>
+
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <Card key={i}>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <Skeleton className="h-4 w-24" />
+                <Skeleton className="h-4 w-4" />
+              </CardHeader>
+              <CardContent>
+                <Skeleton className="h-8 w-32 mb-2" />
+                <Skeleton className="h-3 w-20" />
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex flex-col gap-4 p-4">
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl font-bold tracking-tight">Обзор</h1>
+            <p className="text-muted-foreground">
+              Статистика и аналитика магазина
+            </p>
+          </div>
+        </div>
+        <div className="p-4 bg-red-50 border border-red-200 rounded-md">
+          <p className="text-red-800">{error}</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col gap-4 p-4">
       <div className="flex items-center justify-between">
@@ -35,13 +142,15 @@ export default function DashboardPage() {
             <DollarSign className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">45,231.89 ₽</div>
+            <div className="text-2xl font-bold">
+              {formatCurrency(stats?.orders.totalRevenue || 0)}
+            </div>
             <p className="text-xs text-muted-foreground">
               <span className="text-green-600 flex items-center">
                 <TrendingUp className="mr-1 h-3 w-3" />
-                +20.1%
+                {formatCurrency(stats?.orders.todayRevenue || 0)}
               </span>
-              с прошлого месяца
+              сегодня
             </p>
           </CardContent>
         </Card>
@@ -52,13 +161,13 @@ export default function DashboardPage() {
             <ShoppingCart className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">+2350</div>
+            <div className="text-2xl font-bold">{stats?.orders.totalOrders || 0}</div>
             <p className="text-xs text-muted-foreground">
               <span className="text-green-600 flex items-center">
                 <TrendingUp className="mr-1 h-3 w-3" />
-                +180.1%
+                +{stats?.orders.todayOrders || 0}
               </span>
-              с прошлого месяца
+              сегодня
             </p>
           </CardContent>
         </Card>
@@ -69,13 +178,12 @@ export default function DashboardPage() {
             <Package className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">+12,234</div>
+            <div className="text-2xl font-bold">{stats?.products.totalProducts || 0}</div>
             <p className="text-xs text-muted-foreground">
               <span className="text-red-600 flex items-center">
                 <TrendingDown className="mr-1 h-3 w-3" />
-                -19%
+                {stats?.products.outOfStockProducts || 0} нет в наличии
               </span>
-              с прошлого месяца
             </p>
           </CardContent>
         </Card>
@@ -86,13 +194,13 @@ export default function DashboardPage() {
             <Users className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">+573</div>
+            <div className="text-2xl font-bold">{stats?.users.totalUsers || 0}</div>
             <p className="text-xs text-muted-foreground">
               <span className="text-green-600 flex items-center">
                 <TrendingUp className="mr-1 h-3 w-3" />
-                +201
+                +{stats?.users.todayUsers || 0}
               </span>
-              с прошлого месяца
+              сегодня
             </p>
           </CardContent>
         </Card>
@@ -101,60 +209,56 @@ export default function DashboardPage() {
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
         <Card className="col-span-4">
           <CardHeader>
-            <CardTitle>Последние заказы</CardTitle>
+            <CardTitle>Статистика заказов</CardTitle>
             <CardDescription>
-              Вы получили 265 заказов в этом месяце.
+              Общая статистика по заказам и доходам
             </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              {[1, 2, 3, 4, 5].map((i) => (
-                <div key={i} className="flex items-center space-x-4">
-                  <div className="h-8 w-8 rounded-full bg-muted flex items-center justify-center">
-                    <span className="text-xs font-medium">{i}</span>
-                  </div>
-                  <div className="flex-1 space-y-1">
-                    <p className="text-sm font-medium">Заказ #{1000 + i}</p>
-                    <p className="text-xs text-muted-foreground">
-                      Пользователь {i} • {(5000 + i * 100).toLocaleString()} ₽
-                    </p>
-                  </div>
-                  <div className="text-xs text-muted-foreground">
-                    {new Date(Date.now() - i * 86400000).toLocaleDateString(
-                      "ru-RU",
-                    )}
-                  </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <p className="text-sm font-medium">Всего заказов</p>
+                  <p className="text-2xl font-bold">{stats?.orders.totalOrders || 0}</p>
                 </div>
-              ))}
+                <div className="space-y-2">
+                  <p className="text-sm font-medium">Заказов сегодня</p>
+                  <p className="text-2xl font-bold text-green-600">{stats?.orders.todayOrders || 0}</p>
+                </div>
+                <div className="space-y-2">
+                  <p className="text-sm font-medium">Общий доход</p>
+                  <p className="text-2xl font-bold">{formatCurrency(stats?.orders.totalRevenue || 0)}</p>
+                </div>
+                <div className="space-y-2">
+                  <p className="text-sm font-medium">Доход сегодня</p>
+                  <p className="text-2xl font-bold text-green-600">{formatCurrency(stats?.orders.todayRevenue || 0)}</p>
+                </div>
+              </div>
             </div>
           </CardContent>
         </Card>
 
         <Card className="col-span-3">
           <CardHeader>
-            <CardTitle>Популярные товары</CardTitle>
+            <CardTitle>Статистика товаров</CardTitle>
             <CardDescription>
-              Товары с наибольшим количеством продаж.
+              Информация о товарах и их наличии
             </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              {[1, 2, 3, 4].map((i) => (
-                <div key={i} className="flex items-center space-x-4">
-                  <div className="h-8 w-8 rounded bg-muted flex items-center justify-center">
-                    <span className="text-xs font-medium">{i}</span>
-                  </div>
-                  <div className="flex-1 space-y-1">
-                    <p className="text-sm font-medium">Нож {i}</p>
-                    <p className="text-xs text-muted-foreground">
-                      {100 + i * 10} продаж
-                    </p>
-                  </div>
-                  <div className="text-xs font-medium">
-                    {(5000 + i * 500).toLocaleString()} ₽
-                  </div>
-                </div>
-              ))}
+              <div className="space-y-2">
+                <p className="text-sm font-medium">Всего товаров</p>
+                <p className="text-2xl font-bold">{stats?.products.totalProducts || 0}</p>
+              </div>
+              <div className="space-y-2">
+                <p className="text-sm font-medium">Активных товаров</p>
+                <p className="text-2xl font-bold text-green-600">{stats?.products.activeProducts || 0}</p>
+              </div>
+              <div className="space-y-2">
+                <p className="text-sm font-medium">Нет в наличии</p>
+                <p className="text-2xl font-bold text-red-600">{stats?.products.outOfStockProducts || 0}</p>
+              </div>
             </div>
           </CardContent>
         </Card>

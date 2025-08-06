@@ -10,6 +10,7 @@ import {
   CreditCard,
   Settings,
   BarChart3,
+  FolderOpen,
 } from "lucide-react";
 
 const adminNavItems = [
@@ -27,6 +28,11 @@ const adminNavItems = [
     title: "Товары",
     href: "/dashboard/products",
     icon: Package,
+  },
+  {
+    title: "Категории",
+    href: "/dashboard/categories",
+    icon: FolderOpen,
   },
   {
     title: "Заказы",

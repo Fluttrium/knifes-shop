@@ -4,19 +4,19 @@ export interface Address {
   firstName: string;
   lastName: string;
   company?: string;
-  addressLine1: string;
-  addressLine2?: string;
+  address1: string;
+  address2?: string;
   city: string;
   state: string;
   postalCode: string;
   country: string;
-  phone: string;
+  phone?: string;
   isDefault: boolean;
   createdAt: Date;
   updatedAt: Date;
 }
 
-export interface Payment {
+export interface OrderPayment {
   id: string;
   orderId: string;
   amount: number;
@@ -92,21 +92,14 @@ export interface Order {
   paymentMethod: "yookassa" | "card" | "cash";
   notes?: string;
   items: OrderItem[];
-  payment?: Payment;
+  payment?: OrderPayment;
   parcel?: Parcel;
   createdAt: Date;
   updatedAt: Date;
 }
 
 export interface CreateOrderDto {
-  items: Array<{
-    productId: string;
-    productVariantId?: string;
-    quantity: number;
-  }>;
   shippingAddressId: string;
-  billingAddressId: string;
-  paymentMethod: "yookassa" | "card" | "cash";
   notes?: string;
 }
 

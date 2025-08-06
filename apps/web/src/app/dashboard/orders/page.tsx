@@ -14,6 +14,19 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
+import { 
+  Eye, 
+  Edit3, 
+  User, 
+  Package, 
+  DollarSign, 
+  Calendar,
+  MapPin,
+  Phone
+} from "lucide-react";
 
 import { Order } from "@repo/api-client";
 
@@ -32,6 +45,9 @@ export default function OrdersPage() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
+  const [statusDialogOpen, setStatusDialogOpen] = useState(false);
+  const [newStatus, setNewStatus] = useState<string>("");
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -76,6 +92,32 @@ export default function OrdersPage() {
       hour: "2-digit",
       minute: "2-digit",
     });
+  };
+
+  const handleUpdateStatus = async () => {
+    if (!selectedOrder || !newStatus) return;
+    
+    try {
+      await api.orders.updateOrderStatus(selectedOrder.id, newStatus as any);
+      setStatusDialogOpen(false);
+      fetchOrders(); // Обновляем список
+    } catch (err) {
+      console.error("❌ Error updating order status:", err);
+      setError("Ошибка при обновлении статуса заказа");
+    }
+  };
+
+  const openStatusDialog = (order: Order) => {
+    setSelectedOrder(order);
+    setNewStatus(order.status);
+    setStatusDialogOpen(true);
+  };
+
+  const formatCurrency = (amount: number, currency: string = "RUB") => {
+    return new Intl.NumberFormat("ru-RU", {
+      style: "currency",
+      currency: currency || "RUB",
+    }).format(amount);
   };
 
   if (loading) {
@@ -185,9 +227,105 @@ export default function OrdersPage() {
                       {formatDate(order.createdAt.toString())}
                     </TableCell>
                     <TableCell>
-                      <Button variant="outline" size="sm">
-                        Просмотр
-                      </Button>
+                      <div className="flex items-center gap-2">
+                        <Dialog>
+                          <DialogTrigger asChild>
+                            <Button variant="ghost" size="sm">
+                              <Eye className="h-4 w-4" />
+                            </Button>
+                          </DialogTrigger>
+                          <DialogContent className="max-w-4xl">
+                            <DialogHeader>
+                              <DialogTitle>Детали заказа #{order.orderNumber}</DialogTitle>
+                            </DialogHeader>
+                            <div className="space-y-6">
+                              {/* Информация о заказе */}
+                              <div className="grid grid-cols-2 gap-4">
+                                <div>
+                                  <Label>Номер заказа</Label>
+                                  <p className="text-sm font-mono">{order.orderNumber}</p>
+                                </div>
+                                <div>
+                                  <Label>Статус</Label>
+                                  <div className="mt-1">{getStatusBadge(order.status)}</div>
+                                </div>
+                                <div>
+                                  <Label>Сумма заказа</Label>
+                                  <p className="text-sm font-medium">
+                                    {formatCurrency(order.totalAmount, order.currency)}
+                                  </p>
+                                </div>
+                                <div>
+                                  <Label>Дата создания</Label>
+                                  <p className="text-sm">{formatDate(order.createdAt.toString())}</p>
+                                </div>
+                              </div>
+
+                              {/* Информация о клиенте */}
+                              <div>
+                                <Label className="text-base font-medium">Информация о клиенте</Label>
+                                <div className="mt-2 p-3 bg-muted rounded-md">
+                                  <div className="flex items-center gap-2 mb-2">
+                                    <User className="h-4 w-4" />
+                                    <span className="font-medium">
+                                      {order.shippingAddress?.firstName} {order.shippingAddress?.lastName}
+                                    </span>
+                                  </div>
+                                  <div className="flex items-center gap-2 mb-2">
+                                    <Phone className="h-4 w-4" />
+                                    <span className="text-sm">{order.shippingAddress?.phone}</span>
+                                  </div>
+                                  <div className="flex items-center gap-2">
+                                    <MapPin className="h-4 w-4" />
+                                    <span className="text-sm">
+                                      {order.shippingAddress?.address1}, {order.shippingAddress?.city}
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+
+                              {/* Товары в заказе */}
+                              <div>
+                                <Label className="text-base font-medium">Товары в заказе</Label>
+                                <div className="mt-2 space-y-2">
+                                  {order.items?.map((item, index) => (
+                                    <div key={index} className="flex items-center justify-between p-3 bg-muted rounded-md">
+                                      <div className="flex items-center gap-3">
+                                        <Package className="h-4 w-4" />
+                                        <div>
+                                          <p className="font-medium">{item.productName}</p>
+                                          <p className="text-sm text-muted-foreground">
+                                            Количество: {item.quantity} × {formatCurrency(item.unitPrice)}
+                                          </p>
+                                        </div>
+                                      </div>
+                                      <div className="text-right">
+                                        <p className="font-medium">{formatCurrency(item.totalPrice)}</p>
+                                      </div>
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+
+                              {/* Примечания */}
+                              {order.notes && (
+                                <div>
+                                  <Label>Примечания к заказу</Label>
+                                  <p className="text-sm mt-1 p-2 bg-muted rounded">{order.notes}</p>
+                                </div>
+                              )}
+                            </div>
+                          </DialogContent>
+                        </Dialog>
+                        
+                        <Button 
+                          variant="ghost" 
+                          size="sm"
+                          onClick={() => openStatusDialog(order)}
+                        >
+                          <Edit3 className="h-4 w-4" />
+                        </Button>
+                      </div>
                     </TableCell>
                   </TableRow>
                 ))}
@@ -196,6 +334,43 @@ export default function OrdersPage() {
           )}
         </CardContent>
       </Card>
+
+      {/* Диалог изменения статуса */}
+      <Dialog open={statusDialogOpen} onOpenChange={setStatusDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Изменить статус заказа</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div>
+              <Label htmlFor="status">Новый статус</Label>
+              <Select
+                value={newStatus}
+                onValueChange={setNewStatus}
+              >
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="pending">Ожидает</SelectItem>
+                  <SelectItem value="processing">Обрабатывается</SelectItem>
+                  <SelectItem value="shipped">Отправлен</SelectItem>
+                  <SelectItem value="delivered">Доставлен</SelectItem>
+                  <SelectItem value="cancelled">Отменен</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="flex justify-end gap-2">
+              <Button variant="outline" onClick={() => setStatusDialogOpen(false)}>
+                Отмена
+              </Button>
+              <Button onClick={handleUpdateStatus}>
+                Сохранить
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

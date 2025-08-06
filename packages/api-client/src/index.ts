@@ -46,7 +46,7 @@ export type {
   Order,
   OrderItem,
   Address,
-  Payment,
+  OrderPayment,
   Parcel,
   CreateOrderDto,
   OrderQueryDto,
@@ -65,11 +65,11 @@ export type {
   WishlistResponse,
 
   // Payment types
-  YooKassaPaymentRequest,
-  YooKassaPaymentResponse,
+  Payment,
   PaymentStatusResponse,
   CreatePaymentDto,
-  PaymentHistoryItem,
+  AdminPaymentFilterDto,
+  AdminUpdatePaymentStatusDto,
 
   // Common types
   ApiResponse,
