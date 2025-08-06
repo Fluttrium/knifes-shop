@@ -1,5 +1,4 @@
-const baseConfigModule = await import('@repo/eslint-config/base');
-const baseConfig = baseConfigModule.config;
+import { baseConfig } from '@repo/eslint-config/base';
 
 export default [
   ...baseConfig,

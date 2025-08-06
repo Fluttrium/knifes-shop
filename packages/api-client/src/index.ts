@@ -4,6 +4,7 @@ import { ProductService } from "./product";
 import { OrderService } from "./order";
 import { CartService } from "./cart";
 import { PaymentService } from "./payment";
+import { uploadApi } from "./upload";
 
 const authService = new AuthService();
 const userService = new UserService();
@@ -19,6 +20,7 @@ export const api = {
   orders: orderService,
   cart: cartService,
   payments: paymentService,
+  upload: uploadApi,
 };
 
 export type {
@@ -72,6 +74,18 @@ export type {
   // Common types
   ApiResponse,
   PaginatedResponse,
+
+  // Upload types
+  UploadFileResponse,
+  UploadMultipleFilesResponse,
+  DeleteFileResponse,
+  PresignedUrlResponse,
+  UploadFileDto,
+  UploadMultipleFilesDto,
+  PresignedUrlDto,
+  UploadProductImagesResponse,
+  DeleteProductImageResponse,
+  ReorderProductImagesResponse,
 } from "./types";
 
 export {

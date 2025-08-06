@@ -13,8 +13,8 @@ export const getCookieConfig = (isProduction: boolean): CookieConfig => ({
   options: {
     httpOnly: true,
     secure: isProduction,
-    sameSite: 'strict',
-    maxAge: 60 * 60 * 1000,
+    sameSite: isProduction ? 'strict' : 'lax',
+    maxAge: 60 * 60 * 1000, // 1 час
   },
 });
 
@@ -23,7 +23,7 @@ export const getCookieConfigRef = (isProduction: boolean): CookieConfig => ({
   options: {
     httpOnly: true,
     secure: isProduction,
-    sameSite: 'strict',
-    maxAge: 3 * 24 * 60 * 60 * 1000,
+    sameSite: isProduction ? 'strict' : 'lax',
+    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 дней
   },
 });

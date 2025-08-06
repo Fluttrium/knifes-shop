@@ -13,4 +13,3 @@ export const Providers: React.FC<React.PropsWithChildren> = ({ children }) => {
     </>
   );
 };
-// SessionProvider внутри себя будет хранить контекст, который мы уже будем прокидыать в то место куда нам нужно

@@ -24,7 +24,6 @@ export const ProductsGroupList: React.FC<Props> = ({
         setLoading(true);
         console.log(`🔍 Fetching products for category: ${categoryId}`);
 
-        // Получаем товары с фильтром по категории
         const response = await api.products.getProducts({
           categoryId,
           limit: 20,

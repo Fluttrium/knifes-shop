@@ -47,20 +47,30 @@ export class AuthService {
    * Автоматически обновляет куки с новым токеном
    */
   async refreshToken(): Promise<AuthResponse> {
-    const response = await instance.get<AuthResponse>("/auth/refresh");
-    console.log("✅ Token refreshed");
+    const response = await instance.post<AuthResponse>("/auth/refresh");
     return response.data;
   }
 
   /**
-   * Проверка авторизации
+   * Проверка авторизации с автоматическим обновлением токена
    * Возвращает true если пользователь авторизован
    */
   async isAuthenticated(): Promise<boolean> {
     try {
       await this.getCurrentUser();
       return true;
-    } catch {
+    } catch (error: any) {
+      // Если ошибка 401, пытаемся обновить токен
+      if (error.response?.status === 401) {
+        try {
+          await this.refreshToken();
+          // После успешного обновления токена проверяем снова
+          await this.getCurrentUser();
+          return true;
+        } catch (refreshError) {
+          return false;
+        }
+      }
       return false;
     }
   }

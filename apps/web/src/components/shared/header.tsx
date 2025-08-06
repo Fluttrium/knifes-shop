@@ -8,12 +8,12 @@ import { SearchInput } from "./search-input";
 import { useRouter, useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
 import { ProfileButton } from "./profile-button";
-// import { AuthModal } from './modals';
-import { FiMenu } from "react-icons/fi"; // Иконка бургер-меню
-import { IoClose } from "react-icons/io5"; // Иконка закрытия меню
+import { useAuth } from "@/hooks/use-auth";
+import { FiMenu } from "react-icons/fi";
+import { IoClose } from "react-icons/io5";
 import { FaFolderOpen } from "react-icons/fa";
 import { cn } from "@/lib/utils";
-import { CartButton } from "@/components/ui/card-button"; // Иконка для каталога
+import { CartButton } from "./cart-button";
 
 interface Props {
   hasSearch?: boolean;
@@ -27,8 +27,8 @@ export const Header: React.FC<Props> = ({
   className,
 }) => {
   const router = useRouter();
-  const [openAuthModal, setOpenAuthModal] = React.useState(false);
-  const [isMenuOpen, setIsMenuOpen] = React.useState(false); // Состояние для бургер-меню
+  const { isAuthenticated, isLoading, user } = useAuth();
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
   const searchParams = useSearchParams();
 
@@ -51,12 +51,10 @@ export const Header: React.FC<Props> = ({
         });
       }, 1000);
 
-      // Очистка таймера при размонтировании
       return () => clearTimeout(timeoutId);
     }
   }, [searchParams, router]);
 
-  // Закрытие меню при клике на Escape
   React.useEffect(() => {
     const handleEscape = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
@@ -66,7 +64,6 @@ export const Header: React.FC<Props> = ({
 
     if (isMenuOpen) {
       document.addEventListener("keydown", handleEscape);
-      // Блокируем скролл при открытом меню
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "unset";
@@ -86,13 +83,9 @@ export const Header: React.FC<Props> = ({
     setIsMenuOpen(false);
   }, []);
 
-  const handleAuthModalOpen = React.useCallback(() => {
-    setOpenAuthModal(true);
-  }, []);
-
-  const handleAuthModalClose = React.useCallback(() => {
-    setOpenAuthModal(false);
-  }, []);
+  const handleSignIn = React.useCallback(() => {
+    router.push("/signin");
+  }, [router]);
 
   return (
     <>
@@ -128,15 +121,13 @@ export const Header: React.FC<Props> = ({
           <div className="flex items-center gap-3">
             {hasCart && <CartButton />}
             <ProfileButton
-              isAuthenticated={false}
-              isLoading={false}
-              onClickSignIn={handleAuthModalOpen}
+              isAuthenticated={isAuthenticated}
+              isLoading={isLoading}
+              user={user}
+              onClickSignIn={handleSignIn}
             />
           </div>
         </Container>
-
-        {/* Модальное окно авторизации */}
-        {/*<AuthModal open={openAuthModal} onClose={handleAuthModalClose} />*/}
 
         {/* Бургер-меню */}
         {isMenuOpen && (
@@ -249,11 +240,11 @@ export const Header: React.FC<Props> = ({
 
           {/* Правая часть */}
           <div className="flex items-center gap-3">
-            {/*<AuthModal open={openAuthModal} onClose={handleAuthModalClose} />*/}
             <ProfileButton
-              isAuthenticated={false}
-              isLoading={false}
-              onClickSignIn={handleAuthModalOpen}
+              isAuthenticated={isAuthenticated}
+              isLoading={isLoading}
+              user={user}
+              onClickSignIn={handleSignIn}
             />
             {hasCart && <CartButton />}
           </div>

@@ -63,6 +63,7 @@ export class AuthController {
     );
 
     this.cookieService.setAuthCookie(res, result.token);
+    this.cookieService.setRefreshCookie(res, result.refreshToken);
 
     return result;
   }

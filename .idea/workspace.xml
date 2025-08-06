@@ -4,35 +4,97 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4176361d-84bf-49e8-bfd1-9c64d1c7c2d7" name="Changes" comment="очень плотная работа">
+    <list default="true" id="4176361d-84bf-49e8-bfd1-9c64d1c7c2d7" name="Changes" comment="корзина и рахное">
+      <change afterPath="$PROJECT_DIR$/PROFESSIONAL_FLOWCHARTS.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/api/cookies.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/api/prisma/migrations/20250802195024_fix_cart_unique_index/migration.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/api/prisma/migrations/20250802195217_remove_cart_unique_constraint/migration.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/api/src/cart/cart.controller.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/api/src/cart/cart.module.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/api/src/cart/cart.service.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/api/src/cart/dto/add-to-cart.dto.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/api/src/cart/dto/update-cart-item.dto.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/api/src/product/admin/product-images.controller.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/api/src/upload/dto/upload-file.dto.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/api/src/upload/upload.controller.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/api/src/upload/upload.module.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/api/src/upload/upload.service.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/web/src/app/api/auth/register/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/web/src/app/cart/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/web/src/components/providers/auth-provider.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/web/src/components/shared/add-to-cart-button.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/web/src/components/shared/cart-button.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/web/src/components/shared/image-upload.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/web/src/components/shared/product-images.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/web/src/hooks/use-cart.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/api-client/src/types/upload.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/api-client/src/upload.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_22_07_2025,_16_29_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_22_07_2025__16_29__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_16_07_2025,_06_47_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_16_07_2025__06_47__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/.eslintrc.js" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/.eslintrc.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/prisma/seed.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/prisma/seed.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/api/src/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/app.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/auth/guards/jwt-auth.guard.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/auth/guards/jwt-auth.guard.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/product/admin/admin-parcel.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/product/admin/admin-parcel.controller.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/product/admin/admin-parcel.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/product/admin/admin-parcel.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/product/admin/admin-payment.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/product/admin/admin-payment.controller.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/product/admin/admin-payment.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/product/admin/admin-payment.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/product/admin/product-admin.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/product/admin/product-admin.controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/src/auth/auth.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/auth/auth.controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/src/auth/auth.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/auth/auth.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/src/auth/config/cookie.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/auth/config/cookie.config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/src/auth/interfaces/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/auth/interfaces/index.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/api/src/product/admin/product-admin.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/product/admin/product-admin.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/product/controllers/payment.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/product/controllers/payment.controller.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/product/dto/admin-parcel.dto.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/product/dto/admin-parcel.dto.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/product/dto/admin-payment.dto.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/product/dto/admin-payment.dto.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/product/dto/create-product.dto.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/product/dto/create-product.dto.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/product/dto/payment.dto.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/product/dto/payment.dto.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/product/dto/product-query.dto.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/product/dto/product-query.dto.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/product/dto/update-product.dto.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/product/dto/update-product.dto.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/product/entities/product.entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/product/entities/product.entity.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/product/product.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/product/product.controller.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/api/src/product/product.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/product/product.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/product/product.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/product/product.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/product/services/payment.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/product/services/payment.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/tsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web/next.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web/next.config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web/src/app/dashboard/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web/src/app/dashboard/layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web/src/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web/src/app/layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web/src/components/admin-components/products/add-product-dialog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web/src/components/admin-components/products/add-product-dialog.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web/src/components/shared/count-button.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web/src/components/shared/count-button.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web/src/components/shared/header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web/src/components/shared/header.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web/src/components/shared/product-card.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web/src/components/shared/product-card.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web/src/components/shared/product-form.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web/src/components/shared/product-form.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web/src/components/shared/products-group-list.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web/src/components/shared/products-group-list.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web/src/components/shared/profile-button.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web/src/components/shared/profile-button.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web/src/components/shared/providers.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web/src/components/shared/providers.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web/src/components/shared/search-input.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web/src/components/shared/search-input.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web/src/components/shared/title.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web/src/components/shared/title.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web/src/components/signin-components/login-form.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web/src/components/signin-components/login-form.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web/src/components/signup-componets/signup-form.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web/src/components/signup-componets/signup-form.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web/src/hooks/use-auth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web/src/hooks/use-auth.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web/src/lib/auth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web/src/lib/auth.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web/src/lib/store/category.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web/tsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cookies.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/api-client/eslint.config.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/packages/api-client/eslint.config.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/api-client/eslintrc.js" beforeDir="false" afterPath="$PROJECT_DIR$/packages/api-client/eslintrc.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/api-client/src/auth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/api-client/src/auth.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/api-client/src/config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/api-client/src/config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/api-client/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/api-client/src/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/api-client/src/types/cart.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/api-client/src/types/cart.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/api-client/src/types/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/api-client/src/types/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/api-client/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/packages/api-client/tsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_commit_msg" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FormatOnSaveOptions">
+    <option name="myRunOnSave" value="false" />
+    <option name="myAllFileTypesSelected" value="true" />
+    <option name="mySelectedFileTypes">
+      <set />
+    </option>
+  </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="prod" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="ROOT_SYNC" value="SYNC" />
   </component>
@@ -44,10 +106,13 @@
 }</component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/Fluttrium/knifes-shop.git&quot;,
-    &quot;accountId&quot;: &quot;e33ad7c9-7ea0-4a9a-81dc-ce0357a0b854&quot;
+    &quot;url&quot;: &quot;https://github.com/Fluttrium/knifes-shop&quot;,
+    &quot;accountId&quot;: &quot;66bc6965-1377-4cb2-b1b1-cfd2e270d364&quot;
   }
 }</component>
+  <component name="PackageJsonUpdateNotifier">
+    <dismissed value="$PROJECT_DIR$/apps/web/package.json" />
+  </component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
@@ -69,7 +134,7 @@
     &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;SHELLCHECK.PATH&quot;: &quot;I do mind&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;prod&quot;,
     &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;20.17.0&quot;,
     &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;20.17.58&quot;,
     &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
@@ -93,9 +158,9 @@
     &quot;npm.format.executor&quot;: &quot;Run&quot;,
     &quot;npm.shared &gt; build.executor&quot;: &quot;Run&quot;,
     &quot;npm.ui &gt; build:libs.executor&quot;: &quot;Run&quot;,
-    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;/Users/romanmaksimov/WebstormProjects/knifes-shop/node_modules/prettier&quot;,
+    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;/Users/romanmaksimov/Desktop/fluttrium/shop/node_modules/prettier&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;Settings.JavaScript&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/Users/romanmaksimov/WebstormProjects/knifes-shop/node_modules/typescript/lib&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Users/romanmaksimov/Desktop/fluttrium/shop/node_modules/typescript/lib&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
   &quot;keyToStringList&quot;: {
@@ -184,7 +249,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-6be00b7b0f42-JavaScript-WS-252.23591.33" />
+        <option value="bundled-js-predefined-d6986cc7102b-09060db00ec0-JavaScript-WS-251.27812.50" />
       </set>
     </attachedChunks>
   </component>
@@ -232,6 +297,11 @@
       <workItem from="1752076455291" duration="1862000" />
       <workItem from="1752154684996" duration="10000" />
       <workItem from="1752154704098" duration="6271000" />
+      <workItem from="1754160036890" duration="237000" />
+      <workItem from="1754160336979" duration="10978000" />
+      <workItem from="1754305604835" duration="1895000" />
+      <workItem from="1754403009159" duration="2273000" />
+      <workItem from="1754487292644" duration="686000" />
     </task>
     <task id="LOCAL-00001" summary=".">
       <option name="closed" value="true" />
@@ -407,6 +477,7 @@
     <MESSAGE value="написал рефреш токен &#10;чуть не обосрался" />
     <MESSAGE value="плотная работа" />
     <MESSAGE value="очень плотная работа" />
-    <option name="LAST_COMMIT_MESSAGE" value="очень плотная работа" />
+    <MESSAGE value="корзина и рахное" />
+    <option name="LAST_COMMIT_MESSAGE" value="корзина и рахное" />
   </component>
 </project>

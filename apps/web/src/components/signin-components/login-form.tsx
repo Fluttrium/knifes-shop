@@ -73,7 +73,7 @@ export function SignInForm({
 
       if (success) {
         notify("Вы вошли в аккаунт!", "success");
-        router.push("/dashboard");
+        router.push("/");
       } else {
         setError("Неверный email или пароль");
         notify("Ошибка входа", "error");

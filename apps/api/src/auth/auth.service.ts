@@ -62,7 +62,7 @@ export class AuthService {
         refreshToken: refToken,
       };
     } catch (error) {
-      if (error.code === 'P2002') {
+      if ((error as any).code === 'P2002') {
         this.logger.warn(
           `POST: auth/register: User already exists: ${dto.email}`,
         );
@@ -111,6 +111,9 @@ export class AuthService {
       token: this.getJwtToken({
         id: user.id,
       }),
+      refreshToken: this.getRefreshToken({
+        id: user.id,
+      }),
     };
   }
 
@@ -133,10 +136,15 @@ export class AuthService {
   }
 
   private getRefreshToken(payload: JwtPayload) {
-    return this.jwtService.sign(payload, { expiresIn: '7d' });
+    return this.jwtService.sign(payload, { 
+      expiresIn: '7d',
+      secret: process.env.JWT_REFRESH_SECRET 
+    });
   }
 
   private getJwtToken(payload: JwtPayload) {
-    return this.jwtService.sign(payload);
+    return this.jwtService.sign(payload, {
+      secret: process.env.JWT_SECRET
+    });
   }
 }

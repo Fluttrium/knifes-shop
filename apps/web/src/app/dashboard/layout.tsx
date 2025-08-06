@@ -24,7 +24,7 @@ export default function DashboardLayout({
       checkAuth();
       hasCheckedAuth.current = true;
     }
-  }, [checkAuth]);
+  }, []); // Убираем зависимость от checkAuth
 
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
@@ -52,7 +52,13 @@ export default function DashboardLayout({
   }
 
   if (!isAuthenticated || !isAdmin) {
-    return null;
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-muted-foreground">Проверка прав доступа...</p>
+        </div>
+      </div>
+    );
   }
 
   return (

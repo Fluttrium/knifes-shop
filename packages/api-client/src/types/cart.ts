@@ -2,30 +2,36 @@ export interface CartItem {
   id: string;
   userId: string;
   productId: string;
-  productVariantId?: string;
+  variantId?: string;
   quantity: number;
   product: {
     id: string;
     name: string;
-    price: number;
-    salePrice?: number;
+    price: string;
+    stockQuantity: number;
     images: Array<{
       id: string;
       url: string;
-      alt: string;
+      alt?: string;
       isPrimary: boolean;
     }>;
     variants?: Array<{
       id: string;
       name: string;
       sku: string;
-      price: number;
-      salePrice?: number;
+      price: string;
       stockQuantity: number;
     }>;
   };
-  createdAt: Date;
-  updatedAt: Date;
+  variant?: {
+    id: string;
+    name: string;
+    sku: string;
+    price: string;
+    stockQuantity: number;
+  };
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface WishlistItem {
@@ -35,22 +41,21 @@ export interface WishlistItem {
   product: {
     id: string;
     name: string;
-    price: number;
-    salePrice?: number;
+    price: string;
     images: Array<{
       id: string;
       url: string;
-      alt: string;
+      alt?: string;
       isPrimary: boolean;
     }>;
   };
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface AddToCartDto {
   productId: string;
-  productVariantId?: string;
+  variantId?: string;
   quantity: number;
 }
 

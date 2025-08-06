@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { ProductController } from './product.controller';
 import { ProductAdminController } from './admin/product-admin.controller';
+import { ProductImagesController } from './admin/product-images.controller';
 import { PaymentController } from './controllers/payment.controller';
 import {
   CategoryController,
@@ -17,14 +18,16 @@ import { AdminPaymentService } from './admin/admin-payment.service';
 import { AdminParcelController } from './admin/admin-parcel.controller';
 import { AdminParcelService } from './admin/admin-parcel.service';
 import { ProductService } from './product.service';
+import { UploadModule } from '../upload/upload.module';
 
 @Module({
-  imports: [ConfigModule, PrismaModule, AuthModule],
+  imports: [ConfigModule, PrismaModule, AuthModule, UploadModule],
   controllers: [
     CategoryController,
     CategoryAdminController,
     ProductController,
     ProductAdminController,
+    ProductImagesController,
     PaymentController,
     AdminPaymentController,
     AdminParcelController,

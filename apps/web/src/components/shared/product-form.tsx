@@ -61,9 +61,12 @@ interface Props {
 }
 
 export const ProductForm: React.FC<Props> = ({ product, onSubmit }) => {
-  const [selectedVariant, setSelectedVariant] = useState<ProductVariant | null>(
-    product.variants.length > 0 ? product.variants[0] : null,
-  );
+  const [selectedVariant, setSelectedVariant] = useState<ProductVariant | null>(() => {
+    if (product.variants && product.variants.length > 0 && product.variants[0]) {
+      return product.variants[0];
+    }
+    return null;
+  });
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -93,8 +96,7 @@ export const ProductForm: React.FC<Props> = ({ product, onSubmit }) => {
   const handleAddToCart = async () => {
     setLoading(true);
     try {
-      // Логика добавления в корзину
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // Имитация API
+      await new Promise((resolve) => setTimeout(resolve, 1000));
       onSubmit?.();
     } catch (error) {
       console.error("Error adding to cart:", error);
@@ -105,7 +107,6 @@ export const ProductForm: React.FC<Props> = ({ product, onSubmit }) => {
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 p-6">
-      {/* Изображения */}
       <div className="space-y-4">
         <div className="relative bg-gray-50 rounded-lg p-4 h-[400px] flex items-center justify-center">
           <img
@@ -153,7 +154,6 @@ export const ProductForm: React.FC<Props> = ({ product, onSubmit }) => {
         )}
       </div>
 
-      {/* Информация о товаре */}
       <div className="space-y-6">
         <div>
           {product.brand && (
@@ -171,7 +171,6 @@ export const ProductForm: React.FC<Props> = ({ product, onSubmit }) => {
           )}
         </div>
 
-        {/* Варианты */}
         {product.variants.length > 0 && (
           <div>
             <h3 className="font-semibold mb-3">Варианты:</h3>
@@ -193,7 +192,6 @@ export const ProductForm: React.FC<Props> = ({ product, onSubmit }) => {
           </div>
         )}
 
-        {/* Цена */}
         <div className="space-y-2">
           <div className="flex items-center gap-3">
             <span className="text-3xl font-bold text-gray-900">
@@ -208,7 +206,6 @@ export const ProductForm: React.FC<Props> = ({ product, onSubmit }) => {
           </div>
         </div>
 
-        {/* Количество */}
         <div className="space-y-4">
           <div className="flex items-center gap-4">
             <span className="font-medium">Количество:</span>
@@ -256,7 +253,6 @@ export const ProductForm: React.FC<Props> = ({ product, onSubmit }) => {
           </div>
         </div>
 
-        {/* Характеристики */}
         <div className="space-y-3">
           <h3 className="font-semibold text-lg">Характеристики</h3>
           <div className="grid grid-cols-1 gap-2 text-sm">
@@ -299,7 +295,6 @@ export const ProductForm: React.FC<Props> = ({ product, onSubmit }) => {
           </div>
         </div>
 
-        {/* Описание */}
         {product.description && (
           <div className="space-y-3">
             <h3 className="font-semibold text-lg">Описание</h3>

@@ -13,7 +13,6 @@ async function main() {
 
   console.log('✅ Cleared existing data');
 
-  // ==================== CATEGORIES ====================
   console.log('📂 Creating categories...');
 
   const categories = await Promise.all([
@@ -71,11 +70,9 @@ async function main() {
 
   console.log(`✅ Created ${categories.length} categories`);
 
-  // ==================== PRODUCTS ====================
   console.log('🔪 Creating products...');
 
   const products = await Promise.all([
-    // Кухонные ножи
     prisma.product.create({
       data: {
         name: 'Шеф-нож Santoku 18см',
@@ -152,7 +149,6 @@ async function main() {
         },
       },
     }),
-    // Охотничьи ножи
     prisma.product.create({
       data: {
         name: 'Охотничий нож Bowie',
@@ -188,7 +184,6 @@ async function main() {
         },
       },
     }),
-    // Складные ножи
     prisma.product.create({
       data: {
         name: 'Складной нож EDC',
@@ -224,7 +219,6 @@ async function main() {
         },
       },
     }),
-    // Точилки
     prisma.product.create({
       data: {
         name: 'Точилка для ножей 3-ступенчатая',
@@ -254,7 +248,6 @@ async function main() {
         },
       },
     }),
-    // Аксессуары
     prisma.product.create({
       data: {
         name: 'Кожаный чехол для ножа',
@@ -288,7 +281,6 @@ async function main() {
 
   console.log(`✅ Created ${products.length} products`);
 
-  // ==================== SHIPPING METHODS ====================
   console.log('🚚 Creating shipping methods...');
 
   const shippingMethods = await Promise.all([
@@ -324,7 +316,6 @@ async function main() {
 
   console.log(`✅ Created ${shippingMethods.length} shipping methods`);
 
-  // ==================== TAX RATES ====================
   console.log('💰 Creating tax rates...');
 
   const taxRates = await Promise.all([
@@ -340,7 +331,6 @@ async function main() {
 
   console.log(`✅ Created ${taxRates.length} tax rates`);
 
-  // ==================== COUPONS ====================
   console.log('🎫 Creating coupons...');
 
   const coupons = await Promise.all([
@@ -354,7 +344,7 @@ async function main() {
         minimumAmount: 1000.0,
         usageLimit: 100,
         startsAt: new Date(),
-        expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 дней
+        expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
       },
     }),
     prisma.coupon.create({
@@ -367,7 +357,7 @@ async function main() {
         minimumAmount: 500.0,
         usageLimit: 50,
         startsAt: new Date(),
-        expiresAt: new Date(Date.now() + 60 * 24 * 60 * 60 * 1000), // 60 дней
+        expiresAt: new Date(Date.now() + 60 * 24 * 60 * 60 * 1000),
       },
     }),
   ]);

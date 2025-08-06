@@ -40,12 +40,16 @@ class AuthService {
     this.listeners.forEach((listener) => listener(this.authState));
   }
 
+  private setState(newState: Partial<AuthState>) {
+    this.authState = { ...this.authState, ...newState };
+    this.notifyListeners();
+  }
+
   async login(email: string, password: string): Promise<boolean> {
     try {
-      console.log("🔐 Attempting login...");
+      this.setState({ isLoading: true });
       const response = await api.auth.login({ email, password });
-      console.log("✅ Login successful");
-      this.authState = {
+      this.setState({
         user: {
           id: response.user.id,
           email: response.user.email,
@@ -54,62 +58,65 @@ class AuthService {
         },
         isAuthenticated: true,
         isLoading: false,
-      };
-      this.notifyListeners();
+      });
       return true;
     } catch (error) {
-      console.error("❌ Login failed:", error);
-      this.authState = {
+      this.setState({
         user: null,
         isAuthenticated: false,
         isLoading: false,
-      };
-      this.notifyListeners();
+      });
       return false;
     }
   }
 
   async logout(): Promise<void> {
     try {
-      console.log("🚪 Attempting logout...");
+      this.setState({ isLoading: true });
       await api.auth.logout();
-      console.log("✅ Logout successful");
     } catch (error) {
-      console.error("❌ Logout error:", error);
     } finally {
-      this.authState = {
+      this.setState({
         user: null,
         isAuthenticated: false,
         isLoading: false,
-      };
-      this.notifyListeners();
+      });
     }
   }
 
   async checkAuth(): Promise<void> {
     try {
-      console.log("🔍 Checking authentication...");
-      const user = await api.auth.getCurrentUser();
-      console.log("✅ Auth check successful");
-      this.authState = {
-        user: {
-          id: user.id,
-          email: user.email,
-          name: user.name,
-          role: user.role,
-        },
-        isAuthenticated: true,
-        isLoading: false,
-      };
+      this.setState({ isLoading: true });
+      
+      const isAuth = await api.auth.isAuthenticated();
+      
+      if (isAuth) {
+        const user = await api.auth.getCurrentUser();
+        this.setState({
+          user: {
+            id: user.id,
+            email: user.email,
+            name: user.name,
+            role: user.role,
+          },
+          isAuthenticated: true,
+          isLoading: false,
+        });
+      } else {
+        this.setState({
+          user: null,
+          isAuthenticated: false,
+          isLoading: false,
+        });
+      }
     } catch (error) {
-      console.error("❌ Auth check failed:", error);
-      this.authState = {
+      console.error('Auth check error:', error);
+      this.setState({
         user: null,
         isAuthenticated: false,
         isLoading: false,
-      };
+      });
     }
-    this.notifyListeners();
   }
 
   getState(): AuthState {

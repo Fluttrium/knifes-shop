@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback, useMemo } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { authService, AuthState } from "@/lib/auth";
 
 export function useAuth() {
@@ -11,24 +11,14 @@ export function useAuth() {
     return unsubscribe;
   }, []);
 
-  const login = useCallback(async (email: string, password: string) => {
-    return await authService.login(email, password);
-  }, []);
-
-  const logout = useCallback(async () => {
-    await authService.logout();
-  }, []);
-
-  const checkAuth = useCallback(async () => {
-    await authService.checkAuth();
-  }, []);
-
   const isAdmin = useMemo(() => authService.isAdmin(), [authState.user]);
+
+  const checkAuth = useCallback(() => authService.checkAuth(), []);
 
   return {
     ...authState,
-    login,
-    logout,
+    login: authService.login.bind(authService),
+    logout: authService.logout.bind(authService),
     checkAuth,
     isAdmin,
   };

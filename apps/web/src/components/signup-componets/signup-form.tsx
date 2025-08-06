@@ -6,7 +6,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import api from "@repo/api-client";
+import { useAuth } from "@/hooks/use-auth";
+import { useRouter } from "next/navigation";
 import { notify } from "@/components/ui/toats/basic-toats";
 
 interface SignUpFormData {
@@ -29,7 +30,9 @@ export function SignUpForm({
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState(false);
+
+  const { login } = useAuth();
+  const router = useRouter();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
@@ -74,17 +77,33 @@ export function SignUpForm({
     setError(null);
 
     try {
-      const response = await api.auth.register({
-        name: formData.name,
-        email: formData.email,
-        password: formData.password,
-        passwordconf: formData.passwordConfirm,
-        image: "",
+      const response = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          password: formData.password,
+          passwordconf: formData.passwordConfirm,
+          image: "",
+        }),
       });
 
-      console.log("Регистрация успешна:", response);
-      notify("Регистрация прошла успешно!", "success");
-      setSuccess(true);
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Ошибка регистрации');
+      }
+
+      const success = await login(formData.email, formData.password);
+      
+      if (success) {
+        notify("Регистрация прошла успешно!", "success");
+        router.push("/");
+      } else {
+        setError("Регистрация прошла успешно, но не удалось войти автоматически");
+      }
     } catch (err: any) {
       console.error("Ошибка регистрации:", err);
       const errorMessage = err.message || "Произошла ошибка при регистрации";
@@ -94,23 +113,6 @@ export function SignUpForm({
       setIsLoading(false);
     }
   };
-
-  if (success) {
-    return (
-      <div className={cn("flex flex-col gap-6", className)} {...props}>
-        <Card>
-          <CardContent className="pt-6">
-            <div className="text-center">
-              <div className="text-green-600 text-lg font-semibold mb-2">
-                Регистрация успешна!
-              </div>
-              <p className="text-sm text-gray-600">Перенаправляем вас...</p>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    );
-  }
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>

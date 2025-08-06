@@ -18,6 +18,8 @@ import { Plus } from "lucide-react";
 import { Category } from "@repo/api-client";
 import api from "@repo/api-client";
 import { notify } from "@/components/ui/toats/basic-toats";
+import { ImageUpload } from '@/components/shared/image-upload';
+import { Card } from '@/components/ui/card';
 
 interface AddProductDialogProps {
   categories: Category[];
@@ -98,6 +100,7 @@ export function AddProductDialog({
     metaTitle: "",
     metaDescription: "",
   });
+  const [images, setImages] = useState<string[]>([]);
 
   // Generate slug from name
   const generateSlug = (name: string) => {
@@ -168,6 +171,7 @@ export function AddProductDialog({
         sortOrder: formData.sortOrder || undefined,
         metaTitle: formData.metaTitle || undefined,
         metaDescription: formData.metaDescription || undefined,
+        images: images.map((url, idx) => ({ url, isPrimary: idx === 0, sortOrder: idx })),
       };
 
       await api.products.createProduct(productData);
@@ -206,6 +210,7 @@ export function AddProductDialog({
         metaTitle: "",
         metaDescription: "",
       });
+      setImages([]); // Сброс изображений
     } catch (error) {
       console.error("Ошибка при создании товара:", error);
       notify("Ошибка при создании товара", "error");
@@ -222,7 +227,7 @@ export function AddProductDialog({
           Добавить товар
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[600px] max-h-[80vh] overflow-y-auto">
+      <DialogContent className="sm:max-w-[500px] max-h-[80vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Добавить новый товар</DialogTitle>
           <DialogDescription>
@@ -230,11 +235,10 @@ export function AddProductDialog({
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit}>
-          <div className="grid gap-4 py-4">
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="name" className="text-right">
-                Название *
-              </Label>
+          <div className="flex flex-col gap-4 py-4">
+            {/* Название */}
+            <div>
+              <Label htmlFor="name" className="mb-1 block">Название *</Label>
               <Input
                 id="name"
                 value={formData.name}
@@ -246,77 +250,53 @@ export function AddProductDialog({
                     slug: generateSlug(name),
                   });
                 }}
-                className="col-span-3"
                 required
               />
             </div>
-
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="slug" className="text-right">
-                Slug *
-              </Label>
+            {/* Slug */}
+            <div>
+              <Label htmlFor="slug" className="mb-1 block">Slug *</Label>
               <Input
                 id="slug"
                 value={formData.slug}
-                onChange={(e) =>
-                  setFormData({ ...formData, slug: e.target.value })
-                }
-                className="col-span-3"
+                onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
                 required
               />
             </div>
-
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="sku" className="text-right">
-                SKU *
-              </Label>
+            {/* SKU */}
+            <div>
+              <Label htmlFor="sku" className="mb-1 block">SKU *</Label>
               <Input
                 id="sku"
                 value={formData.sku}
-                onChange={(e) =>
-                  setFormData({ ...formData, sku: e.target.value })
-                }
-                className="col-span-3"
+                onChange={(e) => setFormData({ ...formData, sku: e.target.value })}
                 required
               />
             </div>
-
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="categoryId" className="text-right">
-                Категория *
-              </Label>
+            {/* Категория */}
+            <div>
+              <Label htmlFor="categoryId" className="mb-1 block">Категория *</Label>
               <select
                 id="categoryId"
                 value={formData.categoryId}
-                onChange={(e) =>
-                  setFormData({ ...formData, categoryId: e.target.value })
-                }
-                className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                onChange={(e) => setFormData({ ...formData, categoryId: e.target.value })}
+                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                 required
               >
                 <option value="">Выберите категорию</option>
                 {categories.map((category) => (
-                  <option key={category.id} value={category.id}>
-                    {category.name}
-                  </option>
+                  <option key={category.id} value={category.id}>{category.name}</option>
                 ))}
               </select>
             </div>
-
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="productType" className="text-right">
-                Тип товара *
-              </Label>
+            {/* Тип товара */}
+            <div>
+              <Label htmlFor="productType" className="mb-1 block">Тип товара *</Label>
               <select
                 id="productType"
                 value={formData.productType}
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    productType: e.target.value as any,
-                  })
-                }
-                className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                onChange={(e) => setFormData({ ...formData, productType: e.target.value as any })}
+                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                 required
               >
                 <option value="knife">Нож</option>
@@ -326,269 +306,128 @@ export function AddProductDialog({
                 <option value="gift_set">Подарочный набор</option>
               </select>
             </div>
-
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="price" className="text-right">
-                Цена *
-              </Label>
+            {/* Цена */}
+            <div>
+              <Label htmlFor="price" className="mb-1 block">Цена *</Label>
               <Input
                 id="price"
                 type="number"
                 value={formData.price}
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    price: parseFloat(e.target.value) || 0,
-                  })
-                }
-                className="col-span-3"
+                onChange={(e) => setFormData({ ...formData, price: parseFloat(e.target.value) || 0 })}
                 required
                 min="0"
                 step="0.01"
               />
             </div>
-
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="comparePrice" className="text-right">
-                Цена для сравнения
-              </Label>
+            {/* Цена для сравнения */}
+            <div>
+              <Label htmlFor="comparePrice" className="mb-1 block">Цена для сравнения</Label>
               <Input
                 id="comparePrice"
                 type="number"
                 value={formData.comparePrice}
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    comparePrice: parseFloat(e.target.value) || 0,
-                  })
-                }
-                className="col-span-3"
+                onChange={(e) => setFormData({ ...formData, comparePrice: parseFloat(e.target.value) || 0 })}
                 min="0"
                 step="0.01"
               />
             </div>
-
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="costPrice" className="text-right">
-                Себестоимость
-              </Label>
+            {/* Себестоимость */}
+            <div>
+              <Label htmlFor="costPrice" className="mb-1 block">Себестоимость</Label>
               <Input
                 id="costPrice"
                 type="number"
                 value={formData.costPrice}
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    costPrice: parseFloat(e.target.value) || 0,
-                  })
-                }
-                className="col-span-3"
+                onChange={(e) => setFormData({ ...formData, costPrice: parseFloat(e.target.value) || 0 })}
                 min="0"
                 step="0.01"
               />
             </div>
-
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="stockQuantity" className="text-right">
-                Количество на складе
-              </Label>
+            {/* Количество на складе */}
+            <div>
+              <Label htmlFor="stockQuantity" className="mb-1 block">Количество на складе</Label>
               <Input
                 id="stockQuantity"
                 type="number"
                 value={formData.stockQuantity}
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    stockQuantity: parseInt(e.target.value) || 0,
-                  })
-                }
-                className="col-span-3"
+                onChange={(e) => setFormData({ ...formData, stockQuantity: parseInt(e.target.value) || 0 })}
                 min="0"
               />
             </div>
-
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="weight" className="text-right">
-                Вес (г)
-              </Label>
+            {/* Вес */}
+            <div>
+              <Label htmlFor="weight" className="mb-1 block">Вес (г)</Label>
               <Input
                 id="weight"
                 type="number"
                 value={formData.weight}
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    weight: parseFloat(e.target.value) || 0,
-                  })
-                }
-                className="col-span-3"
+                onChange={(e) => setFormData({ ...formData, weight: parseFloat(e.target.value) || 0 })}
                 min="0"
               />
             </div>
-
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="dimensions" className="text-right">
-                Размеры (ДxШxВ см)
+            {/* СЕКЦИЯ ЗАГРУЗКИ ФОТО */}
+            <div>
+              <Label className="block mb-2 text-base font-medium text-gray-700">
+                Фотографии товара
               </Label>
-              <Input
-                id="dimensions"
-                value={formData.dimensions}
-                onChange={(e) =>
-                  setFormData({ ...formData, dimensions: e.target.value })
-                }
-                className="col-span-3"
-                placeholder="18x3x2"
+              <p className="text-xs text-gray-500 mb-2">
+                Перетащите изображения или выберите файлы. Первое изображение станет основным. Максимум 10 файлов, до 5MB каждый.
+              </p>
+              <ImageUpload
+                onImagesUploaded={setImages}
+                maxFiles={10}
+                maxSize={5 * 1024 * 1024}
+                className="mb-2"
               />
+              {images.length > 0 && (
+                <div className="mt-2 grid grid-cols-3 gap-2">
+                  {images.map((url, idx) => (
+                    <Card key={url} className="relative group overflow-hidden">
+                      <img
+                        src={url}
+                        alt={`Фото ${idx + 1}`}
+                        className="w-full h-24 object-cover rounded"
+                      />
+                      {idx === 0 && (
+                        <span className="absolute top-1 left-1 bg-primary text-white text-xs px-2 py-0.5 rounded">
+                          Основное
+                        </span>
+                      )}
+                    </Card>
+                  ))}
+                </div>
+              )}
             </div>
-
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="material" className="text-right">
-                Материал
-              </Label>
-              <select
-                id="material"
-                value={formData.material}
-                onChange={(e) =>
-                  setFormData({ ...formData, material: e.target.value as any })
-                }
-                className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-              >
-                <option value="">Выберите материал</option>
-                <option value="stainless_steel">Нержавеющая сталь</option>
-                <option value="carbon_steel">Углеродистая сталь</option>
-                <option value="damascus_steel">Дамаск</option>
-                <option value="ceramic">Керамика</option>
-                <option value="titanium">Титан</option>
-                <option value="wood">Дерево</option>
-                <option value="plastic">Пластик</option>
-                <option value="leather">Кожа</option>
-                <option value="synthetic">Синтетика</option>
-              </select>
-            </div>
-
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="handleType" className="text-right">
-                Тип рукояти
-              </Label>
-              <select
-                id="handleType"
-                value={formData.handleType}
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    handleType: e.target.value as any,
-                  })
-                }
-                className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-              >
-                <option value="">Выберите тип рукояти</option>
-                <option value="fixed">Фиксированная</option>
-                <option value="folding">Складная</option>
-                <option value="multi_tool">Мультитул</option>
-              </select>
-            </div>
-
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="bladeLength" className="text-right">
-                Длина лезвия (см)
-              </Label>
-              <Input
-                id="bladeLength"
-                type="number"
-                value={formData.bladeLength}
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    bladeLength: parseFloat(e.target.value) || 0,
-                  })
-                }
-                className="col-span-3"
-                min="0"
-                step="0.1"
-              />
-            </div>
-
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="totalLength" className="text-right">
-                Общая длина (см)
-              </Label>
-              <Input
-                id="totalLength"
-                type="number"
-                value={formData.totalLength}
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    totalLength: parseFloat(e.target.value) || 0,
-                  })
-                }
-                className="col-span-3"
-                min="0"
-                step="0.1"
-              />
-            </div>
-
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="bladeHardness" className="text-right">
-                Твердость (HRC)
-              </Label>
-              <Input
-                id="bladeHardness"
-                type="number"
-                value={formData.bladeHardness}
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    bladeHardness: parseInt(e.target.value) || 0,
-                  })
-                }
-                className="col-span-3"
-                min="0"
-                max="70"
-              />
-            </div>
-
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="shortDescription" className="text-right">
-                Краткое описание
-              </Label>
+            {/* Краткое описание */}
+            <div>
+              <Label htmlFor="shortDescription" className="mb-1 block">Краткое описание</Label>
               <Textarea
                 id="shortDescription"
                 value={formData.shortDescription}
-                onChange={(e) =>
-                  setFormData({ ...formData, shortDescription: e.target.value })
-                }
-                className="col-span-3"
+                onChange={(e) => setFormData({ ...formData, shortDescription: e.target.value })}
                 rows={2}
               />
             </div>
-
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="description" className="text-right">
-                Описание
-              </Label>
+            {/* Описание */}
+            <div>
+              <Label htmlFor="description" className="mb-1 block">Описание</Label>
               <Textarea
                 id="description"
                 value={formData.description}
-                onChange={(e) =>
-                  setFormData({ ...formData, description: e.target.value })
-                }
-                className="col-span-3"
+                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                 rows={4}
               />
             </div>
-
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label className="text-right">Статусы</Label>
-              <div className="col-span-3 space-y-2">
+            {/* Статусы */}
+            <div>
+              <Label className="mb-1 block">Статусы</Label>
+              <div className="space-y-2">
                 <div className="flex items-center space-x-2">
                   <input
                     type="checkbox"
                     id="isActive"
                     checked={formData.isActive}
-                    onChange={(e) =>
-                      setFormData({ ...formData, isActive: e.target.checked })
-                    }
+                    onChange={(e) => setFormData({ ...formData, isActive: e.target.checked })}
                     className="h-4 w-4"
                   />
                   <Label htmlFor="isActive">Активен</Label>
@@ -598,9 +437,7 @@ export function AddProductDialog({
                     type="checkbox"
                     id="isFeatured"
                     checked={formData.isFeatured}
-                    onChange={(e) =>
-                      setFormData({ ...formData, isFeatured: e.target.checked })
-                    }
+                    onChange={(e) => setFormData({ ...formData, isFeatured: e.target.checked })}
                     className="h-4 w-4"
                   />
                   <Label htmlFor="isFeatured">Рекомендуемый</Label>
@@ -610,9 +447,7 @@ export function AddProductDialog({
                     type="checkbox"
                     id="isNew"
                     checked={formData.isNew}
-                    onChange={(e) =>
-                      setFormData({ ...formData, isNew: e.target.checked })
-                    }
+                    onChange={(e) => setFormData({ ...formData, isNew: e.target.checked })}
                     className="h-4 w-4"
                   />
                   <Label htmlFor="isNew">Новый товар</Label>
@@ -622,9 +457,7 @@ export function AddProductDialog({
                     type="checkbox"
                     id="isOnSale"
                     checked={formData.isOnSale}
-                    onChange={(e) =>
-                      setFormData({ ...formData, isOnSale: e.target.checked })
-                    }
+                    onChange={(e) => setFormData({ ...formData, isOnSale: e.target.checked })}
                     className="h-4 w-4"
                   />
                   <Label htmlFor="isOnSale">На распродаже</Label>
@@ -641,7 +474,7 @@ export function AddProductDialog({
               Отмена
             </Button>
             <Button type="submit" disabled={isLoading}>
-              {isLoading ? "Создание..." : "Создать товар"}
+              {isLoading ? 'Сохраняем...' : 'Создать товар'}
             </Button>
           </DialogFooter>
         </form>

@@ -4,6 +4,7 @@ import React from "react";
 import { Button } from "../ui/button";
 import { CircleUser, User } from "lucide-react";
 import Link from "next/link";
+import { useAuth } from "@/hooks/use-auth";
 
 interface Props {
   onClickSignIn?: () => void;
@@ -11,11 +12,12 @@ interface Props {
   // Новые пропсы для состояния
   isAuthenticated?: boolean;
   isLoading?: boolean;
-  userInfo?: {
-    name?: string;
-    email?: string;
-    image?: string;
-  };
+  user?: {
+    id: string;
+    name: string;
+    email: string;
+    role: "admin" | "user";
+  } | null;
 }
 
 export const ProfileButton: React.FC<Props> = ({
@@ -23,8 +25,10 @@ export const ProfileButton: React.FC<Props> = ({
   onClickSignIn,
   isAuthenticated = false,
   isLoading = false,
-  userInfo,
+  user,
 }) => {
+  const { isAdmin } = useAuth();
+
   // Показываем кнопку "Загрузка" если состояние загружается
   if (isLoading) {
     return (
@@ -49,10 +53,10 @@ export const ProfileButton: React.FC<Props> = ({
           Войти
         </Button>
       ) : (
-        <Link href="/profile">
+        <Link href={isAdmin ? "/dashboard" : "/profile"}>
           <Button variant="secondary" className="flex items-center gap-2">
             <CircleUser size={18} />
-            {userInfo?.name || "Профиль"}
+            {user?.name || "Профиль"}
           </Button>
         </Link>
       )}

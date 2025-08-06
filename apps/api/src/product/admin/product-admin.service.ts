@@ -8,10 +8,15 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateProductDto } from '../dto/create-product.dto';
 import { UpdateProductDto } from '../dto/update-product.dto';
 import { ProductEntity } from '../entities/product.entity';
+import { UploadService } from '../../upload/upload.service';
+import type { Multer } from 'multer';
 
 @Injectable()
 export class ProductAdminService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private uploadService: UploadService,
+  ) {}
 
   async create(createProductDto: CreateProductDto): Promise<ProductEntity> {
     const existingProduct = await this.prisma.product.findUnique({
@@ -388,5 +393,118 @@ export class ProductAdminService {
       lowStockProducts,
       outOfStockProducts,
     };
+  }
+
+  async uploadProductImages(
+    productId: string,
+    files: any[],
+  ): Promise<{ success: boolean; images: any[] }> {
+    const product = await this.prisma.product.findUnique({
+      where: { id: productId },
+    });
+
+    if (!product) {
+      throw new NotFoundException('Товар не найден');
+    }
+
+    try {
+      // Загружаем файлы в S3
+      const imageUrls = await this.uploadService.uploadMultipleFiles(
+        files,
+        `products/${productId}`,
+      );
+
+      // Создаем записи изображений в базе данных
+      const imageData = imageUrls.map((url, index) => ({
+        productId,
+        url,
+        alt: files[index].originalname,
+        isPrimary: index === 0, // Первое изображение становится основным
+        sortOrder: index,
+      }));
+
+      const createdImages = await this.prisma.productImage.createMany({
+        data: imageData,
+      });
+
+      // Получаем созданные изображения
+      const images = await this.prisma.productImage.findMany({
+        where: { productId },
+        orderBy: { sortOrder: 'asc' },
+      });
+
+      return {
+        success: true,
+        images,
+      };
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      throw new BadRequestException(`Ошибка загрузки изображений: ${errorMessage}`);
+    }
+  }
+
+  async deleteProductImage(imageId: string): Promise<void> {
+    const image = await this.prisma.productImage.findUnique({
+      where: { id: imageId },
+    });
+
+    if (!image) {
+      throw new NotFoundException('Изображение не найдено');
+    }
+
+    try {
+      // Удаляем файл из S3
+      await this.uploadService.deleteFile(image.url);
+
+      // Удаляем запись из базы данных
+      await this.prisma.productImage.delete({
+        where: { id: imageId },
+      });
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      throw new BadRequestException(`Ошибка удаления изображения: ${errorMessage}`);
+    }
+  }
+
+  async updateImageOrder(
+    productId: string,
+    imageIds: string[],
+  ): Promise<ProductEntity> {
+    const product = await this.prisma.product.findUnique({
+      where: { id: productId },
+    });
+
+    if (!product) {
+      throw new NotFoundException('Товар не найден');
+    }
+
+    // Обновляем порядок изображений
+    const updatePromises = imageIds.map((imageId, index) =>
+      this.prisma.productImage.update({
+        where: { id: imageId, productId },
+        data: { sortOrder: index, isPrimary: index === 0 },
+      }),
+    );
+
+    await Promise.all(updatePromises);
+
+    // Получаем обновленный продукт
+    const updatedProduct = await this.prisma.product.findUnique({
+      where: { id: productId },
+      include: {
+        category: {
+          select: {
+            id: true,
+            name: true,
+            slug: true,
+          },
+        },
+        images: {
+          orderBy: { sortOrder: 'asc' },
+        },
+      },
+    });
+
+    return updatedProduct as ProductEntity;
   }
 }
