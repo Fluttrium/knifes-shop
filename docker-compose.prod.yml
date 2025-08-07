@@ -18,15 +18,15 @@ services:
       YOO_KASSA_SHOP_ID: ${YOO_KASSA_SHOP_ID}
       YOO_KASSA_SECRET_KEY: ${YOO_KASSA_SECRET_KEY}
       YOO_KASSA_API_URL: ${YOO_KASSA_API_URL}
-      FRONTEND_URL: http://92.118.114.147:1488
-    expose:
-      - "1488"
+      FRONTEND_URL: https://knivesspb.fluttrium.com
+    ports:
+      - "3004:3004"
     networks:
       - shop_network
     volumes:
       - uploads_data:/app/uploads
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:1488/api/v1/"]
+      test: ["CMD", "curl", "-f", "http://localhost:3004/api/v1/"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -49,9 +49,9 @@ services:
     restart: unless-stopped
     environment:
       NODE_ENV: production
-      NEXT_PUBLIC_API_URL: http://92.118.114.147:1488/api
-    expose:
-      - "3000"
+      NEXT_PUBLIC_API_URL: https://knivesspb.fluttrium.com/api
+    ports:
+      - "3005:3000"
     networks:
       - shop_network
     healthcheck:

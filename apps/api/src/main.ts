@@ -38,15 +38,15 @@ export async function bootstrap() {
     origin: [
       'http://localhost:3000', 
       'http://localhost:3001',
-      'http://92.118.114.147:1488',
-      'http://localhost:1488'
+      'https://knivesspb.fluttrium.com',
+      'http://knivesspb.fluttrium.com'
     ],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
   });
 
-  await app.listen(1488);
-  console.log(`App running on Port 1488`);
+  await app.listen(3004);
+  console.log(`App running on Port 3004`);
 }
 bootstrap();
