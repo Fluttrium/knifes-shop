@@ -18,7 +18,7 @@ services:
       YOO_KASSA_SHOP_ID: ${YOO_KASSA_SHOP_ID}
       YOO_KASSA_SECRET_KEY: ${YOO_KASSA_SECRET_KEY}
       YOO_KASSA_API_URL: ${YOO_KASSA_API_URL}
-      FRONTEND_URL: https://knivesspb.fluttrium.com
+      FRONTEND_URL: http://knivesspb.fluttrium.com
     ports:
       - "3004:3004"
     networks:
@@ -49,7 +49,7 @@ services:
     restart: unless-stopped
     environment:
       NODE_ENV: production
-      NEXT_PUBLIC_API_URL: https://knivesspb.fluttrium.com/api
+      NEXT_PUBLIC_API_URL: http://knivesspb.fluttrium.com/api
     ports:
       - "3005:3000"
     networks:
