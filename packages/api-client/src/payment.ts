@@ -10,7 +10,6 @@ import instance from "./config";
 export class PaymentService {
   async createPayment(paymentData: CreatePaymentDto): Promise<Payment> {
     const response = await instance.post<Payment>("/payments", paymentData);
-    console.log("✅ Payment created successfully");
     return response.data;
   }
 

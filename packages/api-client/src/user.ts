@@ -61,4 +61,14 @@ export class UserService {
     const response = await instance.get('/admin/users/statistics');
     return response.data;
   }
+
+  async getCurrentUserStats(): Promise<{
+    totalOrders: number;
+    totalSpent: number;
+    totalAddresses: number;
+    lastOrderDate?: string;
+  }> {
+    const response = await instance.get('/users/me/stats');
+    return response.data;
+  }
 }

@@ -43,13 +43,13 @@ export const CheckboxFiltersGroup: React.FC<Props> = ({
   if (loading) {
     return (
       <div className={className}>
-        <p className="font-bold mb-3">{title}</p>
+        <p className="font-bold mb-2 text-sm">{title}</p>
         {...Array(limit)
           .fill(0)
           .map((_, index) => (
-            <Skeleton key={index} className="h-6 mb-4 rounded-[8px]" />
+            <Skeleton key={index} className="h-5 mb-2 rounded-[6px]" />
           ))}
-        <Skeleton className="w-28 h-6 mb-4 rounded-[8px]" />
+        <Skeleton className="w-20 h-5 mb-2 rounded-[6px]" />
       </div>
     );
   }
@@ -62,19 +62,19 @@ export const CheckboxFiltersGroup: React.FC<Props> = ({
 
   return (
     <div className={className}>
-      <p className="font-bold mb-3">{title}</p>
+      <p className="font-bold mb-2 text-sm">{title}</p>
 
       {showAll && (
-        <div className="mb-5">
+        <div className="mb-3">
           <Input
             onChange={onChangeSearchInput}
             placeholder={searchInputPlaceholder}
-            className="bg-gray-50 border-none"
+            className="bg-gray-50 border-none text-sm h-7"
           />
         </div>
       )}
 
-      <div className="flex flex-col gap-4 max-h-96 pr-2 overflow-auto scrollbar">
+      <div className="flex flex-col gap-2 max-h-48 pr-1 overflow-auto scrollbar">
         {list.map((item, index) => (
           <FilterCheckbox
             key={index}
@@ -89,10 +89,10 @@ export const CheckboxFiltersGroup: React.FC<Props> = ({
       </div>
 
       {items.length > limit && (
-        <div className={showAll ? "border-t border-t-neutral-100 mt-4" : ""}>
+        <div className={showAll ? "border-t border-t-neutral-100 mt-3" : ""}>
           <button
             onClick={() => setShowAll(!showAll)}
-            className="text-primary mt-3"
+            className="text-primary mt-2 text-xs"
           >
             {showAll ? "Скрыть" : "+ Показать все"}
           </button>

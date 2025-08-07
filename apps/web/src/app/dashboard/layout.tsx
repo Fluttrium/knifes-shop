@@ -28,14 +28,14 @@ export default function DashboardLayout({
 
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
-      console.log("❌ Not authenticated, redirecting to signin");
+      // Not authenticated, redirecting to signin
       redirect("/signin");
     }
   }, [isAuthenticated, isLoading]);
 
   useEffect(() => {
     if (!isLoading && isAuthenticated && !isAdmin) {
-      console.log("❌ Not admin, redirecting to home");
+      // Not admin, redirecting to home
       redirect("/");
     }
   }, [isAuthenticated, isLoading, isAdmin]);

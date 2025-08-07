@@ -5,156 +5,137 @@ import { Title } from "./title";
 import { Input } from "../ui/input";
 import { RangeSlider } from "../ui/range-slider";
 import { CheckboxFiltersGroup } from "./checkbox-filters-group";
+import { Button } from "../ui/button";
+import { useFilters } from "@/contexts/filter-context";
+import { X } from "lucide-react";
 
 interface Props {
   className?: string;
 }
 
 export const Filters: React.FC<Props> = ({ className }) => {
-  const [priceRange, setPriceRange] = React.useState<[number, number]>([
-    0, 50000,
-  ]);
-  const [selectedBrands, setSelectedBrands] = React.useState<Set<string>>(
-    new Set(),
-  );
-  const [selectedMaterials, setSelectedMaterials] = React.useState<Set<string>>(
-    new Set(),
-  );
-  const [selectedTypes, setSelectedTypes] = React.useState<Set<string>>(
-    new Set(),
-  );
+  const {
+    filters,
+    brands,
+    materials,
+    types,
+    loading,
+    updatePriceRange,
+    toggleBrand,
+    toggleMaterial,
+    toggleType,
+    clearFilters,
+  } = useFilters();
 
-  const brands = [
-    { text: "Zwilling", value: "zwilling" },
-    { text: "Wüsthof", value: "wusthof" },
-    { text: "Buck Knives", value: "buck" },
-    { text: "Spyderco", value: "spyderco" },
-    { text: "Chef's Choice", value: "chefs_choice" },
-    { text: "Condor", value: "condor" },
-  ];
+  const hasActiveFilters = 
+    filters.selectedBrands.size > 0 ||
+    filters.selectedMaterials.size > 0 ||
+    filters.selectedTypes.size > 0 ||
+    filters.priceRange[0] > 0 ||
+    filters.priceRange[1] < 50000;
 
-  const materials = [
-    { text: "Нержавеющая сталь", value: "stainless_steel" },
-    { text: "Углеродистая сталь", value: "carbon_steel" },
-    { text: "Дамасская сталь", value: "damascus_steel" },
-    { text: "Керамика", value: "ceramic" },
-    { text: "Титан", value: "titanium" },
-  ];
-
-  const types = [
-    { text: "Ножи", value: "knife" },
-    { text: "Точилки", value: "sharpener" },
-    { text: "Ножны", value: "sheath" },
-    { text: "Аксессуары", value: "accessory" },
-    { text: "Подарочные наборы", value: "gift_set" },
-  ];
-
-  const handlePriceChange = (values: [number, number]) => {
-    setPriceRange(values);
-  };
-
-  const handleBrandChange = (value: string) => {
-    const newSelected = new Set(selectedBrands);
-    if (newSelected.has(value)) {
-      newSelected.delete(value);
-    } else {
-      newSelected.add(value);
-    }
-    setSelectedBrands(newSelected);
-  };
-
-  const handleMaterialChange = (value: string) => {
-    const newSelected = new Set(selectedMaterials);
-    if (newSelected.has(value)) {
-      newSelected.delete(value);
-    } else {
-      newSelected.add(value);
-    }
-    setSelectedMaterials(newSelected);
-  };
-
-  const handleTypeChange = (value: string) => {
-    const newSelected = new Set(selectedTypes);
-    if (newSelected.has(value)) {
-      newSelected.delete(value);
-    } else {
-      newSelected.add(value);
-    }
-    setSelectedTypes(newSelected);
-  };
+  if (loading) {
+    return (
+      <div className={className}>
+        <Title text="Фильтрация" size="sm" className="mb-5 font-bold" />
+        <div className="space-y-4">
+          <div className="h-32 bg-gray-200 animate-pulse rounded-lg"></div>
+          <div className="h-32 bg-gray-200 animate-pulse rounded-lg"></div>
+          <div className="h-32 bg-gray-200 animate-pulse rounded-lg"></div>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className={className}>
-      <Title text="Фильтрация" size="sm" className="mb-5 font-bold" />
+    <div className={`${className} bg-white rounded-lg border border-gray-200 p-3 lg:p-4 max-w-full`}>
+      <div className="flex items-center justify-between mb-4">
+        <Title text="Фильтрация" size="sm" className="font-bold text-sm" />
+        {hasActiveFilters && (
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={clearFilters}
+            className="flex items-center gap-1 text-xs px-2 py-1 h-7"
+          >
+            <X className="h-3 w-3" />
+            Очистить
+          </Button>
+        )}
+      </div>
 
       {/* Цена */}
-      <div className="mt-5 border-y border-y-neutral-100 py-6 pb-7">
-        <p className="font-bold mb-3">Цена от и до:</p>
-        <div className="flex gap-3 mb-5">
+      <div className="mt-4 border-y border-y-neutral-100 py-4">
+        <p className="font-bold mb-2 text-sm">Цена от и до:</p>
+        <div className="flex gap-2 mb-3">
           <Input
             type="number"
             placeholder="0"
             min={0}
             max={50000}
-            value={priceRange[0]}
+            value={filters.priceRange[0]}
             onChange={(e) =>
-              setPriceRange([Number(e.target.value), priceRange[1]])
+              updatePriceRange([Number(e.target.value), filters.priceRange[1]])
             }
+            className="text-sm h-8"
           />
           <Input
             type="number"
             placeholder="50000"
             min={100}
             max={50000}
-            value={priceRange[1]}
+            value={filters.priceRange[1]}
             onChange={(e) =>
-              setPriceRange([priceRange[0], Number(e.target.value)])
+              updatePriceRange([filters.priceRange[0], Number(e.target.value)])
             }
+            className="text-sm h-8"
           />
         </div>
         <RangeSlider
           min={0}
           max={50000}
           step={100}
-          value={priceRange}
-          onValueChange={handlePriceChange}
+          value={filters.priceRange}
+          onValueChange={updatePriceRange}
         />
       </div>
 
       {/* Бренды */}
-      <CheckboxFiltersGroup
-        title="Бренды"
-        name="brands"
-        className="mt-5"
-        limit={6}
-        defaultItems={brands}
-        items={brands}
-        selected={selectedBrands}
-        onClickCheckbox={handleBrandChange}
-      />
+      {brands.length > 0 && (
+        <CheckboxFiltersGroup
+          title="Бренды"
+          name="brands"
+          className="mt-4"
+          limit={4}
+          defaultItems={brands}
+          items={brands}
+          selected={filters.selectedBrands}
+          onClickCheckbox={toggleBrand}
+        />
+      )}
 
       {/* Материалы */}
       <CheckboxFiltersGroup
         title="Материалы"
         name="materials"
-        className="mt-5"
-        limit={5}
+        className="mt-4"
+        limit={4}
         defaultItems={materials}
         items={materials}
-        selected={selectedMaterials}
-        onClickCheckbox={handleMaterialChange}
+        selected={filters.selectedMaterials}
+        onClickCheckbox={toggleMaterial}
       />
 
       {/* Типы товаров */}
       <CheckboxFiltersGroup
         title="Типы товаров"
         name="types"
-        className="mt-5"
-        limit={5}
+        className="mt-4"
+        limit={4}
         defaultItems={types}
         items={types}
-        selected={selectedTypes}
-        onClickCheckbox={handleTypeChange}
+        selected={filters.selectedTypes}
+        onClickCheckbox={toggleType}
       />
     </div>
   );

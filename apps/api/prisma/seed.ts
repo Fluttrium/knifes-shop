@@ -3,7 +3,7 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 async function main() {
-  console.log('🌱 Starting database seed...');
+  console.log('Starting database seed...');
 
   // Очищаем данные в правильном порядке из-за внешних ключей
   await prisma.orderItem.deleteMany({});
@@ -21,9 +21,9 @@ async function main() {
   await prisma.coupon.deleteMany({});
   await prisma.user.deleteMany({});
 
-  console.log('✅ Cleared existing data');
+  console.log('Cleared existing data');
 
-  console.log('👤 Creating admin user...');
+  console.log('Creating admin user...');
 
   const adminUser = await prisma.user.create({
     data: {
@@ -34,9 +34,40 @@ async function main() {
     },
   });
 
-  console.log(`✅ Created admin user: ${adminUser.email}`);
+  console.log(`Created admin user: ${adminUser.email}`);
 
-  console.log('📂 Creating categories...');
+  console.log('Creating test users...');
+
+  const testUsers = await Promise.all([
+    prisma.user.create({
+      data: {
+        name: 'Иван Петров',
+        email: 'ivan@example.com',
+        password: '$2a$10$sRrJJzLfNqIelp.r9rrMn.Tjr/Db8VI5crBtw27nJWNoYSv8.2Dt2',
+        role: 'user',
+      },
+    }),
+    prisma.user.create({
+      data: {
+        name: 'Мария Сидорова',
+        email: 'maria@example.com',
+        password: '$2a$10$sRrJJzLfNqIelp.r9rrMn.Tjr/Db8VI5crBtw27nJWNoYSv8.2Dt2',
+        role: 'user',
+      },
+    }),
+    prisma.user.create({
+      data: {
+        name: 'Алексей Козлов',
+        email: 'alex@example.com',
+        password: '$2a$10$sRrJJzLfNqIelp.r9rrMn.Tjr/Db8VI5crBtw27nJWNoYSv8.2Dt2',
+        role: 'user',
+      },
+    }),
+  ]);
+
+  console.log(`Created ${testUsers.length} test users`);
+
+  console.log('Creating categories...');
 
   const categories = await Promise.all([
     prisma.category.create({
@@ -91,9 +122,9 @@ async function main() {
     }),
   ]);
 
-  console.log(`✅ Created ${categories.length} categories`);
+  console.log(`Created ${categories.length} categories`);
 
-  console.log('🔪 Creating products...');
+  console.log('Creating products...');
 
   const products = await Promise.all([
     prisma.product.create({
@@ -302,9 +333,9 @@ async function main() {
     }),
   ]);
 
-  console.log(`✅ Created ${products.length} products`);
+  console.log(`Created ${products.length} products`);
 
-  console.log('🚚 Creating shipping methods...');
+  console.log('Creating shipping methods...');
 
   const shippingMethods = await Promise.all([
     prisma.shippingMethod.create({
@@ -337,9 +368,9 @@ async function main() {
     }),
   ]);
 
-  console.log(`✅ Created ${shippingMethods.length} shipping methods`);
+  console.log(`Created ${shippingMethods.length} shipping methods`);
 
-  console.log('💰 Creating tax rates...');
+  console.log('Creating tax rates...');
 
   const taxRates = await Promise.all([
     prisma.taxRate.create({
@@ -352,9 +383,9 @@ async function main() {
     }),
   ]);
 
-  console.log(`✅ Created ${taxRates.length} tax rates`);
+  console.log(`Created ${taxRates.length} tax rates`);
 
-  console.log('🎫 Creating coupons...');
+  console.log('Creating coupons...');
 
   const coupons = await Promise.all([
     prisma.coupon.create({
@@ -385,9 +416,193 @@ async function main() {
     }),
   ]);
 
-  console.log(`✅ Created ${coupons.length} coupons`);
+  console.log(`Created ${coupons.length} coupons`);
 
-  console.log('🎉 Database seeding completed successfully!');
+  console.log('Creating addresses...');
+
+  const addresses = await Promise.all([
+    prisma.address.create({
+      data: {
+        userId: testUsers[0].id,
+        firstName: 'Иван',
+        lastName: 'Петров',
+        address1: 'ул. Ленина, д. 10, кв. 5',
+        city: 'Москва',
+        state: 'Москва',
+        postalCode: '123456',
+        country: 'Россия',
+        phone: '+7 (999) 123-45-67',
+        isDefault: true,
+      },
+    }),
+    prisma.address.create({
+      data: {
+        userId: testUsers[1].id,
+        firstName: 'Мария',
+        lastName: 'Сидорова',
+        address1: 'пр. Мира, д. 25, кв. 12',
+        city: 'Санкт-Петербург',
+        state: 'Санкт-Петербург',
+        postalCode: '654321',
+        country: 'Россия',
+        phone: '+7 (999) 987-65-43',
+        isDefault: true,
+      },
+    }),
+    prisma.address.create({
+      data: {
+        userId: testUsers[2].id,
+        firstName: 'Алексей',
+        lastName: 'Козлов',
+        address1: 'ул. Гагарина, д. 15, кв. 8',
+        city: 'Екатеринбург',
+        state: 'Свердловская область',
+        postalCode: '620000',
+        country: 'Россия',
+        phone: '+7 (999) 555-44-33',
+        isDefault: true,
+      },
+    }),
+  ]);
+
+  console.log(`Created ${addresses.length} addresses`);
+
+  console.log('Creating orders...');
+
+  const orders = await Promise.all([
+    prisma.order.create({
+      data: {
+        userId: testUsers[0].id,
+        orderNumber: 'ORD-001',
+        status: 'confirmed',
+        subtotal: 2500.0,
+        taxAmount: 500.0,
+        shippingAmount: 300.0,
+        discountAmount: 0.0,
+        totalAmount: 3300.0,
+        currency: 'RUB',
+        shippingAddressId: addresses[0].id,
+        paymentMethod: 'card',
+        notes: 'Доставить до 18:00',
+      },
+    }),
+    prisma.order.create({
+      data: {
+        userId: testUsers[1].id,
+        orderNumber: 'ORD-002',
+        status: 'shipped',
+        subtotal: 1800.0,
+        taxAmount: 360.0,
+        shippingAmount: 0.0,
+        discountAmount: 100.0,
+        totalAmount: 2060.0,
+        currency: 'RUB',
+        shippingAddressId: addresses[1].id,
+        paymentMethod: 'card',
+        notes: 'Хрупкий товар',
+      },
+    }),
+    prisma.order.create({
+      data: {
+        userId: testUsers[2].id,
+        orderNumber: 'ORD-003',
+        status: 'delivered',
+        subtotal: 3200.0,
+        taxAmount: 640.0,
+        shippingAmount: 300.0,
+        discountAmount: 0.0,
+        totalAmount: 4140.0,
+        currency: 'RUB',
+        shippingAddressId: addresses[2].id,
+        paymentMethod: 'card',
+        notes: 'Подарочная упаковка',
+      },
+    }),
+  ]);
+
+  console.log(`Created ${orders.length} orders`);
+
+  console.log('Creating parcels...');
+
+  const parcels = await Promise.all([
+    prisma.parcel.create({
+      data: {
+        orderId: orders[0].id,
+        status: 'ready',
+        trackingNumber: 'RU123456789CN',
+        carrier: 'СДЭК',
+        comment: 'Готов к отправке',
+      },
+    }),
+    prisma.parcel.create({
+      data: {
+        orderId: orders[1].id,
+        status: 'shipped',
+        trackingNumber: 'RU987654321CN',
+        carrier: 'Почта России',
+        shippedAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
+        comment: 'Отправлено через Почту России',
+      },
+    }),
+    prisma.parcel.create({
+      data: {
+        orderId: orders[2].id,
+        status: 'delivered',
+        trackingNumber: 'RU555444333CN',
+        carrier: 'СДЭК',
+        shippedAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000),
+        deliveredAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000),
+        comment: 'Доставлено успешно',
+      },
+    }),
+  ]);
+
+  console.log(`Created ${parcels.length} parcels`);
+
+  console.log('Creating payments...');
+
+  const payments = await Promise.all([
+    prisma.payment.create({
+      data: {
+        orderId: orders[0].id,
+        userId: testUsers[0].id,
+        status: 'paid',
+        method: 'card',
+        amount: 3300.0,
+        currency: 'RUB',
+        externalId: 'PAY-001',
+        comment: 'Оплачено картой',
+      },
+    }),
+    prisma.payment.create({
+      data: {
+        orderId: orders[1].id,
+        userId: testUsers[1].id,
+        status: 'paid',
+        method: 'card',
+        amount: 2060.0,
+        currency: 'RUB',
+        externalId: 'PAY-002',
+        comment: 'Оплачено картой',
+      },
+    }),
+    prisma.payment.create({
+      data: {
+        orderId: orders[2].id,
+        userId: testUsers[2].id,
+        status: 'paid',
+        method: 'card',
+        amount: 4140.0,
+        currency: 'RUB',
+        externalId: 'PAY-003',
+        comment: 'Оплачено картой',
+      },
+    }),
+  ]);
+
+  console.log(`Created ${payments.length} payments`);
+
+  console.log('Database seeding completed successfully!');
 }
 
 main()

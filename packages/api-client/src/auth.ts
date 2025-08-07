@@ -9,8 +9,6 @@ import instance from "./config";
 export class AuthService {
   async login(userData: LoginRequest): Promise<AuthResponse> {
     const response = await instance.post<AuthResponse>("/auth/login", userData);
-
-    console.log("✅ Login successful");
     return response.data;
   }
 
@@ -19,17 +17,14 @@ export class AuthService {
       "/auth/register",
       userData,
     );
-
-    console.log("✅ Registration successful");
     return response.data;
   }
 
   async logout(): Promise<void> {
     try {
       await instance.post("/auth/logout");
-      console.log("✅ Logout successful");
     } catch {
-      console.error("❌ Logout error");
+      // Silent fail for logout
     }
   }
 

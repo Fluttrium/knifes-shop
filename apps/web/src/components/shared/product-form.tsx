@@ -117,10 +117,10 @@ export const ProductForm: React.FC<Props> = ({ product, onSubmit }) => {
 
           <div className="absolute top-4 left-4 flex flex-col gap-2">
             {product.isNew && (
-              <Badge className="bg-green-500 text-white">Новинка</Badge>
+              <Badge className="bg-primary text-primary-foreground">Новинка</Badge>
             )}
             {product.isFeatured && (
-              <Badge className="bg-blue-500 text-white">
+              <Badge className="bg-primary text-primary-foreground">
                 <Star size={12} className="mr-1" />
                 Хит продаж
               </Badge>
@@ -139,7 +139,7 @@ export const ProductForm: React.FC<Props> = ({ product, onSubmit }) => {
                 onClick={() => setSelectedImage(index)}
                 className={`flex-shrink-0 w-16 h-16 bg-gray-50 rounded border-2 p-1 ${
                   selectedImage === index
-                    ? "border-blue-500"
+                    ? "border-primary"
                     : "border-gray-200"
                 }`}
               >

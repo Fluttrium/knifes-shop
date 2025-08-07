@@ -35,19 +35,9 @@ const adminNavItems = [
     icon: FolderOpen,
   },
   {
-    title: "Заказы",
+    title: "Заказы и платежи",
     href: "/dashboard/orders",
     icon: ShoppingCart,
-  },
-  {
-    title: "Доставки",
-    href: "/dashboard/shipping",
-    icon: Truck,
-  },
-  {
-    title: "Платежи",
-    href: "/dashboard/payments",
-    icon: CreditCard,
   },
   {
     title: "Настройки",

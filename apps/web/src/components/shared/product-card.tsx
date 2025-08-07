@@ -57,41 +57,44 @@ export const ProductCard: React.FC<Props> = ({
 
   return (
     <div
-      className={`${className} w-[280px] bg-white rounded-lg border shadow-sm hover:shadow-md transition-shadow`}
+      className={`${className} product-card-hover bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden`}
     >
       <div className="relative">
-        <Link href={`/product/${slug}`}>
-          <div className="flex justify-center p-4 bg-gray-50 h-[200px] rounded-t-lg">
+        <Link href={`/product/${slug}`} className="block">
+          {/* Изображение */}
+          <div className="relative aspect-square bg-gray-50 overflow-hidden">
             <img
-              className="w-full h-full object-contain"
+              className="w-full h-full object-contain p-4 transition-transform duration-200 group-hover:scale-105"
               src={getMainImage()}
               alt={name}
             />
 
-            <div className="absolute top-2 left-2 flex flex-col gap-1">
+            {/* Бейджи */}
+            <div className="absolute top-3 left-3 flex flex-col gap-2">
               {isNew && (
-                <Badge className="bg-green-500 text-white text-xs">
+                <Badge className="bg-blue-500 text-white text-xs px-2 py-1 shadow-sm">
                   Новинка
                 </Badge>
               )}
               {isFeatured && (
-                <Badge className="bg-blue-500 text-white text-xs">
-                  <Star size={12} className="mr-1" />
+                <Badge className="bg-yellow-500 text-white text-xs px-2 py-1 shadow-sm">
+                  <Star size={10} className="mr-1" />
                   Хит
                 </Badge>
               )}
               {isOnSale && discountPercent > 0 && (
-                <Badge variant="destructive" className="text-xs">
+                <Badge variant="destructive" className="text-xs px-2 py-1 shadow-sm">
                   -{discountPercent}%
                 </Badge>
               )}
             </div>
 
+            {/* Статус наличия */}
             {stockQuantity === 0 && (
-              <div className="absolute top-2 right-2">
+              <div className="absolute top-3 right-3">
                 <Badge
                   variant="outline"
-                  className="bg-red-50 text-red-600 text-xs"
+                  className="bg-red-50 text-red-600 border-red-200 text-xs px-2 py-1 shadow-sm"
                 >
                   Нет в наличии
                 </Badge>
@@ -99,16 +102,24 @@ export const ProductCard: React.FC<Props> = ({
             )}
           </div>
 
+          {/* Информация о товаре */}
           <div className="p-4">
+            {/* Бренд */}
             {brand && (
-              <p className="text-xs text-gray-500 mb-1 uppercase">{brand}</p>
+              <p className="text-xs text-gray-500 mb-2 font-medium tracking-wide uppercase">
+                {brand}
+              </p>
             )}
 
-            <h3 className="font-semibold text-sm mb-2 line-clamp-2">{name}</h3>
+            {/* Название */}
+            <h3 className="font-medium text-sm text-gray-900 mb-3 line-clamp-2 min-h-[2.5rem] leading-tight">
+              {name}
+            </h3>
 
-            <div className="flex justify-between items-center">
+            {/* Цена */}
+            <div className="flex items-center justify-between mb-3">
               <div className="flex flex-col">
-                <span className="text-lg font-bold">
+                <span className="text-lg font-bold text-gray-900">
                   {price.toLocaleString()} ₽
                 </span>
                 {comparePrice && comparePrice > price && (
@@ -121,12 +132,14 @@ export const ProductCard: React.FC<Props> = ({
           </div>
         </Link>
 
+        {/* Кнопка добавления в корзину */}
         <div className="px-4 pb-4">
           <AddToCartButton
             productId={id}
             stockQuantity={stockQuantity}
             variant="secondary"
             size="sm"
+            className="w-full"
           />
         </div>
       </div>

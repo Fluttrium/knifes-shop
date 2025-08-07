@@ -41,6 +41,15 @@ export class ProductService {
     return response.data;
   }
 
+  async getOnSaleProducts(limit?: number): Promise<Product[]> {
+    const params = new URLSearchParams();
+    if (limit) {
+      params.append('limit', limit.toString());
+    }
+    const response = await instance.get<Product[]>(`/products/sale?${params.toString()}`);
+    return response.data;
+  }
+
   async getCategories(): Promise<Category[]> {
     const response = await instance.get<Category[]>("/categories");
     return response.data;
@@ -81,7 +90,6 @@ export class ProductService {
       "/admin/products",
       productData,
     );
-    console.log("✅ Product created successfully");
     return response.data;
   }
 
@@ -93,13 +101,11 @@ export class ProductService {
       `/admin/products/${id}`,
       productData,
     );
-    console.log("✅ Product updated successfully");
     return response.data;
   }
 
   async deleteProduct(id: string): Promise<{ message: string }> {
     const response = await instance.delete(`/admin/products/${id}`);
-    console.log("✅ Product deleted successfully");
     return response.data;
   }
 
@@ -126,7 +132,6 @@ export class ProductService {
       "/admin/categories",
       categoryData,
     );
-    console.log("✅ Category created successfully");
     return response.data;
   }
 
@@ -138,13 +143,11 @@ export class ProductService {
       `/admin/categories/${id}`,
       categoryData,
     );
-    console.log("✅ Category updated successfully");
     return response.data;
   }
 
   async deleteCategory(id: string): Promise<{ message: string }> {
     const response = await instance.delete(`/admin/categories/${id}`);
-    console.log("✅ Category deleted successfully");
     return response.data;
   }
 

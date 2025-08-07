@@ -15,6 +15,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
@@ -42,7 +43,8 @@ export default function CategoriesPage() {
     slug: "",
     description: "",
     image: "",
-    sortOrder: 0
+    sortOrder: 0,
+    isActive: true
   });
 
   useEffect(() => {
@@ -51,9 +53,9 @@ export default function CategoriesPage() {
 
   const fetchCategories = async () => {
     try {
-      console.log("📁 Fetching categories...");
+              // Fetching categories
       const response = await api.products.getCategories();
-      console.log("✅ Categories fetched:", response);
+      // Categories fetched successfully
       setCategories(response);
     } catch (err) {
       console.error("❌ Error fetching categories:", err);
@@ -107,7 +109,8 @@ export default function CategoriesPage() {
       slug: "",
       description: "",
       image: "",
-      sortOrder: 0
+      sortOrder: 0,
+      isActive: true
     });
     setSelectedCategory(null);
     setIsEditing(false);
@@ -127,7 +130,8 @@ export default function CategoriesPage() {
       slug: category.slug,
       description: category.description || "",
       image: category.image || "",
-      sortOrder: category.sortOrder || 0
+      sortOrder: category.sortOrder || 0,
+      isActive: category.isActive
     });
     setDialogOpen(true);
   };
@@ -398,6 +402,14 @@ export default function CategoriesPage() {
                   placeholder="0"
                 />
               </div>
+            </div>
+            <div className="flex items-center space-x-2">
+              <Checkbox
+                id="isActive"
+                checked={formData.isActive}
+                onCheckedChange={(checked) => setFormData({ ...formData, isActive: checked as boolean })}
+              />
+              <Label htmlFor="isActive">Активная категория</Label>
             </div>
             <div className="flex justify-end gap-2">
               <Button variant="outline" onClick={() => setDialogOpen(false)}>

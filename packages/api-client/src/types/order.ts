@@ -1,6 +1,7 @@
 export interface Address {
   id: string;
   userId: string;
+  type?: string;
   firstName: string;
   lastName: string;
   company?: string;
@@ -48,7 +49,7 @@ export interface Parcel {
   estimatedDelivery?: Date;
   weight?: number;
   dimensions?: string;
-  notes?: string;
+  comment?: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -92,8 +93,8 @@ export interface Order {
   paymentMethod: "yookassa" | "card" | "cash";
   notes?: string;
   items: OrderItem[];
-  payment?: OrderPayment;
-  parcel?: Parcel;
+  payments?: OrderPayment[];
+  parcels?: Parcel[];
   createdAt: Date;
   updatedAt: Date;
 }
@@ -141,6 +142,7 @@ export interface ParcelQueryDto {
   status?: string;
   orderId?: string;
   carrier?: string;
+  trackingNumber?: string;
   startDate?: string;
   endDate?: string;
   sortBy?: "createdAt" | "shippedAt";
@@ -168,5 +170,5 @@ export interface UpdateParcelDto {
   estimatedDelivery?: Date;
   weight?: number;
   dimensions?: string;
-  notes?: string;
+  comment?: string;
 }

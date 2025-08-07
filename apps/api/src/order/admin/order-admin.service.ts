@@ -107,46 +107,10 @@ export class OrderAdminService {
       throw new NotFoundException('Заказ не найден');
     }
 
-    // Если заказ отменяется, возвращаем товары на склад
-    if (status === 'cancelled' && order.status !== 'cancelled') {
-      const orderItems = await this.prisma.orderItem.findMany({
-        where: { orderId },
-      });
-
-      for (const item of orderItems) {
-        if (item.variantId) {
-          await this.prisma.productVariant.update({
-            where: { id: item.variantId },
-            data: {
-              stockQuantity: {
-                increment: item.quantity,
-              },
-            },
-          });
-        } else {
-          await this.prisma.product.update({
-            where: { id: item.productId },
-            data: {
-              stockQuantity: {
-                increment: item.quantity,
-              },
-            },
-          });
-        }
-      }
-    }
-
     return this.prisma.order.update({
       where: { id: orderId },
       data: { status },
       include: {
-        items: {
-          include: {
-            product: true,
-            variant: true,
-          },
-        },
-        shippingAddress: true,
         user: {
           select: {
             id: true,
@@ -154,8 +118,84 @@ export class OrderAdminService {
             email: true,
           },
         },
+        shippingAddress: true,
+        items: {
+          include: {
+            product: true,
+            variant: true,
+          },
+        },
+        payments: true,
+        parcels: true,
       },
     });
+  }
+
+  async createParcel(orderId: string, createParcelDto: { trackingNumber: string; carrier: string; comment?: string }) {
+    const order = await this.prisma.order.findUnique({
+      where: { id: orderId },
+    });
+
+    if (!order) {
+      throw new NotFoundException('Заказ не найден');
+    }
+
+    // Проверяем, есть ли уже отправление для этого заказа
+    const existingParcel = await this.prisma.parcel.findFirst({
+      where: { orderId },
+    });
+
+    if (existingParcel) {
+      // Обновляем существующее отправление
+      return this.prisma.parcel.update({
+        where: { id: existingParcel.id },
+        data: {
+          trackingNumber: createParcelDto.trackingNumber,
+          carrier: createParcelDto.carrier,
+          comment: createParcelDto.comment,
+          status: 'shipped',
+          shippedAt: new Date(),
+        },
+        include: {
+          order: {
+            include: {
+              user: {
+                select: {
+                  id: true,
+                  name: true,
+                  email: true,
+                },
+              },
+            },
+          },
+        },
+      });
+    } else {
+      // Создаем новое отправление
+      return this.prisma.parcel.create({
+        data: {
+          orderId,
+          trackingNumber: createParcelDto.trackingNumber,
+          carrier: createParcelDto.carrier,
+          comment: createParcelDto.comment,
+          status: 'shipped',
+          shippedAt: new Date(),
+        },
+        include: {
+          order: {
+            include: {
+              user: {
+                select: {
+                  id: true,
+                  name: true,
+                  email: true,
+                },
+              },
+            },
+          },
+        },
+      });
+    }
   }
 
   async getOrderStatistics() {

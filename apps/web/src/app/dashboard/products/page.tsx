@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { ProductsTable } from "@/components/admin-components/products/products-table";
 import { AddProductDialog } from "@/components/admin-components/products/add-product-dialog";
+import { AddCategoryDialog } from "@/components/admin-components/products/add-category-dialog";
 import api, { Product, Category } from "@repo/api-client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -35,9 +36,9 @@ export default function ProductsPage() {
   const fetchProducts = async () => {
     setIsLoading(true);
     try {
-      console.log("🔪 Fetching products...");
+              // Fetching products
       const response = await api.products.getAllProductsAdmin();
-      console.log("✅ Products fetched:", response);
+      // Products fetched successfully
       setProducts(response.products || []);
       setFilteredProducts(response.products || []);
     } catch (error) {
@@ -117,6 +118,10 @@ export default function ProductsPage() {
     fetchProducts();
   };
 
+  const handleCategoryCreated = () => {
+    fetchCategories();
+  };
+
   const getStatistics = () => {
     const total = products.length;
     const active = products.filter((p) => p.isActive).length;
@@ -149,20 +154,25 @@ export default function ProductsPage() {
   }
 
   return (
-    <div className="flex flex-col gap-4 p-4">
-      <div className="flex items-center justify-between">
+    <div className="p-6">
+      <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight">Товары</h1>
-          <p className="text-muted-foreground">Управление товарами магазина</p>
+          <h1 className="text-3xl font-bold tracking-tight">Товары</h1>
+          <p className="text-muted-foreground">
+            Управление товарами магазина
+          </p>
         </div>
-        <Button onClick={fetchProducts} variant="outline" size="sm">
-          <RefreshCw className="mr-2 h-4 w-4" />
-          Обновить
-        </Button>
+        <div className="flex gap-2">
+          <AddCategoryDialog onCategoryCreated={handleCategoryCreated} />
+          <AddProductDialog
+            categories={categories}
+            onProductCreated={handleProductUpdated}
+          />
+        </div>
       </div>
 
       {/* Статистика */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mb-6">
         <div className="rounded-lg border bg-card p-4">
           <div className="flex items-center space-x-2">
             <Package className="h-4 w-4 text-muted-foreground" />
@@ -173,14 +183,14 @@ export default function ProductsPage() {
         <div className="rounded-lg border bg-card p-4">
           <div className="flex items-center space-x-2">
             <Filter className="h-4 w-4 text-muted-foreground" />
-            <span className="text-sm font-medium">Активных</span>
+            <span className="text-sm font-medium">Активные</span>
           </div>
           <div className="text-2xl font-bold">{stats.active}</div>
         </div>
         <div className="rounded-lg border bg-card p-4">
           <div className="flex items-center space-x-2">
             <Star className="h-4 w-4 text-muted-foreground" />
-            <span className="text-sm font-medium">Рекомендуемых</span>
+            <span className="text-sm font-medium">Рекомендуемые</span>
           </div>
           <div className="text-2xl font-bold">{stats.featured}</div>
         </div>
@@ -237,10 +247,6 @@ export default function ProductsPage() {
             <h3 className="text-lg font-semibold">
               Список товаров ({filteredProducts.length})
             </h3>
-            <AddProductDialog
-              categories={categories}
-              onProductCreated={handleProductUpdated}
-            />
           </div>
           <ProductsTable
             products={filteredProducts}

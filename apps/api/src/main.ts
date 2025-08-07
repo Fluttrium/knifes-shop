@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { Logger, ValidationPipe } from '@nestjs/common';
+import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { swaggerOptions, swaggerTitle, swaggerDescription } from './common';
 import cookieParser from 'cookie-parser';
@@ -40,6 +40,6 @@ export async function bootstrap() {
   });
 
   await app.listen(1488);
-  Logger.log(`App running on Port 1488`);
+  console.log(`App running on Port 1488`);
 }
 bootstrap();

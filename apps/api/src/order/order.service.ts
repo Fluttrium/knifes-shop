@@ -3,12 +3,14 @@ import { PrismaService } from '../prisma/prisma.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { OrderQueryDto } from './dto/order-query.dto';
 import { CartService } from '../cart/cart.service';
+import { ParcelService } from './parcel.service';
 
 @Injectable()
 export class OrderService {
   constructor(
     private prisma: PrismaService,
     private cartService: CartService,
+    private parcelService: ParcelService,
   ) {}
 
   async createOrder(userId: string, createOrderDto: CreateOrderDto) {
@@ -96,6 +98,14 @@ export class OrderService {
         notes: createOrderDto.notes,
         items: {
           create: orderItems,
+        },
+        // Автоматически создаем посылку для заказа
+        parcels: {
+          create: {
+            status: 'created',
+            carrier: 'Стандартная доставка',
+            comment: 'Заказ создан, ожидает обработки',
+          },
         },
       },
       include: {
@@ -243,7 +253,7 @@ export class OrderService {
       throw new BadRequestException('Можно отменить только заказы в статусе "Ожидает"');
     }
 
-    return this.prisma.order.update({
+    const updatedOrder = await this.prisma.order.update({
       where: { id: orderId },
       data: { status: 'cancelled' },
       include: {
@@ -256,6 +266,46 @@ export class OrderService {
         shippingAddress: true,
       },
     });
+
+    // Автоматически обновляем статус посылки
+    await this.parcelService.updateParcelStatusByOrderStatus(orderId, 'cancelled');
+
+    return updatedOrder;
+  }
+
+  /**
+   * Обновляет статус заказа и автоматически обновляет статус посылки
+   */
+  async updateOrderStatus(orderId: string, newStatus: any) {
+    const order = await this.prisma.order.findUnique({
+      where: { id: orderId },
+    });
+
+    if (!order) {
+      throw new NotFoundException('Заказ не найден');
+    }
+
+    const updatedOrder = await this.prisma.order.update({
+      where: { id: orderId },
+      data: { status: newStatus },
+      include: {
+        items: {
+          include: {
+            product: true,
+            variant: true,
+          },
+        },
+        shippingAddress: true,
+        parcels: {
+          orderBy: { createdAt: 'desc' },
+        },
+      },
+    });
+
+    // Автоматически обновляем статус посылки
+    await this.parcelService.updateParcelStatusByOrderStatus(orderId, newStatus);
+
+    return updatedOrder;
   }
 
   private generateOrderNumber(): string {

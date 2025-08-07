@@ -17,7 +17,6 @@ export class OrderService {
   // Пользовательские методы
   async createOrder(orderData: CreateOrderDto): Promise<Order> {
     const response = await instance.post<Order>("/orders", orderData);
-    console.log("✅ Order created successfully");
     return response.data;
   }
 
@@ -49,7 +48,6 @@ export class OrderService {
 
   async cancelOrder(id: string): Promise<Order> {
     const response = await instance.patch<Order>(`/orders/${id}/cancel`);
-    console.log("✅ Order cancelled successfully");
     return response.data;
   }
 
@@ -71,7 +69,6 @@ export class OrderService {
       "/orders/addresses",
       addressData,
     );
-    console.log("✅ Address created successfully");
     return response.data;
   }
 
@@ -83,13 +80,11 @@ export class OrderService {
       `/orders/addresses/${id}`,
       addressData,
     );
-    console.log("✅ Address updated successfully");
     return response.data;
   }
 
   async deleteAddress(id: string): Promise<{ message: string }> {
     const response = await instance.delete(`/orders/addresses/${id}`);
-    console.log("✅ Address deleted successfully");
     return response.data;
   }
 
@@ -129,7 +124,6 @@ export class OrderService {
     const response = await instance.patch<Order>(`/admin/orders/${id}/status`, {
       status,
     });
-    console.log("✅ Order status updated successfully");
     return response.data;
   }
 
@@ -163,7 +157,6 @@ export class OrderService {
       `/admin/payments/${id}`,
       paymentData,
     );
-    console.log("✅ Payment updated successfully");
     return response.data;
   }
 
@@ -200,11 +193,11 @@ export class OrderService {
     orderId: string,
     parcelData: Omit<Parcel, "id" | "orderId" | "createdAt" | "updatedAt">,
   ): Promise<Parcel> {
-    const response = await instance.post<Parcel>(`/admin/parcels`, {
-      ...parcelData,
-      orderId,
+    const response = await instance.post<Parcel>(`/admin/orders/${orderId}/parcel`, {
+      trackingNumber: parcelData.trackingNumber,
+      carrier: parcelData.carrier,
+      comment: parcelData.comment,
     });
-    console.log("✅ Parcel created successfully");
     return response.data;
   }
 
@@ -213,13 +206,11 @@ export class OrderService {
       `/admin/parcels/${id}`,
       parcelData,
     );
-    console.log("✅ Parcel updated successfully");
     return response.data;
   }
 
   async deleteParcel(id: string): Promise<{ message: string }> {
     const response = await instance.delete(`/admin/parcels/${id}`);
-    console.log("✅ Parcel deleted successfully");
     return response.data;
   }
 

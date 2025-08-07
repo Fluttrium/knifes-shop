@@ -27,9 +27,7 @@ export default function OrdersPage() {
 
   const fetchOrders = async () => {
     try {
-      console.log("📦 Загружаем заказы пользователя...");
-      const response = await api.orders.getOrders();
-      console.log("✅ Заказы загружены:", response);
+          const response = await api.orders.getOrders();
       setOrders(response.data || []);
     } catch (err) {
       console.error("❌ Ошибка при загрузке заказов:", err);

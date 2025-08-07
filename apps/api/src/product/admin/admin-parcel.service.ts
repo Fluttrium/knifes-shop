@@ -14,13 +14,36 @@ export class AdminParcelService {
     const where: any = {};
     if (filter.orderId) where.orderId = filter.orderId;
     if (filter.status) where.status = filter.status;
-    return this.prisma.parcel.findMany({
+    if (filter.trackingNumber) where.trackingNumber = { contains: filter.trackingNumber };
+    
+    const parcels = await this.prisma.parcel.findMany({
       where,
       include: {
-        order: { select: { orderNumber: true, userId: true } },
+        order: { 
+          select: { 
+            orderNumber: true, 
+            userId: true,
+            user: {
+              select: {
+                id: true,
+                name: true,
+                email: true,
+              }
+            }
+          } 
+        },
       },
       orderBy: { createdAt: 'desc' },
     });
+
+    const total = await this.prisma.parcel.count({ where });
+
+    return {
+      data: parcels,
+      total,
+      page: filter.page || 1,
+      limit: filter.limit || 10,
+    };
   }
 
   async findOne(id: string) {

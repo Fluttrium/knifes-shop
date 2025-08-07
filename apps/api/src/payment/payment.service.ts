@@ -99,6 +99,21 @@ export class PaymentService {
       throw new BadRequestException('Заказ уже оплачен');
     }
 
+    // Проверяем обязательные поля для ЮKassa
+    if (!order.user.email) {
+      throw new BadRequestException('Email пользователя обязателен для оплаты');
+    }
+
+    if (!order.shippingAddress?.phone) {
+      throw new BadRequestException('Номер телефона обязателен для оплаты');
+    }
+
+    // Валидируем и форматируем телефон
+    const phone = this.formatPhoneForYooKassa(order.shippingAddress.phone);
+    if (!phone) {
+      throw new BadRequestException('Неверный формат номера телефона');
+    }
+
     // Создаем платеж в базе данных
     const payment = await this.prisma.payment.create({
       data: {
@@ -117,38 +132,22 @@ export class PaymentService {
       console.log('YooKassa Shop ID:', this.yooKassaShopId);
       console.log('YooKassa Secret Key:', this.yooKassaSecretKey ? '***' : 'not set');
       
-      // Принудительно включаем тестовый режим для разработки
-      console.log('=== About to check test mode condition ===');
-      if (true) {
-        console.log('Using test mode - development environment');
-        // Тестовый режим - создаем платеж без интеграции с ЮKassa
-        const testPayment = await this.prisma.payment.update({
-          where: { id: payment.id },
-          data: {
-            externalId: `test_${payment.id}`,
-            status: PaymentStatus.pending,
-          },
-        });
-
-        return {
-          ...testPayment,
-          paymentUrl: `http://localhost:3000/payment/test/${payment.id}`,
-        };
+      if (!this.yooKassaShopId || !this.yooKassaSecretKey) {
+        throw new Error('YooKassa credentials not configured');
       }
 
-      // Создаем платеж в ЮKassa - ЗАКОММЕНТИРОВАНО ДЛЯ ТЕСТИРОВАНИЯ
-      /*
+      // Создаем платеж в ЮKassa
       const yooKassaPayment = await this.createYooKassaPayment({
         orderId: payment.id,
         amount: Math.round(amount * 100), // Конвертация в копейки
         currency,
         description: description || `Заказ #${order.orderNumber} в магазине ножей`,
         email: order.user.email,
-        phone: order.shippingAddress.phone,
+        phone: phone,
         receipt: {
           customer: {
             email: order.user.email,
-            phone: order.shippingAddress.phone,
+            phone: phone,
           },
           items: order.items.map((item) => ({
             description: item.product.name,
@@ -172,13 +171,14 @@ export class PaymentService {
           status: yooKassaPayment.status === 'pending' ? PaymentStatus.pending : PaymentStatus.failed,
         },
       });
-      */
 
-      // return {
-      //   ...updatedPayment,
-      //   paymentUrl: yooKassaPayment.confirmation.confirmation_url,
-      // };
+      return {
+        ...updatedPayment,
+        paymentUrl: yooKassaPayment.confirmation.confirmation_url,
+      };
     } catch (error) {
+      console.error('Error creating YooKassa payment:', error);
+      
       // Если ошибка при создании платежа в ЮKassa, удаляем запись из БД
       await this.prisma.payment.delete({
         where: { id: payment.id },
@@ -311,7 +311,18 @@ export class PaymentService {
   }
 
   private async createYooKassaPayment(paymentData: YooKassaPaymentRequest): Promise<YooKassaPaymentResponse> {
-    console.log('=== createYooKassaPayment called - this should not happen in test mode ===');
+    console.log('=== createYooKassaPayment called ===');
+    
+    // Получаем заказ для правильного URL возврата
+    const order = await this.prisma.order.findUnique({
+      where: { id: paymentData.orderId },
+      select: { id: true }
+    });
+
+    const returnUrl = order 
+      ? `${this.configService.get('FRONTEND_URL', 'http://localhost:3000')}/orders/${order.id}`
+      : `${this.configService.get('FRONTEND_URL', 'http://localhost:3000')}/profile/orders`;
+
     const response = await fetch(`${this.yooKassaApiUrl}/payments`, {
       method: 'POST',
       headers: {
@@ -327,7 +338,7 @@ export class PaymentService {
         capture: true,
         confirmation: {
           type: 'redirect',
-          return_url: `${this.configService.get('FRONTEND_URL')}/orders/${paymentData.orderId}`,
+          return_url: returnUrl,
         },
         description: paymentData.description,
         receipt: paymentData.receipt,
@@ -339,10 +350,13 @@ export class PaymentService {
 
     if (!response.ok) {
       const error = await response.text();
+      console.error('YooKassa API error:', error);
       throw new BadRequestException(`Ошибка создания платежа в ЮKassa: ${error}`);
     }
 
-    return response.json();
+    const result = await response.json();
+    console.log('YooKassa payment created:', result);
+    return result;
   }
 
   private async getYooKassaPayment(paymentId: string): Promise<YooKassaPaymentResponse> {
@@ -364,5 +378,40 @@ export class PaymentService {
     // В реальном проекте здесь должна быть проверка подписи webhook'а
     // Для демонстрации возвращаем true
     return true;
+  }
+
+  private formatPhoneForYooKassa(phone: string): string | null {
+    if (!phone) return null;
+    
+    // Очищаем от нецифровых символов
+    const cleanedPhone = phone.replace(/\D/g, '');
+    
+    // Проверяем длину
+    if (cleanedPhone.length < 10 || cleanedPhone.length > 15) {
+      return null;
+    }
+
+    // Если номер начинается с 8, заменяем на 7
+    let formattedPhone = cleanedPhone;
+    if (formattedPhone.startsWith('8') && formattedPhone.length === 11) {
+      formattedPhone = '7' + formattedPhone.slice(1);
+    }
+
+    // Если номер начинается с 7 и имеет 11 цифр, добавляем +
+    if (formattedPhone.startsWith('7') && formattedPhone.length === 11) {
+      return `+${formattedPhone}`;
+    }
+
+    // Если номер имеет 10 цифр, добавляем +7
+    if (formattedPhone.length === 10) {
+      return `+7${formattedPhone}`;
+    }
+
+    // Если номер уже в международном формате
+    if (formattedPhone.startsWith('+')) {
+      return formattedPhone;
+    }
+
+    return null;
   }
 } 

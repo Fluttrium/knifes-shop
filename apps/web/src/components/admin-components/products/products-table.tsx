@@ -46,6 +46,8 @@ import { Product, Category } from "@repo/api-client";
 
 import api from "@repo/api-client";
 import { notify } from "@/components/ui/toats/basic-toats";
+import { ImageUpload } from "@/components/shared/image-upload";
+import { Card } from "@/components/ui/card";
 
 interface ProductsTableProps {
   products: Product[];
@@ -127,6 +129,8 @@ export function ProductsTable({
   const [isViewDialogOpen, setIsViewDialogOpen] = useState(false);
   const [viewingProduct, setViewingProduct] = useState<Product | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [images, setImages] = useState<string[]>([]);
+  const [isUploadingImages, setIsUploadingImages] = useState(false);
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat("ru-RU", {
@@ -141,6 +145,35 @@ export function ProductsTable({
       month: "long",
       day: "numeric",
     });
+  };
+
+  const handleImageUpload = async (files: File[]) => {
+    if (files.length === 0) return;
+
+    setIsUploadingImages(true);
+    try {
+      const response = await api.upload.uploadMultipleFiles(files, {
+        folder: 'products',
+      });
+
+      const newImageUrls = response.data.map((file) => file.url);
+      setImages([...images, ...newImageUrls]);
+      
+      notify(`Загружено ${files.length} изображений`, "success");
+    } catch (error) {
+      console.error('Ошибка загрузки изображений:', error);
+      notify('Ошибка при загрузке изображений', "error");
+    } finally {
+      setIsUploadingImages(false);
+    }
+  };
+
+  const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    if (files) {
+      const fileArray = Array.from(files);
+      handleImageUpload(fileArray);
+    }
   };
 
   const handleEditProduct = (product: Product) => {
@@ -172,6 +205,16 @@ export function ProductsTable({
       metaTitle: product.metaTitle || "",
       metaDescription: product.metaDescription || "",
     });
+    // Извлекаем URL изображений из ProductImage[]
+    const imageUrls: string[] = [];
+    if (product.images) {
+      for (const img of product.images) {
+        if (img.url) {
+          imageUrls.push(img.url);
+        }
+      }
+    }
+    setImages(imageUrls);
     setIsEditDialogOpen(true);
   };
 
@@ -242,13 +285,20 @@ export function ProductsTable({
         sortOrder: editData.sortOrder ? Number(editData.sortOrder) : undefined,
         metaTitle: editData.metaTitle,
         metaDescription: editData.metaDescription,
+        // Добавляем изображения
+        images: images.map((url, idx) => ({ 
+          url, 
+          isPrimary: idx === 0, 
+          sortOrder: idx 
+        })),
       };
 
       await api.products.updateProduct(editingProduct.id, updateData);
-      console.log("✅ Update data sent:", updateData);
+      // Update data sent successfully
       notify("Товар успешно обновлен", "success");
       setIsEditDialogOpen(false);
       setEditingProduct(null);
+      setImages([]); // Сбрасываем изображения
       onProductUpdated();
     } catch (error) {
       console.error("Ошибка при обновлении товара:", error);
@@ -271,6 +321,14 @@ export function ProductsTable({
       badges.push(
         <Badge key="inactive" variant="secondary">
           Неактивен
+        </Badge>,
+      );
+    }
+
+    if (product.stockQuantity === 0) {
+      badges.push(
+        <Badge key="outOfStock" variant="destructive">
+          Нет в наличии
         </Badge>,
       );
     }
@@ -516,7 +574,13 @@ export function ProductsTable({
       </Dialog>
 
       {/* Диалог редактирования товара */}
-      <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
+      <Dialog open={isEditDialogOpen} onOpenChange={(open) => {
+        setIsEditDialogOpen(open);
+        if (!open) {
+          setEditingProduct(null);
+          setImages([]); // Сбрасываем изображения при закрытии
+        }
+      }}>
         <DialogContent className="sm:max-w-[600px] max-h-[80vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Редактировать товар</DialogTitle>
@@ -710,6 +774,98 @@ export function ProductsTable({
                     className="h-4 w-4"
                   />
                   <Label htmlFor="isFeatured">Рекомендуемый</Label>
+                </div>
+              </div>
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label className="text-right">Изображения</Label>
+              <div className="col-span-3">
+                <div className="space-y-4">
+                   {/* Существующие изображения */}
+                   {images.length > 0 && (
+                     <div className="grid grid-cols-3 gap-2 mb-4">
+                       {images.map((url, idx) => (
+                         <Card key={url} className="relative group overflow-hidden">
+                           <img
+                             src={url}
+                             alt={`Фото ${idx + 1}`}
+                             className="w-full h-24 object-cover rounded"
+                           />
+                           {idx === 0 && (
+                             <span className="absolute top-1 left-1 bg-primary text-white text-xs px-2 py-0.5 rounded">
+                               Основное
+                             </span>
+                           )}
+                           <div className="absolute top-1 right-1 flex gap-1">
+                             {/* Кнопка сделать основным */}
+                             {idx !== 0 && (
+                               <button
+                                 type="button"
+                                 onClick={() => {
+                                   const newImages = [...images];
+                                   const temp = newImages[0];
+                                   const currentImage = newImages[idx];
+                                   if (temp && currentImage) {
+                                     newImages[0] = currentImage;
+                                     newImages[idx] = temp;
+                                     setImages(newImages);
+                                   }
+                                 }}
+                                 className="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-blue-600"
+                                 title="Сделать основным"
+                               >
+                                 ★
+                               </button>
+                             )}
+                             {/* Кнопка удаления */}
+                             <button
+                               type="button"
+                               onClick={() => {
+                                 const newImages = images.filter((_, i) => i !== idx);
+                                 setImages(newImages);
+                               }}
+                               className="bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-red-600"
+                               title="Удалить"
+                             >
+                               ×
+                             </button>
+                           </div>
+                           <div className="absolute bottom-1 left-1 bg-black/50 text-white text-xs px-2 py-0.5 rounded">
+                             {idx + 1}
+                           </div>
+                         </Card>
+                       ))}
+                     </div>
+                   )}
+                  
+                  {/* Загрузка новых изображений */}
+                  {images.length < 10 && (
+                    <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center">
+                      <p className="text-sm text-gray-600 mb-2">
+                        Добавить новые изображения
+                      </p>
+                      <input
+                        type="file"
+                        multiple
+                        accept="image/*"
+                        onChange={handleFileSelect}
+                        disabled={isUploadingImages}
+                        className="hidden"
+                        id="image-upload"
+                      />
+                      <label
+                        htmlFor="image-upload"
+                        className={`inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary cursor-pointer ${
+                          isUploadingImages ? 'opacity-50 cursor-not-allowed' : ''
+                        }`}
+                      >
+                        {isUploadingImages ? 'Загрузка...' : 'Выбрать файлы'}
+                      </label>
+                      <p className="text-xs text-gray-500 mt-2">
+                        Текущих изображений: {images.length}/10
+                      </p>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

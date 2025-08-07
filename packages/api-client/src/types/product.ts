@@ -5,6 +5,7 @@ export interface Category {
   slug: string;
   image?: string;
   isActive: boolean;
+  sortOrder?: number;
   createdAt: Date;
   updatedAt: Date;
 }

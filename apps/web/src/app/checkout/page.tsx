@@ -67,6 +67,13 @@ export default function CheckoutPage() {
       return;
     }
 
+    // Проверяем, что выбранный адрес имеет телефон
+    const selectedAddress = addresses.find(addr => addr.id === selectedAddressId);
+    if (!selectedAddress?.phone) {
+      setError('В выбранном адресе отсутствует номер телефона. Пожалуйста, добавьте телефон в адрес доставки.');
+      return;
+    }
+
     setLoading(true);
     setError(null);
 
@@ -82,7 +89,7 @@ export default function CheckoutPage() {
       };
 
       const order = await api.orders.createOrder(orderData);
-      console.log('✅ Заказ создан:', order);
+      // Order created successfully
 
       // Создаем платеж
       const paymentData = {
@@ -93,7 +100,7 @@ export default function CheckoutPage() {
       };
 
       const payment = await api.payments.createPayment(paymentData);
-      console.log('✅ Платеж создан:', payment);
+              // Payment created successfully
 
       // Перенаправляем на страницу оплаты
       if (payment.paymentUrl) {
@@ -181,7 +188,7 @@ export default function CheckoutPage() {
                           selectedAddressId === address.id
                             ? 'border-primary bg-primary/5'
                             : 'border-border hover:border-primary/50'
-                        }`}
+                        } ${!address.phone ? 'border-red-200 bg-red-50' : ''}`}
                         onClick={() => setSelectedAddressId(address.id)}
                       >
                         <div className="flex items-start justify-between">
@@ -192,6 +199,9 @@ export default function CheckoutPage() {
                               </span>
                               {address.isDefault && (
                                 <Badge variant="secondary">По умолчанию</Badge>
+                              )}
+                              {!address.phone && (
+                                <Badge variant="destructive">Нет телефона</Badge>
                               )}
                             </div>
                             <p className="text-sm text-muted-foreground">
@@ -204,9 +214,13 @@ export default function CheckoutPage() {
                             <p className="text-sm text-muted-foreground">
                               {address.country}
                             </p>
-                            {address.phone && (
-                              <p className="text-sm text-muted-foreground">
-                                {address.phone}
+                            {address.phone ? (
+                              <p className="text-sm text-green-600 font-medium">
+                                📞 {address.phone}
+                              </p>
+                            ) : (
+                              <p className="text-sm text-red-600">
+                                ⚠️ Номер телефона не указан
                               </p>
                             )}
                           </div>

@@ -85,6 +85,25 @@ export class AdminParcelController {
     return this.parcelService.updateStatus(id, dto);
   }
 
+  @Patch(':id')
+  @ApiOperation({
+    summary: 'Обновить отправление',
+    description: 'Обновить данные отправления',
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'ID отправления',
+    example: 'uuid-parcel-id',
+  })
+  @ApiResponse({ status: 200, description: 'Отправление обновлено' })
+  @ApiResponse({ status: 404, description: 'Отправление не найдено' })
+  async updateParcel(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() dto: AdminUpdateParcelStatusDto,
+  ) {
+    return this.parcelService.updateStatus(id, dto);
+  }
+
   @Get('order/:orderId')
   @ApiOperation({
     summary: 'История отправлений заказа',

@@ -1,4 +1,4 @@
-import { Controller, Get, Patch, Param, Query, Body, UseGuards } from '@nestjs/common';
+import { Controller, Get, Patch, Post, Param, Query, Body, UseGuards } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
 import { UserRoleGuard } from '../../auth/guards/user-role/user-role.guard';
@@ -6,11 +6,23 @@ import { RolProtected } from '../../auth/decorators/rol-protected.decorator';
 import { Role, OrderStatus } from '@prisma/client';
 import { OrderAdminService } from './order-admin.service';
 import { OrderQueryDto } from '../dto/order-query.dto';
-import { IsEnum } from 'class-validator';
+import { IsEnum, IsString, IsOptional } from 'class-validator';
 
 class UpdateOrderStatusDto {
   @IsEnum(OrderStatus)
   status: OrderStatus;
+}
+
+class CreateParcelDto {
+  @IsString()
+  trackingNumber: string;
+
+  @IsString()
+  carrier: string;
+
+  @IsString()
+  @IsOptional()
+  comment?: string;
 }
 
 @ApiTags('Админ - Заказы')
@@ -55,5 +67,17 @@ export class OrderAdminController {
     @Body() updateOrderStatusDto: UpdateOrderStatusDto,
   ) {
     return this.orderAdminService.updateOrderStatus(orderId, updateOrderStatusDto.status);
+  }
+
+  @Post(':id/parcel')
+  @RolProtected(Role.admin)
+  @ApiOperation({ summary: 'Создать отправление для заказа (админ)' })
+  @ApiResponse({ status: 201, description: 'Отправление создано' })
+  @ApiResponse({ status: 404, description: 'Заказ не найден' })
+  async createParcel(
+    @Param('id') orderId: string,
+    @Body() createParcelDto: CreateParcelDto,
+  ) {
+    return this.orderAdminService.createParcel(orderId, createParcelDto);
   }
 } 

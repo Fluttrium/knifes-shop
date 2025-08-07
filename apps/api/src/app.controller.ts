@@ -1,4 +1,4 @@
-import { Controller, Get, Logger } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
 import {
   ApiOperation,
@@ -38,7 +38,6 @@ export class AppController {
     type: GetServerListeningResponse,
   }) //Swagger
   getHello(): GetServerListeningResponse {
-    Logger.log(`API is working`);
     return this.appService.getIsWorking();
   }
 }
