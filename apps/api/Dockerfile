@@ -37,7 +37,7 @@ RUN npx turbo run build --filter=nest-prisma-postgres-auth-api... --filter=@repo
 FROM node:18-alpine AS runner
 
 # Устанавливаем необходимые пакеты
-RUN apk add --no-cache dumb-init
+RUN apk add --no-cache dumb-init openssl
 
 # Создаем пользователя для безопасности
 RUN addgroup --system --gid 1001 nodejs
