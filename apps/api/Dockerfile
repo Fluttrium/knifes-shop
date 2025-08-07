@@ -28,7 +28,7 @@ RUN npm ci --ignore-scripts
 COPY . .
 
 # Собираем все пакеты с помощью Turbo
-RUN npx turbo run build --filter=api...
+RUN npx turbo run build --filter=nest-prisma-postgres-auth-api...
 
 # Этап production
 FROM node:18-alpine AS runner
