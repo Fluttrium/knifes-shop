@@ -31,7 +31,7 @@ COPY . .
 RUN npx prisma generate --schema=./apps/api/prisma/schema.prisma
 
 # Собираем все пакеты с помощью Turbo
-RUN npx turbo run build --filter=nest-prisma-postgres-auth-api...
+RUN npx turbo run build --filter=nest-prisma-postgres-auth-api... --filter=@repo/api-client...
 
 # Этап production
 FROM node:18-alpine AS runner
