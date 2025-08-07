@@ -27,6 +27,9 @@ RUN npm ci --ignore-scripts
 # Копируем исходный код
 COPY . .
 
+# Генерируем Prisma клиент
+RUN npx prisma generate --schema=./apps/api/prisma/schema.prisma
+
 # Собираем все пакеты с помощью Turbo
 RUN npx turbo run build --filter=nest-prisma-postgres-auth-api...
 
