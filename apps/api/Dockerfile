@@ -34,10 +34,10 @@ RUN npx prisma generate --schema=./apps/api/prisma/schema.prisma
 RUN npx turbo run build --filter=nest-prisma-postgres-auth-api... --filter=@repo/api-client...
 
 # Этап production
-FROM node:18-alpine AS runner
+FROM node:18-slim AS runner
 
-# Устанавливаем необходимые пакеты
-RUN apk add --no-cache dumb-init openssl
+# Устанавливаем dumb-init и необходимые пакеты для Prisma
+RUN apt-get update && apt-get install -y dumb-init openssl ca-certificates && rm -rf /var/lib/apt/lists/*
 
 # Создаем пользователя для безопасности
 RUN addgroup --system --gid 1001 nodejs
