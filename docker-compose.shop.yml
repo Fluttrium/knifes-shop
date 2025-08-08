@@ -1,0 +1,70 @@
+version: '3.8'
+
+services:
+  # API сервер
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+      target: runner
+    container_name: shop_api_prod
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: ${DATABASE_URL}
+      SHADOW_DATABASE_URL: ${SHADOW_DATABASE_URL}
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET}
+      JWT_EXP: ${JWT_EXP}
+      YOO_KASSA_SHOP_ID: ${YOO_KASSA_SHOP_ID}
+      YOO_KASSA_SECRET_KEY: ${YOO_KASSA_SECRET_KEY}
+      YOO_KASSA_API_URL: ${YOO_KASSA_API_URL}
+      FRONTEND_URL: https://knivesspb.fluttrium.com
+    ports:
+      - "3004:3004"
+    volumes:
+      - uploads_data:/app/uploads
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3004/api/v1/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '0.5'
+        reservations:
+          memory: 256M
+          cpus: '0.25'
+
+  # Web приложение
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+      target: runner
+    container_name: shop_web_prod
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      NEXT_PUBLIC_API_URL: https://knivesspb.fluttrium.com/api
+    ports:
+      - "3005:3000"
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+          cpus: '0.75'
+        reservations:
+          memory: 512M
+          cpus: '0.5'
+
+volumes:
+  uploads_data:
+    driver: local

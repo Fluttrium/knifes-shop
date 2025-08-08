@@ -1,0 +1,234 @@
+name: Deploy Shop to VPS
+on:
+  push:
+    branches: [main]
+
+env:
+  DEPLOY_PATH: /var/www/shop
+  PROJECT_NAME: shop
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build with Turbo
+        run: npx turbo run build
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_TOKEN }}
+
+      - name: Backup important files on VPS
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            # Создаем временную папку для бэкапа
+            BACKUP_DIR="/tmp/shop_backup_$(date +%s)"
+            mkdir -p "$BACKUP_DIR"
+            
+            if [ -d "${{ env.DEPLOY_PATH }}" ]; then
+              cd ${{ env.DEPLOY_PATH }}
+            
+              # Сохраняем важные файлы
+              for file in .env .env.local .env.production docker-compose.override.yml; do
+                if [ -f "$file" ]; then
+                  cp "$file" "$BACKUP_DIR/"
+                  echo "✓ Backed up: $file"
+                fi
+              done
+            
+              # Сохраняем volumes если есть
+              if [ -d "volumes" ]; then
+                cp -r volumes "$BACKUP_DIR/"
+                echo "✓ Backed up: volumes directory"
+              fi
+            fi
+            
+            # Сохраняем путь к бэкапу
+            echo "BACKUP_DIR=$BACKUP_DIR" > /tmp/deploy_backup_path
+            echo "Backup created at: $BACKUP_DIR"
+
+      - name: Clean deployment directory
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            # Создаем директорию если не существует
+            mkdir -p ${{ env.DEPLOY_PATH }}
+            
+            # Полностью очищаем содержимое (но не саму папку)
+            rm -rf ${{ env.DEPLOY_PATH }}/*
+            rm -rf ${{ env.DEPLOY_PATH }}/.[!.]*  # удаляем скрытые файлы
+            
+            echo "✓ Deployment directory cleaned"
+
+      - name: Copy files to VPS
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: 22
+          source: "./"
+          target: "${{ env.DEPLOY_PATH }}"
+          timeout: 120s
+
+      - name: Restore backed up files
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            cd ${{ env.DEPLOY_PATH }}
+            
+            # Получаем путь к бэкапу
+            if [ -f "/tmp/deploy_backup_path" ]; then
+              BACKUP_DIR=$(cat /tmp/deploy_backup_path | grep "BACKUP_DIR=" | cut -d'=' -f2)
+            
+              # Восстанавливаем файлы
+              if [ -d "$BACKUP_DIR" ]; then
+                for file in "$BACKUP_DIR"/*; do
+                  if [ -f "$file" ]; then
+                    filename=$(basename "$file")
+                    if [ "$filename" != "volumes" ]; then
+                      cp "$file" "./$filename"
+                      echo "✓ Restored: $filename"
+                    fi
+                  fi
+                done
+            
+                # Восстанавливаем volumes
+                if [ -d "$BACKUP_DIR/volumes" ]; then
+                  cp -r "$BACKUP_DIR/volumes" ./
+                  echo "✓ Restored: volumes directory"
+                fi
+            
+                # Удаляем временный бэкап
+                rm -rf "$BACKUP_DIR"
+                rm -f "/tmp/deploy_backup_path"
+              fi
+            fi
+            
+            # Устанавливаем права на выполнение для скриптов
+            find . -type f -name "*.sh" -exec chmod +x {} \;
+            
+            echo "✓ Files restored and permissions set"
+
+      - name: Deploy application
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            echo "${{ secrets.DOCKER_HUB_TOKEN }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
+            cd ${{ env.DEPLOY_PATH }}
+
+            # Показываем использование диска до сборки
+            echo "=== Disk usage before build ==="
+            df -h
+            
+            # Проверяем наличие docker-compose.shop.yml
+            if [ ! -f "docker-compose.shop.yml" ]; then
+              echo "❌ ERROR: docker-compose.shop.yml not found!"
+              ls -la
+              exit 1
+            fi
+            
+            echo "✓ docker-compose.shop.yml found"
+
+            # Останавливаем контейнеры с таймаутом
+            echo "=== Stopping containers ==="
+            timeout 60 docker-compose -f docker-compose.shop.yml -p ${{ env.PROJECT_NAME }} down || {
+              echo "Graceful shutdown failed, forcing stop..."
+              docker-compose -f docker-compose.shop.yml -p ${{ env.PROJECT_NAME }} kill
+              docker-compose -f docker-compose.shop.yml -p ${{ env.PROJECT_NAME }} rm -f
+            }
+            
+            # Очистка перед сборкой
+            echo "=== Cleaning Docker resources ==="
+            docker system prune -f
+            
+            # Собираем контейнеры
+            echo "=== Building containers ==="
+            if ! docker-compose -f docker-compose.shop.yml -p ${{ env.PROJECT_NAME }} build --no-cache; then
+              echo "❌ Build failed!"
+              exit 1
+            fi
+            
+            # Запускаем контейнеры
+            echo "=== Starting containers ==="
+            if ! docker-compose -f docker-compose.shop.yml -p ${{ env.PROJECT_NAME }} up -d; then
+              echo "❌ Failed to start containers!"
+              docker-compose -f docker-compose.shop.yml -p ${{ env.PROJECT_NAME }} logs
+              exit 1
+            fi
+            
+            echo "✓ Containers started successfully"
+
+      - name: Verify deployment
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            cd ${{ env.DEPLOY_PATH }}
+            
+            # Ждем инициализации контейнеров
+            echo "=== Waiting for containers to initialize ==="
+            sleep 30
+            
+            # Проверяем статус контейнеров
+            echo "=== Container status ==="
+            docker-compose -f docker-compose.shop.yml -p ${{ env.PROJECT_NAME }} ps
+            
+            # Проверяем что контейнеры действительно запущены
+            RUNNING_COUNT=$(docker-compose -f docker-compose.shop.yml -p ${{ env.PROJECT_NAME }} ps | grep "Up" | wc -l)
+            TOTAL_SERVICES=$(docker-compose -f docker-compose.shop.yml -p ${{ env.PROJECT_NAME }} config --services | wc -l)
+            
+            echo "Running containers: $RUNNING_COUNT / $TOTAL_SERVICES"
+            
+            if [ $RUNNING_COUNT -eq 0 ]; then
+              echo "❌ ERROR: No containers are running!"
+              echo "=== Container logs ==="
+              docker-compose -f docker-compose.shop.yml -p ${{ env.PROJECT_NAME }} logs --tail=100
+              exit 1
+            elif [ $RUNNING_COUNT -lt $TOTAL_SERVICES ]; then
+              echo "⚠️ WARNING: Not all containers are running"
+              echo "=== Logs for troubleshooting ==="
+              docker-compose -f docker-compose.shop.yml -p ${{ env.PROJECT_NAME }} logs --tail=50
+            else
+              echo "✅ All containers are running!"
+            fi
+            
+            # Финальная очистка после запуска
+            docker system prune -f
+            
+            echo "=== Running containers ==="
+            docker ps
+            
+            echo "=== Final disk usage ==="
+            df -h
+            
+            echo "=== Deployment completed ==="
