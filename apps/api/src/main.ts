@@ -38,7 +38,9 @@ export async function bootstrap() {
     origin: [
       'http://localhost:3000', 
       'http://localhost:3001',
-      'http://knivesspb.fluttrium.com'
+      'http://knivesspb.fluttrium.com',
+      'https://knivesspb.fluttrium.com',
+      'http://web:3000' // Внутренняя Docker сеть
     ],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
@@ -48,7 +50,8 @@ export async function bootstrap() {
       'X-Requested-With', 
       'Accept',
       'Cookie',
-      'Set-Cookie'
+      'Set-Cookie',
+      'X-CSRF-Token'
     ],
     exposedHeaders: ['Set-Cookie'],
   });

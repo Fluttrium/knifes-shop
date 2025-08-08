@@ -5,8 +5,24 @@ import axios, {
 } from "axios";
 
 // Переменные окружения для API
-const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL || "https://knivesspb.fluttrium.com/api/v1";
+// В продакшене внутри Docker используем внутренний URL, иначе - внешний
+const API_BASE_URL = (() => {
+  // Если явно задан URL в env - используем его
+  if (process.env.NEXT_PUBLIC_API_URL) {
+    return process.env.NEXT_PUBLIC_API_URL;
+  }
+  
+  // Fallback для разных окружений
+  if (typeof window === 'undefined') {
+    // Server-side рендеринг - возможно внутри Docker
+    return process.env.NODE_ENV === 'production' 
+      ? 'http://api:3004/api/v1'  // Внутренняя Docker сеть
+      : 'http://localhost:3001/api/v1'; // Локальная разработка
+  } else {
+    // Client-side - всегда внешний URL
+    return 'https://knivesspb.fluttrium.com/api/v1';
+  }
+})();
 
 // Флаг для предотвращения множественных запросов refresh
 let isRefreshing = false;

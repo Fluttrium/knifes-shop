@@ -11,21 +11,23 @@ services:
     restart: unless-stopped
     environment:
       NODE_ENV: production
-      DATABASE_URL: ${DATABASE_URL}
-      SHADOW_DATABASE_URL: ${SHADOW_DATABASE_URL}
-      JWT_SECRET: ${JWT_SECRET}
-      JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET}
-      JWT_EXP: ${JWT_EXP}
-      YOO_KASSA_SHOP_ID: ${YOO_KASSA_SHOP_ID}
-      YOO_KASSA_SECRET_KEY: ${YOO_KASSA_SECRET_KEY}
-      YOO_KASSA_API_URL: ${YOO_KASSA_API_URL}
+      DATABASE_URL: ${DATABASE_URL:-postgresql://postgres:postgres@host.docker.internal:5432/shop}
+      SHADOW_DATABASE_URL: ${SHADOW_DATABASE_URL:-postgresql://postgres:postgres@host.docker.internal:5432/shop_shadow}
+      JWT_SECRET: ${JWT_SECRET:-your-super-secret-jwt-key-change-this-in-production}
+      JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET:-your-super-secret-refresh-key-change-this-in-production}
+      JWT_EXP: ${JWT_EXP:-15m}
+      YOO_KASSA_SHOP_ID: ${YOO_KASSA_SHOP_ID:-your-shop-id}
+      YOO_KASSA_SECRET_KEY: ${YOO_KASSA_SECRET_KEY:-your-secret-key}
+      YOO_KASSA_API_URL: ${YOO_KASSA_API_URL:-https://api.yookassa.ru/v3}
       FRONTEND_URL: https://knivesspb.fluttrium.com
     ports:
       - "3004:3004"
+    networks:
+      - shop_network
     volumes:
       - uploads_data:/app/uploads
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3004/api/v1/"]
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3004/api/v1/"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -48,9 +50,13 @@ services:
     restart: unless-stopped
     environment:
       NODE_ENV: production
-      NEXT_PUBLIC_API_URL: https://knivesspb.fluttrium.com/api
+      NEXT_PUBLIC_API_URL: http://api:3004/api/v1
     ports:
       - "3005:3000"
+    networks:
+      - shop_network
+    depends_on:
+      - api
     healthcheck:
       test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000"]
       interval: 30s
@@ -68,3 +74,7 @@ services:
 volumes:
   uploads_data:
     driver: local
+
+networks:
+  shop_network:
+    driver: bridge

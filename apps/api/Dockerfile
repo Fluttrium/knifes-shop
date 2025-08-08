@@ -37,7 +37,7 @@ RUN npx turbo run build --filter=nest-prisma-postgres-auth-api... --filter=@repo
 FROM node:18-slim AS runner
 
 # Устанавливаем dumb-init и необходимые пакеты для Prisma
-RUN apt-get update && apt-get install -y dumb-init openssl ca-certificates && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y dumb-init openssl ca-certificates wget && rm -rf /var/lib/apt/lists/*
 
 # Создаем пользователя для безопасности
 RUN addgroup --system --gid 1001 nodejs
@@ -63,7 +63,7 @@ COPY --from=builder --chown=nestjs:nodejs /app/apps/api/prisma ./apps/api/prisma
 USER nestjs
 
 # Открываем порт
-EXPOSE 3001
+EXPOSE 3004
 
 # Используем dumb-init для правильной обработки сигналов
 ENTRYPOINT ["dumb-init", "--"]
