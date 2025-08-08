@@ -6,7 +6,7 @@ import axios, {
 
 // Переменные окружения для API
 const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL || "http://knivesspb.fluttrium.com/api/v1";
+  process.env.NEXT_PUBLIC_API_URL || "https://knivesspb.fluttrium.com/api/v1";
 
 // Флаг для предотвращения множественных запросов refresh
 let isRefreshing = false;
