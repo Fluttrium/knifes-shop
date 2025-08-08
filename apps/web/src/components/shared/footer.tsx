@@ -112,7 +112,7 @@ export const Footer: React.FC = () => {
             <ul className="space-y-2">
               <li>
                 <Link
-                  href="/about"
+                  href="/company"
                   className="text-gray-300 hover:text-white transition-colors"
                 >
                   О компании
@@ -128,7 +128,7 @@ export const Footer: React.FC = () => {
               </li>
               <li>
                 <Link
-                  href="/warranty"
+                  href="/garanty"
                   className="text-gray-300 hover:text-white transition-colors"
                 >
                   Гарантия
@@ -151,11 +151,11 @@ export const Footer: React.FC = () => {
             <div className="space-y-3">
               <div className="flex items-center space-x-3">
                 <Phone className="w-4 h-4 text-gray-400" />
-                <span className="text-gray-300">+7 (812) 123-45-67</span>
+                <span className="text-gray-300">+79214570057</span>
               </div>
               <div className="flex items-center space-x-3">
                 <Mail className="w-4 h-4 text-gray-400" />
-                <span className="text-gray-300">info@nozhi-spb.ru</span>
+                <span className="text-gray-300">fluttrium@gmail.com</span>
               </div>
               <div className="flex items-center space-x-3">
                 <MapPin className="w-4 h-4 text-gray-400" />
