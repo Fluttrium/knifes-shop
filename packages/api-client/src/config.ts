@@ -12,15 +12,26 @@ const API_BASE_URL = (() => {
     return process.env.NEXT_PUBLIC_API_URL;
   }
   
-  // Fallback для разных окружений
-  if (typeof window === 'undefined') {
-    // Server-side рендеринг - возможно внутри Docker
-    return process.env.NODE_ENV === 'production' 
-      ? 'http://api:3004/api/v1'  // Внутренняя Docker сеть
-      : 'http://localhost:3001/api/v1'; // Локальная разработка
+  // Проверяем окружение
+  const isServer = typeof globalThis !== 'undefined' && typeof (globalThis as any).window === 'undefined';
+  const isProduction = process.env.NODE_ENV === 'production';
+  
+  if (isServer) {
+    // Server-side рендеринг
+    if (isProduction) {
+      // В продакшене используем внутренний Docker URL для SSR
+      return 'http://api:3004/api/v1';
+    } else {
+      // В разработке используем localhost для SSR
+      return 'http://localhost:3001/api/v1';
+    }
   } else {
     // Client-side - всегда внешний URL
-    return 'https://knivesspb.fluttrium.com/api/v1';
+    if (isProduction) {
+      return 'https://knivesspb.fluttrium.com/api/v1';
+    } else {
+      return 'http://localhost:3001/api/v1';
+    }
   }
 })();
 
