@@ -13,7 +13,6 @@ import {
   XCircle, 
   Clock, 
   ArrowLeft,
-  DollarSign,
   Package
 } from "lucide-react";
 import api, { Payment } from "@repo/api-client";

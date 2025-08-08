@@ -4,49 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4176361d-84bf-49e8-bfd1-9c64d1c7c2d7" name="Changes" comment="корзина и рахное">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/prisma/schema.prisma" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/prisma/schema.prisma" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/prisma/seed.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/prisma/seed.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/app.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/app.controller.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/main.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/order/admin/order-admin.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/order/admin/order-admin.controller.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/order/admin/order-admin.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/order/admin/order-admin.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/order/order.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/order/order.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/order/order.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/order/order.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/payment/payment.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/payment/payment.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/product/admin/admin-parcel.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/product/admin/admin-parcel.controller.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/product/admin/admin-parcel.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/product/admin/admin-parcel.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/src/product/dto/admin-parcel.dto.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/product/dto/admin-parcel.dto.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/web/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/web/src/app/(main)/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web/src/app/(main)/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/web/src/app/checkout/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web/src/app/checkout/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/web/src/app/dashboard/categories/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web/src/app/dashboard/categories/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/web/src/app/dashboard/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web/src/app/dashboard/layout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/web/src/app/dashboard/orders/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web/src/app/dashboard/orders/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/web/src/app/dashboard/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web/src/app/dashboard/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/web/src/app/dashboard/payments/page.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/web/src/app/dashboard/products/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web/src/app/dashboard/products/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/web/src/app/dashboard/shipping/page.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/web/src/app/orders/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web/src/app/orders/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/web/src/components/admin-components/navigation/admin-nav.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web/src/components/admin-components/navigation/admin-nav.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/web/src/components/admin-components/products/products-table.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web/src/components/admin-components/products/products-table.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/web/src/components/shared/filters.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web/src/components/shared/filters.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/web/src/components/shared/product-card.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web/src/components/shared/product-card.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/web/src/components/shared/product-form.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web/src/components/shared/product-form.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/web/src/components/shared/products-group-list.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web/src/components/shared/products-group-list.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/web/src/components/ui/breadcrumb.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/web/src/lib/auth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web/src/lib/auth.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/api-client/src/auth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/api-client/src/auth.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/api-client/src/cart.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/api-client/src/cart.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/api-client/src/order.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/api-client/src/order.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/api-client/src/payment.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/api-client/src/payment.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/api-client/src/product.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/api-client/src/product.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/api-client/src/types/auth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/api-client/src/types/auth.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/api-client/src/types/order.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/api-client/src/types/order.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/api-client/src/types/product.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/api-client/src/types/product.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/api-client/src/user.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/api-client/src/user.ts" afterDir="false" />
+    <list default="true" id="4176361d-84bf-49e8-bfd1-9c64d1c7c2d7" name="Changes" comment="очень плотная работа">
+      <change afterPath="$PROJECT_DIR$/apps/web/public/logo1.png" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -98,62 +57,63 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SHELLCHECK.PATH&quot;: &quot;I do mind&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;prod&quot;,
-    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;20.17.0&quot;,
-    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;20.17.58&quot;,
-    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/romanmaksimov/WebstormProjects/knifes-shop/apps/web/src/components/signin-components&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;npm.api &gt; dev.executor&quot;: &quot;Run&quot;,
-    &quot;npm.api-client &gt; build.executor&quot;: &quot;Run&quot;,
-    &quot;npm.build.executor&quot;: &quot;Run&quot;,
-    &quot;npm.database &gt; build.executor&quot;: &quot;Run&quot;,
-    &quot;npm.database &gt; db:build.executor&quot;: &quot;Run&quot;,
-    &quot;npm.database &gt; db:generate.executor&quot;: &quot;Run&quot;,
-    &quot;npm.database &gt; db:migrate:deploy.executor&quot;: &quot;Run&quot;,
-    &quot;npm.database &gt; db:migrate:dev.executor&quot;: &quot;Run&quot;,
-    &quot;npm.database &gt; db:studio.executor&quot;: &quot;Run&quot;,
-    &quot;npm.database &gt; generate.executor&quot;: &quot;Run&quot;,
-    &quot;npm.dev.executor&quot;: &quot;Run&quot;,
-    &quot;npm.format.executor&quot;: &quot;Run&quot;,
-    &quot;npm.shared &gt; build.executor&quot;: &quot;Run&quot;,
-    &quot;npm.ui &gt; build:libs.executor&quot;: &quot;Run&quot;,
-    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;/Users/romanmaksimov/Desktop/fluttrium/shop/node_modules/prettier&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;Settings.JavaScript&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/Users/romanmaksimov/Desktop/fluttrium/shop/node_modules/typescript/lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHELLCHECK.PATH": "I do mind",
+    "dart.analysis.tool.window.visible": "false",
+    "git-widget-placeholder": "prod",
+    "javascript.nodejs.core.library.configured.version": "20.17.0",
+    "javascript.nodejs.core.library.typings.version": "20.17.58",
+    "junie.onboarding.icon.badge.shown": "true",
+    "last_opened_file_path": "/Users/franzlarionov/WebstormProjects/knifes-shop/apps/web/public",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "npm.api > dev.executor": "Run",
+    "npm.api-client > build.executor": "Run",
+    "npm.build.executor": "Run",
+    "npm.database > build.executor": "Run",
+    "npm.database > db:build.executor": "Run",
+    "npm.database > db:generate.executor": "Run",
+    "npm.database > db:migrate:deploy.executor": "Run",
+    "npm.database > db:migrate:dev.executor": "Run",
+    "npm.database > db:studio.executor": "Run",
+    "npm.database > generate.executor": "Run",
+    "npm.dev.executor": "Run",
+    "npm.format.executor": "Run",
+    "npm.shared > build.executor": "Run",
+    "npm.ui > build:libs.executor": "Run",
+    "prettierjs.PrettierConfiguration.Package": "/Users/franzlarionov/WebstormProjects/knifes-shop/node_modules/prettier",
+    "settings.editor.selected.configurable": "Settings.JavaScript",
+    "ts.external.directory.path": "/Users/franzlarionov/WebstormProjects/knifes-shop/node_modules/typescript/lib",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;postgresql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/apps/web/public" />
       <recent name="$PROJECT_DIR$/apps/web/src/components/signin-components" />
       <recent name="$PROJECT_DIR$/packages/typescript-config" />
       <recent name="$PROJECT_DIR$/packages/api-client" />
       <recent name="$PROJECT_DIR$/apps/api" />
-      <recent name="$PROJECT_DIR$/packages/shared/src/dto/user/entities" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/apps/web/public" />
       <recent name="$PROJECT_DIR$/apps/web/src/components/admin-components/ui" />
       <recent name="$PROJECT_DIR$/apps/web/src/app/signin" />
       <recent name="$PROJECT_DIR$/packages/shared/src" />
       <recent name="$PROJECT_DIR$/apps/api/src/user/entities" />
-      <recent name="$PROJECT_DIR$/packages/database" />
     </key>
   </component>
   <component name="RunManager" selected="npm.api-client &gt; build">
@@ -220,7 +180,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-09060db00ec0-JavaScript-WS-251.27812.50" />
+        <option value="bundled-js-predefined-d6986cc7102b-09060db00ec0-JavaScript-WS-251.26927.40" />
       </set>
     </attachedChunks>
   </component>
@@ -275,6 +235,7 @@
       <workItem from="1754487292644" duration="6353000" />
       <workItem from="1754566331962" duration="1785000" />
       <workItem from="1754588567637" duration="5490000" />
+      <workItem from="1754654270392" duration="1229000" />
     </task>
     <task id="LOCAL-00001" summary=".">
       <option name="closed" value="true" />
@@ -431,7 +392,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/prod" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
