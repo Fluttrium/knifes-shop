@@ -1,7 +1,7 @@
 name: Deploy Shop to VPS
 on:
   push:
-    branches: [main]
+    branches: [prod]
 
 env:
   DEPLOY_PATH: /var/www/shop
