@@ -60,11 +60,7 @@ export class UploadService {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
       this.logger.error(`Error uploading file: ${errorMessage}`);
       this.logger.error(`Error details:`, error);
-      
-      // Временный фиксированный URL для отладки
-      const fallbackUrl = `https://via.placeholder.com/300x200?text=${encodeURIComponent(file.originalname)}`;
-      this.logger.warn(`Using fallback URL: ${fallbackUrl}`);
-      return fallbackUrl;
+      throw new Error(`Failed to upload file: ${errorMessage}`);
     }
   }
 
