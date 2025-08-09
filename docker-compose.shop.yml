@@ -18,10 +18,8 @@ services:
       JWT_SECRET: ${JWT_SECRET:-your-super-secret-jwt-key-change-this-in-production}
       JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET:-your-super-secret-refresh-key-change-this-in-production}
       JWT_EXP: ${JWT_EXP:-15m}
-      YOO_KASSA_SHOP_ID: ${YOO_KASSA_SHOP_ID:-your-shop-id}
-      YOO_KASSA_SECRET_KEY: ${YOO_KASSA_SECRET_KEY:-your-secret-key}
-      YOO_KASSA_API_URL: ${YOO_KASSA_API_URL:-https://api.yookassa.ru/v3}
       FRONTEND_URL: https://knivesspb.fluttrium.com
+      # YOO_KASSA переменные берутся из .env файла через env_file
       S3_ACCESS_KEY_ID: WABBHFTJV3BVIVEPI15E
       S3_SECRET_ACCESS_KEY: fDgDrZd7BHKdSjPDyhEtD4YYyGEGBzLOiVfSMghd
       S3_BUCKET_NAME: ${S3_BUCKET_NAME:-468ed122-asleep}
