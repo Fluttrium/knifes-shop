@@ -138,6 +138,16 @@ export class PaymentService {
         throw new Error('YooKassa credentials not configured');
       }
 
+      // Проверяем, что не используются дефолтные значения
+      if (this.yooKassaShopId === 'your-shop-id' || this.yooKassaSecretKey === 'your-secret-key') {
+        throw new Error('YooKassa credentials are using default values. Please set proper environment variables.');
+      }
+
+      // Предупреждение о тестовом ключе в продакшене
+      if (this.yooKassaSecretKey.startsWith('test_') && process.env.NODE_ENV === 'production') {
+        console.warn('⚠️  WARNING: Using test YooKassa key in production environment!');
+      }
+
       // Создаем платеж в ЮKassa
       const yooKassaPayment = await this.createYooKassaPayment({
         orderId: payment.id,
