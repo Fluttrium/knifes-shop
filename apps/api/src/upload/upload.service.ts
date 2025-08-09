@@ -12,7 +12,7 @@ export class UploadService {
   private readonly region: string;
 
   constructor(private readonly configService: ConfigService) {
-    this.bucketName = this.configService.get<string>('S3_BUCKET_NAME', '468ed122-knives');
+    this.bucketName = this.configService.get<string>('S3_BUCKET_NAME', '468ed122-asleep');
     this.region = this.configService.get<string>('S3_REGION', 'ru-1');
     
     const accessKeyId = this.configService.get<string>('S3_ACCESS_KEY_ID');
