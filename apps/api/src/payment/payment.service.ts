@@ -130,7 +130,9 @@ export class PaymentService {
     try {
       // Проверяем, настроены ли ключи ЮKassa
       console.log('YooKassa Shop ID:', this.yooKassaShopId);
-      console.log('YooKassa Secret Key:', this.yooKassaSecretKey ? '***' : 'not set');
+      console.log('YooKassa Secret Key exists:', !!this.yooKassaSecretKey);
+      console.log('YooKassa Secret Key length:', this.yooKassaSecretKey?.length || 0);
+      console.log('YooKassa API URL:', this.yooKassaApiUrl);
       
       if (!this.yooKassaShopId || !this.yooKassaSecretKey) {
         throw new Error('YooKassa credentials not configured');
@@ -323,11 +325,21 @@ export class PaymentService {
       ? `${this.configService.get('FRONTEND_URL', 'http://localhost:3000')}/orders/${order.id}`
       : `${this.configService.get('FRONTEND_URL', 'http://localhost:3000')}/profile/orders`;
 
+    // Логируем данные для авторизации
+    const authString = `${this.yooKassaShopId}:${this.yooKassaSecretKey}`;
+    const authBase64 = Buffer.from(authString).toString('base64');
+    console.log('Auth string format check:', {
+      shopId: this.yooKassaShopId,
+      secretKeyFirst5: this.yooKassaSecretKey?.substring(0, 5) + '...',
+      authStringLength: authString.length,
+      base64Length: authBase64.length
+    });
+
     const response = await fetch(`${this.yooKassaApiUrl}/payments`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Basic ${Buffer.from(`${this.yooKassaShopId}:${this.yooKassaSecretKey}`).toString('base64')}`,
+        'Authorization': `Basic ${authBase64}`,
         'Idempotence-Key': paymentData.orderId,
       },
       body: JSON.stringify({
@@ -360,10 +372,11 @@ export class PaymentService {
   }
 
   private async getYooKassaPayment(paymentId: string): Promise<YooKassaPaymentResponse> {
+    const authBase64 = Buffer.from(`${this.yooKassaShopId}:${this.yooKassaSecretKey}`).toString('base64');
     const response = await fetch(`${this.yooKassaApiUrl}/payments/${paymentId}`, {
       method: 'GET',
       headers: {
-        'Authorization': `Basic ${Buffer.from(`${this.yooKassaShopId}:${this.yooKassaSecretKey}`).toString('base64')}`,
+        'Authorization': `Basic ${authBase64}`,
       },
     });
 
