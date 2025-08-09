@@ -11,8 +11,8 @@ services:
     restart: unless-stopped
     environment:
       NODE_ENV: production
-      DATABASE_URL: ${DATABASE_URL:-postgresql://postgres:postgres@host.docker.internal:5432/shop}
-      SHADOW_DATABASE_URL: ${SHADOW_DATABASE_URL:-postgresql://postgres:postgres@host.docker.internal:5432/shop_shadow}
+      DATABASE_URL: "postgresql://shopUser:3Mu%3Cas%3E%3D8HE-X%5C@185.211.170.182:5432/shop"
+      SHADOW_DATABASE_URL: "postgresql://shopUser:3Mu%3Cas%3E%3D8HE-X%5C@185.211.170.182:5432/shop_shadow"
       JWT_SECRET: ${JWT_SECRET:-your-super-secret-jwt-key-change-this-in-production}
       JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET:-your-super-secret-refresh-key-change-this-in-production}
       JWT_EXP: ${JWT_EXP:-15m}
