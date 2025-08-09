@@ -40,6 +40,8 @@ export async function bootstrap() {
       'http://localhost:3001',
       'http://knivesspb.fluttrium.com',
       'https://knivesspb.fluttrium.com',
+      'http://asleep.online',
+      'https://asleep.online',
       'http://web:3000' // Внутренняя Docker сеть
     ],
     credentials: true,

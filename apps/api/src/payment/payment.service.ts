@@ -331,6 +331,7 @@ export class PaymentService {
     console.log('Auth string format check:', {
       shopId: this.yooKassaShopId,
       secretKeyFirst5: this.yooKassaSecretKey?.substring(0, 5) + '...',
+      isTestKey: this.yooKassaSecretKey?.startsWith('test_'),
       authStringLength: authString.length,
       base64Length: authBase64.length
     });
@@ -426,5 +427,17 @@ export class PaymentService {
     }
 
     return null;
+  }
+
+  async checkYooKassaConfig() {
+    return {
+      shopId: this.yooKassaShopId,
+      secretKeyExists: !!this.yooKassaSecretKey,
+      secretKeyLength: this.yooKassaSecretKey?.length || 0,
+      secretKeyPrefix: this.yooKassaSecretKey?.substring(0, 10) + '...',
+      isTestKey: this.yooKassaSecretKey?.startsWith('test_'),
+      apiUrl: this.yooKassaApiUrl,
+      nodeEnv: process.env.NODE_ENV,
+    };
   }
 } 

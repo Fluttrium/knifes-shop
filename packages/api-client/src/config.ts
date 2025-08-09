@@ -28,7 +28,7 @@ const API_BASE_URL = (() => {
   } else {
     // Client-side - всегда внешний URL
     if (isProduction) {
-      return 'https://knivesspb.fluttrium.com/api/v1';
+      return 'https://asleep.online/api/v1';
     } else {
       return 'http://localhost:3001/api/v1';
     }
