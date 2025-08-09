@@ -9,6 +9,9 @@ import { FilterProvider } from "@/contexts/filter-context";
 import { Suspense } from "react";
 import api, { Category } from "@repo/api-client";
 
+// Принудительно делаем страницу динамической
+export const dynamic = 'force-dynamic';
+
 // Функция для получения категорий через API клиент
 async function getAllCategories(): Promise<Category[]> {
   try {
