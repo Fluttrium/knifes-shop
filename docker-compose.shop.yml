@@ -9,6 +9,8 @@ services:
       target: runner
     container_name: shop_api_prod
     restart: unless-stopped
+    env_file:
+      - apps/api/.env
     environment:
       NODE_ENV: production
       DATABASE_URL: "postgresql://shopUser:3Mu%3Cas%3E%3D8HE-X%5C@185.211.170.182:5432/shop"
