@@ -5,7 +5,7 @@ import axios, {
 } from "axios";
 
 
-const API_BASE_URL = 'http://localhost:3004/api/v1';
+const API_BASE_URL = 'https://knivesspb.fluttrium.com/api/v1';
 
 // Флаг для предотвращения множественных запросов refresh
 let isRefreshing = false;
