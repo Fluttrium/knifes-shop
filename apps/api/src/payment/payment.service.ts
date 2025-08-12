@@ -59,18 +59,25 @@ export class PaymentService {
   private readonly yooKassaSecretKey: string;
   private readonly yooKassaApiUrl: string;
 
-  constructor(
-    private prisma: PrismaService,
-    private configService: ConfigService,
-  ) {
-    this.yooKassaShopId = this.configService.get<string>('YOO_KASSA_SHOP_ID');
-    this.yooKassaSecretKey = this.configService.get<string>(
-      'YOO_KASSA_SECRET_KEY',
-    );
-    this.yooKassaApiUrl = this.configService.get<string>(
-      'YOO_KASSA_API_URL',
-      'https://api.yookassa.ru/v3',
-    );
+  constructor(private prisma: PrismaService) {
+    this.yooKassaShopId = process.env.YOO_KASSA_SHOP_ID;
+    this.yooKassaSecretKey = process.env.YOO_KASSA_SECRET_KEY;
+    this.yooKassaApiUrl = process.env.YOO_KASSA_API_URL || 'https://api.yookassa.ru/v3';
+
+    // Проверка наличия обязательных переменных
+    if (!this.yooKassaShopId || !this.yooKassaSecretKey) {
+      throw new Error('YooKassa credentials are not configured in environment variables');
+    }
+
+    // Проверка на тестовые значения
+    if (
+      this.yooKassaShopId === 'your-shop-id' ||
+      this.yooKassaSecretKey === 'your-secret-key'
+    ) {
+      throw new Error(
+        'YooKassa credentials are using default values. Please set proper environment variables.',
+      );
+    }
   }
 
   async createPayment(createPaymentDto: CreatePaymentDto, userId: string) {
@@ -364,10 +371,11 @@ export class PaymentService {
       select: { id: true },
     });
 
+    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
     const returnUrl = order
-      ? `${this.configService.get('FRONTEND_URL', 'http://localhost:3000')}/orders/${order.id}`
-      : `${this.configService.get('FRONTEND_URL', 'http://localhost:3000')}/profile/orders`;
+      ? `${frontendUrl}/orders/${order.id}`
 
+      : `${frontendUrl}/profile/orders`;
     // Логируем данные для авторизации
     const authString = `${this.yooKassaShopId}:${this.yooKassaSecretKey}`;
     const authBase64 = Buffer.from(authString).toString('base64');
