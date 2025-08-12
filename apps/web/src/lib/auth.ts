@@ -88,9 +88,9 @@ class AuthService {
   async checkAuth(): Promise<void> {
     try {
       this.setState({ isLoading: true });
-      
+
       const isAuth = await api.auth.isAuthenticated();
-      
+
       if (isAuth) {
         const user = await api.auth.getCurrentUser();
         this.setState({
@@ -111,7 +111,7 @@ class AuthService {
         });
       }
     } catch (error) {
-      console.error('Auth check error:', error);
+      console.error("Auth check error:", error);
       this.setState({
         user: null,
         isAuthenticated: false,

@@ -1,5 +1,12 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsString, IsEnum, IsOptional, IsUUID, IsNumber, IsPositive } from 'class-validator';
+import {
+  IsString,
+  IsEnum,
+  IsOptional,
+  IsUUID,
+  IsNumber,
+  IsPositive,
+} from 'class-validator';
 import { ParcelStatus } from '@prisma/client';
 import { Type } from 'class-transformer';
 
@@ -29,7 +36,10 @@ export class AdminParcelFilterDto {
   @IsPositive()
   page?: number;
 
-  @ApiPropertyOptional({ description: 'Количество элементов на странице', example: 10 })
+  @ApiPropertyOptional({
+    description: 'Количество элементов на странице',
+    example: 10,
+  })
   @IsOptional()
   @Type(() => Number)
   @IsNumber()

@@ -1,17 +1,17 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { useAuth } from '@/hooks/use-auth';
-import { api } from '@repo/api-client';
-import type { Order } from '@repo/api-client';
-import { Container } from '@/components/shared/container';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Skeleton } from '@/components/ui/skeleton';
-import { Package, Eye, ArrowRight } from 'lucide-react';
-import Link from 'next/link';
-import Image from 'next/image';
+import { useEffect, useState } from "react";
+import { useAuth } from "@/hooks/use-auth";
+import { api } from "@repo/api-client";
+import type { Order } from "@repo/api-client";
+import { Container } from "@/components/shared/container";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Package, Eye, ArrowRight } from "lucide-react";
+import Link from "next/link";
+import Image from "next/image";
 
 export default function OrdersPage() {
   const { isAuthenticated } = useAuth();
@@ -27,7 +27,7 @@ export default function OrdersPage() {
 
   const fetchOrders = async () => {
     try {
-          const response = await api.orders.getOrders();
+      const response = await api.orders.getOrders();
       setOrders(response.data || []);
     } catch (err) {
       console.error("❌ Ошибка при загрузке заказов:", err);
@@ -57,7 +57,7 @@ export default function OrdersPage() {
   };
 
   const formatDate = (date: Date | string) => {
-    const dateObj = typeof date === 'string' ? new Date(date) : date;
+    const dateObj = typeof date === "string" ? new Date(date) : date;
     return dateObj.toLocaleDateString("ru-RU", {
       year: "numeric",
       month: "long",
@@ -119,7 +119,10 @@ export default function OrdersPage() {
             <CardContent className="pt-6">
               <div className="text-center text-red-600">
                 <p>{error}</p>
-                <Button onClick={() => window.location.reload()} className="mt-4">
+                <Button
+                  onClick={() => window.location.reload()}
+                  className="mt-4"
+                >
                   Попробовать снова
                 </Button>
               </div>
@@ -140,7 +143,9 @@ export default function OrdersPage() {
             <CardContent className="pt-6">
               <div className="text-center py-8">
                 <Package className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
-                <h3 className="text-lg font-semibold mb-2">У вас пока нет заказов</h3>
+                <h3 className="text-lg font-semibold mb-2">
+                  У вас пока нет заказов
+                </h3>
                 <p className="text-muted-foreground mb-4">
                   Сделайте свой первый заказ и он появится здесь
                 </p>
@@ -184,21 +189,29 @@ export default function OrdersPage() {
                     <div className="space-y-3">
                       {order.items.slice(0, 3).map((item) => {
                         return (
-                          <div key={item.id} className="flex items-center space-x-3">
+                          <div
+                            key={item.id}
+                            className="flex items-center space-x-3"
+                          >
                             <div className="relative w-12 h-12 flex-shrink-0">
                               <div className="w-full h-full bg-muted rounded-md flex items-center justify-center">
-                                <span className="text-muted-foreground text-xs">Нет фото</span>
+                                <span className="text-muted-foreground text-xs">
+                                  Нет фото
+                                </span>
                               </div>
                             </div>
                             <div className="flex-1 min-w-0">
-                              <p className="font-medium truncate">{item.productName}</p>
+                              <p className="font-medium truncate">
+                                {item.productName}
+                              </p>
                               <p className="text-sm text-muted-foreground">
-                                {item.quantity} шт. × {item.unitPrice.toLocaleString('ru-RU')} ₽
+                                {item.quantity} шт. ×{" "}
+                                {item.unitPrice.toLocaleString("ru-RU")} ₽
                               </p>
                             </div>
                             <div className="text-right">
                               <p className="font-semibold">
-                                {item.totalPrice.toLocaleString('ru-RU')} ₽
+                                {item.totalPrice.toLocaleString("ru-RU")} ₽
                               </p>
                             </div>
                           </div>
@@ -215,7 +228,7 @@ export default function OrdersPage() {
                       <div className="flex justify-between items-center">
                         <span className="text-lg font-semibold">Итого:</span>
                         <span className="text-lg font-semibold">
-                          {order.totalAmount.toLocaleString('ru-RU')} ₽
+                          {order.totalAmount.toLocaleString("ru-RU")} ₽
                         </span>
                       </div>
                     </div>
@@ -228,4 +241,4 @@ export default function OrdersPage() {
       </div>
     </Container>
   );
-} 
+}

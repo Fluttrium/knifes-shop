@@ -1,5 +1,10 @@
 import { Controller, Get, Query, UseGuards } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiResponse,
+  ApiBearerAuth,
+} from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { UserRoleGuard } from '../auth/guards/user-role/user-role.guard';
 import { RolProtected } from '../auth/decorators/rol-protected.decorator';
@@ -28,4 +33,4 @@ export class UserAdminController {
   async getUserStatistics() {
     return this.userAdminService.getUserStatistics();
   }
-} 
+}

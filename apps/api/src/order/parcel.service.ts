@@ -9,7 +9,10 @@ export class ParcelService {
   /**
    * Создает посылку для заказа
    */
-  async createParcelForOrder(orderId: string, carrier: string = 'Стандартная доставка') {
+  async createParcelForOrder(
+    orderId: string,
+    carrier: string = 'Стандартная доставка',
+  ) {
     return this.prisma.parcel.create({
       data: {
         orderId,
@@ -148,7 +151,7 @@ export class ParcelService {
    */
   async updateParcelStatusByOrderStatus(orderId: string, orderStatus: string) {
     const parcel = await this.getParcelByOrderId(orderId);
-    
+
     if (!parcel) {
       return null;
     }
@@ -181,6 +184,11 @@ export class ParcelService {
         return parcel;
     }
 
-    return this.updateParcelStatus(parcel.id, newParcelStatus, undefined, comment);
+    return this.updateParcelStatus(
+      parcel.id,
+      newParcelStatus,
+      undefined,
+      comment,
+    );
   }
-} 
+}

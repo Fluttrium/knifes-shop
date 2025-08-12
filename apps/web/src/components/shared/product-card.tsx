@@ -49,10 +49,10 @@ export const ProductCard: React.FC<Props> = ({
 
   const getMainImage = () => {
     if (images && images.length > 0) {
-      const primaryImage = images.find(img => img.isPrimary);
+      const primaryImage = images.find((img) => img.isPrimary);
       return primaryImage?.url || images[0]?.url;
     }
-    return imageUrl || '/placeholder-image.jpg';
+    return imageUrl || "/placeholder-image.jpg";
   };
 
   return (
@@ -83,7 +83,10 @@ export const ProductCard: React.FC<Props> = ({
                 </Badge>
               )}
               {isOnSale && discountPercent > 0 && (
-                <Badge variant="destructive" className="text-xs px-2 py-1 shadow-sm">
+                <Badge
+                  variant="destructive"
+                  className="text-xs px-2 py-1 shadow-sm"
+                >
                   -{discountPercent}%
                 </Badge>
               )}

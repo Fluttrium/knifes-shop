@@ -1,5 +1,19 @@
-import { Controller, Get, Patch, Post, Param, Query, Body, UseGuards } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
+import {
+  Controller,
+  Get,
+  Patch,
+  Post,
+  Param,
+  Query,
+  Body,
+  UseGuards,
+} from '@nestjs/common';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiResponse,
+  ApiBearerAuth,
+} from '@nestjs/swagger';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
 import { UserRoleGuard } from '../../auth/guards/user-role/user-role.guard';
 import { RolProtected } from '../../auth/decorators/rol-protected.decorator';
@@ -66,7 +80,10 @@ export class OrderAdminController {
     @Param('id') orderId: string,
     @Body() updateOrderStatusDto: UpdateOrderStatusDto,
   ) {
-    return this.orderAdminService.updateOrderStatus(orderId, updateOrderStatusDto.status);
+    return this.orderAdminService.updateOrderStatus(
+      orderId,
+      updateOrderStatusDto.status,
+    );
   }
 
   @Post(':id/parcel')
@@ -80,4 +97,4 @@ export class OrderAdminController {
   ) {
     return this.orderAdminService.createParcel(orderId, createParcelDto);
   }
-} 
+}

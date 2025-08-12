@@ -7,13 +7,13 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
-import { 
-  CreditCard, 
-  CheckCircle, 
-  XCircle, 
-  Clock, 
+import {
+  CreditCard,
+  CheckCircle,
+  XCircle,
+  Clock,
   ArrowLeft,
-  Package
+  Package,
 } from "lucide-react";
 import api, { Payment } from "@repo/api-client";
 import { useAuth } from "@/hooks/use-auth";
@@ -32,7 +32,7 @@ export default function TestPaymentPage() {
 
   useEffect(() => {
     if (!isAuthenticated) {
-      router.push('/signin');
+      router.push("/signin");
       return;
     }
 
@@ -56,12 +56,12 @@ export default function TestPaymentPage() {
     setProcessing(true);
     try {
       // Имитируем успешную оплату
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+
       // Обновляем статус платежа через админский API
       await api.payments.updatePaymentStatusAdmin(paymentId, {
         status: "paid",
-        comment: "Тестовая оплата"
+        comment: "Тестовая оплата",
       });
 
       // Перенаправляем на страницу заказа
@@ -80,12 +80,12 @@ export default function TestPaymentPage() {
     setProcessing(true);
     try {
       // Имитируем неудачную оплату
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
       // Обновляем статус платежа через админский API
       await api.payments.updatePaymentStatusAdmin(paymentId, {
         status: "failed",
-        comment: "Тестовая неудачная оплата"
+        comment: "Тестовая неудачная оплата",
       });
 
       setError("Платеж не прошел");
@@ -150,11 +150,12 @@ export default function TestPaymentPage() {
         <div className="flex flex-col items-center justify-center min-h-[400px] space-y-4">
           <CreditCard className="h-16 w-16 text-muted-foreground" />
           <h2 className="text-2xl font-semibold">Платеж не найден</h2>
-          <p className="text-muted-foreground text-center">{error || "Платеж не найден"}</p>
+          <p className="text-muted-foreground text-center">
+            {error || "Платеж не найден"}
+          </p>
           <Link href="/profile/orders">
             <Button>
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              К заказам
+              <ArrowLeft className="h-4 w-4 mr-2" />К заказам
             </Button>
           </Link>
         </div>
@@ -164,16 +165,32 @@ export default function TestPaymentPage() {
 
   const getStatusBadge = (status: string) => {
     const statusConfig = {
-      pending: { label: "Ожидает оплаты", variant: "secondary" as const, icon: Clock },
-      paid: { label: "Оплачен", variant: "default" as const, icon: CheckCircle },
-      failed: { label: "Ошибка оплаты", variant: "destructive" as const, icon: XCircle },
-      refunded: { label: "Возвращен", variant: "outline" as const, icon: XCircle },
+      pending: {
+        label: "Ожидает оплаты",
+        variant: "secondary" as const,
+        icon: Clock,
+      },
+      paid: {
+        label: "Оплачен",
+        variant: "default" as const,
+        icon: CheckCircle,
+      },
+      failed: {
+        label: "Ошибка оплаты",
+        variant: "destructive" as const,
+        icon: XCircle,
+      },
+      refunded: {
+        label: "Возвращен",
+        variant: "outline" as const,
+        icon: XCircle,
+      },
     };
 
     const config = statusConfig[status as keyof typeof statusConfig] || {
       label: status,
       variant: "secondary" as const,
-      icon: Clock
+      icon: Clock,
     };
 
     return (
@@ -192,8 +209,7 @@ export default function TestPaymentPage() {
           <div className="flex items-center gap-4 mb-2">
             <Link href="/profile/orders">
               <Button variant="ghost" size="sm">
-                <ArrowLeft className="h-4 w-4 mr-2" />
-                К заказам
+                <ArrowLeft className="h-4 w-4 mr-2" />К заказам
               </Button>
             </Link>
             <h1 className="text-3xl font-bold">Тестовая оплата</h1>
@@ -214,7 +230,9 @@ export default function TestPaymentPage() {
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="flex justify-between items-center">
-                <span className="text-sm text-muted-foreground">ID платежа:</span>
+                <span className="text-sm text-muted-foreground">
+                  ID платежа:
+                </span>
                 <span className="font-mono text-sm">{payment.id}</span>
               </div>
               <div className="flex justify-between items-center">
@@ -223,19 +241,25 @@ export default function TestPaymentPage() {
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-sm text-muted-foreground">Сумма:</span>
-                <span className="font-semibold text-lg">{formatPrice(payment.amount)}</span>
+                <span className="font-semibold text-lg">
+                  {formatPrice(payment.amount)}
+                </span>
               </div>
               {payment.comment && (
                 <div className="flex justify-between items-start">
-                  <span className="text-sm text-muted-foreground">Описание:</span>
-                  <span className="text-sm text-right max-w-xs">{payment.comment}</span>
+                  <span className="text-sm text-muted-foreground">
+                    Описание:
+                  </span>
+                  <span className="text-sm text-right max-w-xs">
+                    {payment.comment}
+                  </span>
                 </div>
               )}
             </CardContent>
           </Card>
 
           {/* Тестовые кнопки */}
-          {payment.status === 'pending' && (
+          {payment.status === "pending" && (
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
@@ -247,9 +271,9 @@ export default function TestPaymentPage() {
                 <p className="text-sm text-muted-foreground">
                   Выберите результат тестирования платежа:
                 </p>
-                
+
                 <div className="grid grid-cols-2 gap-4">
-                  <Button 
+                  <Button
                     onClick={handleSuccessPayment}
                     disabled={processing}
                     className="bg-green-600 hover:bg-green-700"
@@ -266,8 +290,8 @@ export default function TestPaymentPage() {
                       </div>
                     )}
                   </Button>
-                  
-                  <Button 
+
+                  <Button
                     onClick={handleFailedPayment}
                     disabled={processing}
                     variant="destructive"
@@ -287,42 +311,45 @@ export default function TestPaymentPage() {
                 </div>
 
                 <p className="text-xs text-muted-foreground text-center">
-                  Это тестовая среда. В реальном приложении здесь будет интеграция с платежной системой.
+                  Это тестовая среда. В реальном приложении здесь будет
+                  интеграция с платежной системой.
                 </p>
               </CardContent>
             </Card>
           )}
 
           {/* Результат */}
-          {payment.status === 'paid' && (
+          {payment.status === "paid" && (
             <Card className="border-green-200 bg-green-50">
               <CardContent className="p-6">
                 <div className="flex items-center gap-3 text-green-800">
                   <CheckCircle className="h-6 w-6" />
                   <div>
                     <h3 className="font-semibold">Оплата прошла успешно!</h3>
-                    <p className="text-sm">Ваш заказ подтвержден и будет обработан.</p>
+                    <p className="text-sm">
+                      Ваш заказ подтвержден и будет обработан.
+                    </p>
                   </div>
                 </div>
                 <div className="mt-4">
                   <Link href={`/orders/${payment.orderId}`}>
-                    <Button className="w-full">
-                      Перейти к заказу
-                    </Button>
+                    <Button className="w-full">Перейти к заказу</Button>
                   </Link>
                 </div>
               </CardContent>
             </Card>
           )}
 
-          {payment.status === 'failed' && (
+          {payment.status === "failed" && (
             <Card className="border-red-200 bg-red-50">
               <CardContent className="p-6">
                 <div className="flex items-center gap-3 text-red-800">
                   <XCircle className="h-6 w-6" />
                   <div>
                     <h3 className="font-semibold">Ошибка оплаты</h3>
-                    <p className="text-sm">Платеж не прошел. Попробуйте еще раз.</p>
+                    <p className="text-sm">
+                      Платеж не прошел. Попробуйте еще раз.
+                    </p>
                   </div>
                 </div>
                 <div className="mt-4">

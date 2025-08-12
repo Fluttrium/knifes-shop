@@ -24,11 +24,11 @@ export default function SettingsPage() {
   });
 
   const handleNotificationChange = (key: string, value: boolean) => {
-    setNotifications(prev => ({ ...prev, [key]: value }));
+    setNotifications((prev) => ({ ...prev, [key]: value }));
   };
 
   const handlePrivacyChange = (key: string, value: boolean) => {
-    setPrivacy(prev => ({ ...prev, [key]: value }));
+    setPrivacy((prev) => ({ ...prev, [key]: value }));
   };
 
   return (
@@ -50,48 +50,66 @@ export default function SettingsPage() {
           <div className="flex items-center justify-between">
             <div>
               <Label htmlFor="email-notifications">Email уведомления</Label>
-              <p className="text-sm text-gray-600">Получать уведомления на email</p>
+              <p className="text-sm text-gray-600">
+                Получать уведомления на email
+              </p>
             </div>
             <Switch
               id="email-notifications"
               checked={notifications.email}
-              onCheckedChange={(checked) => handleNotificationChange('email', checked)}
+              onCheckedChange={(checked) =>
+                handleNotificationChange("email", checked)
+              }
             />
           </div>
 
           <div className="flex items-center justify-between">
             <div>
               <Label htmlFor="sms-notifications">SMS уведомления</Label>
-              <p className="text-sm text-gray-600">Получать уведомления по SMS</p>
+              <p className="text-sm text-gray-600">
+                Получать уведомления по SMS
+              </p>
             </div>
             <Switch
               id="sms-notifications"
               checked={notifications.sms}
-              onCheckedChange={(checked) => handleNotificationChange('sms', checked)}
+              onCheckedChange={(checked) =>
+                handleNotificationChange("sms", checked)
+              }
             />
           </div>
 
           <div className="flex items-center justify-between">
             <div>
               <Label htmlFor="push-notifications">Push уведомления</Label>
-              <p className="text-sm text-gray-600">Получать push уведомления в браузере</p>
+              <p className="text-sm text-gray-600">
+                Получать push уведомления в браузере
+              </p>
             </div>
             <Switch
               id="push-notifications"
               checked={notifications.push}
-              onCheckedChange={(checked) => handleNotificationChange('push', checked)}
+              onCheckedChange={(checked) =>
+                handleNotificationChange("push", checked)
+              }
             />
           </div>
 
           <div className="flex items-center justify-between">
             <div>
-              <Label htmlFor="marketing-notifications">Маркетинговые уведомления</Label>
-              <p className="text-sm text-gray-600">Получать информацию о скидках и акциях</p>
+              <Label htmlFor="marketing-notifications">
+                Маркетинговые уведомления
+              </Label>
+              <p className="text-sm text-gray-600">
+                Получать информацию о скидках и акциях
+              </p>
             </div>
             <Switch
               id="marketing-notifications"
               checked={notifications.marketing}
-              onCheckedChange={(checked) => handleNotificationChange('marketing', checked)}
+              onCheckedChange={(checked) =>
+                handleNotificationChange("marketing", checked)
+              }
             />
           </div>
         </CardContent>
@@ -109,36 +127,48 @@ export default function SettingsPage() {
           <div className="flex items-center justify-between">
             <div>
               <Label htmlFor="profile-visible">Видимость профиля</Label>
-              <p className="text-sm text-gray-600">Показывать профиль другим пользователям</p>
+              <p className="text-sm text-gray-600">
+                Показывать профиль другим пользователям
+              </p>
             </div>
             <Switch
               id="profile-visible"
               checked={privacy.profileVisible}
-              onCheckedChange={(checked) => handlePrivacyChange('profileVisible', checked)}
+              onCheckedChange={(checked) =>
+                handlePrivacyChange("profileVisible", checked)
+              }
             />
           </div>
 
           <div className="flex items-center justify-between">
             <div>
               <Label htmlFor="order-history">История заказов</Label>
-              <p className="text-sm text-gray-600">Показывать историю заказов в профиле</p>
+              <p className="text-sm text-gray-600">
+                Показывать историю заказов в профиле
+              </p>
             </div>
             <Switch
               id="order-history"
               checked={privacy.orderHistory}
-              onCheckedChange={(checked) => handlePrivacyChange('orderHistory', checked)}
+              onCheckedChange={(checked) =>
+                handlePrivacyChange("orderHistory", checked)
+              }
             />
           </div>
 
           <div className="flex items-center justify-between">
             <div>
               <Label htmlFor="address-sharing">Делиться адресами</Label>
-              <p className="text-sm text-gray-600">Разрешить использование адресов для аналитики</p>
+              <p className="text-sm text-gray-600">
+                Разрешить использование адресов для аналитики
+              </p>
             </div>
             <Switch
               id="address-sharing"
               checked={privacy.addressSharing}
-              onCheckedChange={(checked) => handlePrivacyChange('addressSharing', checked)}
+              onCheckedChange={(checked) =>
+                handlePrivacyChange("addressSharing", checked)
+              }
             />
           </div>
         </CardContent>
@@ -194,7 +224,8 @@ export default function SettingsPage() {
         </CardHeader>
         <CardContent className="space-y-4">
           <p className="text-gray-600">
-            Вы можете экспортировать все ваши данные в формате JSON. Это может занять несколько минут.
+            Вы можете экспортировать все ваши данные в формате JSON. Это может
+            занять несколько минут.
           </p>
           <Button variant="outline">Экспортировать данные</Button>
         </CardContent>
@@ -210,11 +241,12 @@ export default function SettingsPage() {
         </CardHeader>
         <CardContent className="space-y-4">
           <p className="text-gray-600">
-            Удаление аккаунта необратимо. Все ваши данные будут удалены навсегда.
+            Удаление аккаунта необратимо. Все ваши данные будут удалены
+            навсегда.
           </p>
           <Button variant="destructive">Удалить аккаунт</Button>
         </CardContent>
       </Card>
     </div>
   );
-} 
+}

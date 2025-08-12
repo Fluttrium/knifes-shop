@@ -1,11 +1,10 @@
-
-import type { Metadata } from 'next';
-import { Suspense } from 'react';
+import type { Metadata } from "next";
+import { Suspense } from "react";
 import { Header } from "@/components/shared/header";
 import { Footer } from "@/components/shared/footer";
 
 export const metadata: Metadata = {
-  title: 'Ножи СПБ | О Компании',
+  title: "Ножи СПБ | О Компании",
 };
 
 interface HomeLayoutProps {

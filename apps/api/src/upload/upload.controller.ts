@@ -12,13 +12,23 @@ import {
 } from '@nestjs/common';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import type { Multer } from 'multer';
-import { ApiTags, ApiConsumes, ApiBody, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiConsumes,
+  ApiBody,
+  ApiOperation,
+  ApiResponse,
+} from '@nestjs/swagger';
 import { UploadService } from './upload.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RolProtected } from '../auth/decorators/rol-protected.decorator';
 import { ValidRoles } from '../auth/interfaces/valid-roles';
 import { UserRoleGuard } from '../auth/guards/user-role/user-role.guard';
-import { UploadFileDto, UploadMultipleFilesDto, PresignedUrlDto } from './dto/upload-file.dto';
+import {
+  UploadFileDto,
+  UploadMultipleFilesDto,
+  PresignedUrlDto,
+} from './dto/upload-file.dto';
 
 @ApiTags('Upload')
 @Controller('upload')
@@ -55,7 +65,10 @@ export class UploadController {
       throw new BadRequestException('Файл не предоставлен');
     }
 
-    const fileUrl = await this.uploadService.uploadFile(file, uploadFileDto.folder);
+    const fileUrl = await this.uploadService.uploadFile(
+      file,
+      uploadFileDto.folder,
+    );
     return {
       success: true,
       data: {
@@ -100,7 +113,10 @@ export class UploadController {
       throw new BadRequestException('Файлы не предоставлены');
     }
 
-    const fileUrls = await this.uploadService.uploadMultipleFiles(files, uploadMultipleFilesDto.folder);
+    const fileUrls = await this.uploadService.uploadMultipleFiles(
+      files,
+      uploadMultipleFilesDto.folder,
+    );
     const fileData = files.map((file, index) => ({
       url: fileUrls[index],
       originalName: file.originalname,
@@ -149,7 +165,10 @@ export class UploadController {
   })
   @ApiResponse({ status: 200, description: 'Presigned URL получен' })
   async getPresignedUrl(@Body() presignedUrlDto: PresignedUrlDto) {
-    const presignedUrl = await this.uploadService.getPresignedUrl(presignedUrlDto.key, presignedUrlDto.expiresIn);
+    const presignedUrl = await this.uploadService.getPresignedUrl(
+      presignedUrlDto.key,
+      presignedUrlDto.expiresIn,
+    );
     return {
       success: true,
       data: {
@@ -159,4 +178,4 @@ export class UploadController {
       },
     };
   }
-} 
+}

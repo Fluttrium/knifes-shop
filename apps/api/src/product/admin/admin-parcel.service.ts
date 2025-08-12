@@ -14,23 +14,24 @@ export class AdminParcelService {
     const where: any = {};
     if (filter.orderId) where.orderId = filter.orderId;
     if (filter.status) where.status = filter.status;
-    if (filter.trackingNumber) where.trackingNumber = { contains: filter.trackingNumber };
-    
+    if (filter.trackingNumber)
+      where.trackingNumber = { contains: filter.trackingNumber };
+
     const parcels = await this.prisma.parcel.findMany({
       where,
       include: {
-        order: { 
-          select: { 
-            orderNumber: true, 
+        order: {
+          select: {
+            orderNumber: true,
             userId: true,
             user: {
               select: {
                 id: true,
                 name: true,
                 email: true,
-              }
-            }
-          } 
+              },
+            },
+          },
         },
       },
       orderBy: { createdAt: 'desc' },

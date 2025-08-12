@@ -26,7 +26,7 @@ export const ProductsGroupList: React.FC<Props> = ({
     const fetchProducts = async () => {
       try {
         setLoading(true);
-        
+
         let response;
         if (isSale) {
           // Получаем товары на распродаже с фильтрами
@@ -46,11 +46,11 @@ export const ProductsGroupList: React.FC<Props> = ({
 
         setProducts(response);
         console.log(
-          `✅ Fetched ${response.length} products for ${isSale ? 'sale' : `category: ${title}`}`,
+          `✅ Fetched ${response.length} products for ${isSale ? "sale" : `category: ${title}`}`,
         );
       } catch (error) {
         console.error(
-          `❌ Error fetching products for ${isSale ? 'sale' : `category ${categoryId}`}:`,
+          `❌ Error fetching products for ${isSale ? "sale" : `category ${categoryId}`}:`,
           error,
         );
         setProducts([]);
@@ -64,10 +64,10 @@ export const ProductsGroupList: React.FC<Props> = ({
 
   // Функция для применения фильтров на клиентской стороне
   const applyFilters = (products: Product[]): Product[] => {
-    return products.filter(product => {
+    return products.filter((product) => {
       // Фильтр по брендам
       if (filters.selectedBrands.size > 0 && product.brand) {
-        const brandValue = product.brand.toLowerCase().replace(/\s+/g, '_');
+        const brandValue = product.brand.toLowerCase().replace(/\s+/g, "_");
         if (!filters.selectedBrands.has(brandValue)) {
           return false;
         }
@@ -126,11 +126,13 @@ export const ProductsGroupList: React.FC<Props> = ({
       {products.length === 0 ? (
         <div className="text-center py-12">
           <p className="text-gray-500">
-            {isSale ? 'Товары на распродаже скоро появятся' : 'Товары в этой категории скоро появятся'}
+            {isSale
+              ? "Товары на распродаже скоро появятся"
+              : "Товары в этой категории скоро появятся"}
           </p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-3 gap-4">
           {products.map((product) => (
             <ProductCard
               key={product.id}

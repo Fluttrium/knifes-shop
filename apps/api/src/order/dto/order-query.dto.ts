@@ -1,4 +1,11 @@
-import { IsOptional, IsString, IsEnum, IsNumber, Min, Max } from 'class-validator';
+import {
+  IsOptional,
+  IsString,
+  IsEnum,
+  IsNumber,
+  Min,
+  Max,
+} from 'class-validator';
 import { Transform } from 'class-transformer';
 
 export enum OrderStatus {
@@ -48,4 +55,4 @@ export class OrderQueryDto {
   @IsOptional()
   @IsString()
   sortOrder?: 'asc' | 'desc' = 'desc';
-} 
+}

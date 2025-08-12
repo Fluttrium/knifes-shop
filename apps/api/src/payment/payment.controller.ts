@@ -1,5 +1,10 @@
 import { Controller, Post, Get, Param, Body, UseGuards } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiResponse,
+  ApiBearerAuth,
+} from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { PaymentService } from './payment.service';
 import { CreatePaymentDto } from './dto/create-payment.dto';
@@ -35,9 +40,11 @@ export class PaymentController {
   }
 
   @Get('config/check')
-  @ApiOperation({ summary: 'Проверить конфигурацию ЮKassa (только для отладки)' })
+  @ApiOperation({
+    summary: 'Проверить конфигурацию ЮKassa (только для отладки)',
+  })
   @ApiResponse({ status: 200, description: 'Конфигурация проверена' })
   async checkYooKassaConfig() {
     return this.paymentService.checkYooKassaConfig();
   }
-} 
+}

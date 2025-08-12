@@ -6,20 +6,71 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { Package, Eye, Calendar, CheckCircle, Clock, AlertCircle, Truck, CreditCard } from "lucide-react";
+import {
+  Package,
+  Eye,
+  Calendar,
+  CheckCircle,
+  Clock,
+  AlertCircle,
+  Truck,
+  CreditCard,
+} from "lucide-react";
 import api, { Order } from "@repo/api-client";
 import { useAuth } from "@/hooks/use-auth";
 import Link from "next/link";
 
 // Статусы жизненного цикла заказа для пользователей
 const ORDER_LIFECYCLE = {
-  pending: { step: 1, label: "Оформлен", icon: Clock, color: "text-yellow-600", description: "Заказ создан и ожидает подтверждения" },
-  confirmed: { step: 2, label: "Подтвержден", icon: CheckCircle, color: "text-blue-600", description: "Заказ подтвержден менеджером" },
-  processing: { step: 3, label: "Обрабатывается", icon: Package, color: "text-blue-600", description: "Заказ собирается и готовится к отправке" },
-  shipped: { step: 4, label: "Отправлен", icon: Truck, color: "text-purple-600", description: "Заказ отправлен и в пути" },
-  delivered: { step: 5, label: "Доставлен", icon: CheckCircle, color: "text-green-600", description: "Заказ успешно доставлен" },
-  cancelled: { step: 0, label: "Отменен", icon: AlertCircle, color: "text-red-600", description: "Заказ отменен" },
-  refunded: { step: 0, label: "Возвращен", icon: AlertCircle, color: "text-red-600", description: "Заказ возвращен" },
+  pending: {
+    step: 1,
+    label: "Оформлен",
+    icon: Clock,
+    color: "text-yellow-600",
+    description: "Заказ создан и ожидает подтверждения",
+  },
+  confirmed: {
+    step: 2,
+    label: "Подтвержден",
+    icon: CheckCircle,
+    color: "text-blue-600",
+    description: "Заказ подтвержден менеджером",
+  },
+  processing: {
+    step: 3,
+    label: "Обрабатывается",
+    icon: Package,
+    color: "text-blue-600",
+    description: "Заказ собирается и готовится к отправке",
+  },
+  shipped: {
+    step: 4,
+    label: "Отправлен",
+    icon: Truck,
+    color: "text-purple-600",
+    description: "Заказ отправлен и в пути",
+  },
+  delivered: {
+    step: 5,
+    label: "Доставлен",
+    icon: CheckCircle,
+    color: "text-green-600",
+    description: "Заказ успешно доставлен",
+  },
+  cancelled: {
+    step: 0,
+    label: "Отменен",
+    icon: AlertCircle,
+    color: "text-red-600",
+    description: "Заказ отменен",
+  },
+  refunded: {
+    step: 0,
+    label: "Возвращен",
+    icon: AlertCircle,
+    color: "text-red-600",
+    description: "Заказ возвращен",
+  },
 };
 
 export default function OrdersPage() {
@@ -49,7 +100,10 @@ export default function OrdersPage() {
 
   const getStatusBadge = (status: string) => {
     const statusConfig = {
-      pending: { label: "Ожидает подтверждения", variant: "secondary" as const },
+      pending: {
+        label: "Ожидает подтверждения",
+        variant: "secondary" as const,
+      },
       confirmed: { label: "Подтвержден", variant: "default" as const },
       processing: { label: "Обрабатывается", variant: "default" as const },
       shipped: { label: "Отправлен", variant: "default" as const },
@@ -68,19 +122,39 @@ export default function OrdersPage() {
 
   const getPaymentStatusBadge = (status: string) => {
     const statusConfig = {
-      pending: { label: "Ожидает оплаты", variant: "secondary" as const, color: "bg-yellow-100 text-yellow-800" },
-      paid: { label: "Оплачен", variant: "default" as const, color: "bg-green-100 text-green-800" },
-      failed: { label: "Ошибка оплаты", variant: "destructive" as const, color: "bg-red-100 text-red-800" },
-      refunded: { label: "Возвращен", variant: "outline" as const, color: "bg-gray-100 text-gray-800" },
+      pending: {
+        label: "Ожидает оплаты",
+        variant: "secondary" as const,
+        color: "bg-yellow-100 text-yellow-800",
+      },
+      paid: {
+        label: "Оплачен",
+        variant: "default" as const,
+        color: "bg-green-100 text-green-800",
+      },
+      failed: {
+        label: "Ошибка оплаты",
+        variant: "destructive" as const,
+        color: "bg-red-100 text-red-800",
+      },
+      refunded: {
+        label: "Возвращен",
+        variant: "outline" as const,
+        color: "bg-gray-100 text-gray-800",
+      },
     };
 
     const config = statusConfig[status as keyof typeof statusConfig] || {
       label: status,
       variant: "secondary" as const,
-      color: "bg-gray-100 text-gray-800"
+      color: "bg-gray-100 text-gray-800",
     };
 
-    return <Badge variant={config.variant} className={config.color}>{config.label}</Badge>;
+    return (
+      <Badge variant={config.variant} className={config.color}>
+        {config.label}
+      </Badge>
+    );
   };
 
   const formatPrice = (price: number) => {
@@ -99,20 +173,47 @@ export default function OrdersPage() {
   };
 
   const getOrderProgress = (order: Order) => {
-    const lifecycle = ORDER_LIFECYCLE[order.status as keyof typeof ORDER_LIFECYCLE];
+    const lifecycle =
+      ORDER_LIFECYCLE[order.status as keyof typeof ORDER_LIFECYCLE];
     if (!lifecycle || lifecycle.step === 0) return 0;
     return (lifecycle.step / 5) * 100;
   };
 
   const getOrderLifecycleSteps = (order: Order) => {
-    const currentStep = ORDER_LIFECYCLE[order.status as keyof typeof ORDER_LIFECYCLE]?.step || 0;
-    
+    const currentStep =
+      ORDER_LIFECYCLE[order.status as keyof typeof ORDER_LIFECYCLE]?.step || 0;
+
     return [
-      { step: 1, label: "Оформлен", completed: currentStep >= 1, current: currentStep === 1 },
-      { step: 2, label: "Подтвержден", completed: currentStep >= 2, current: currentStep === 2 },
-      { step: 3, label: "Обрабатывается", completed: currentStep >= 3, current: currentStep === 3 },
-      { step: 4, label: "Отправлен", completed: currentStep >= 4, current: currentStep === 4 },
-      { step: 5, label: "Доставлен", completed: currentStep >= 5, current: currentStep === 5 },
+      {
+        step: 1,
+        label: "Оформлен",
+        completed: currentStep >= 1,
+        current: currentStep === 1,
+      },
+      {
+        step: 2,
+        label: "Подтвержден",
+        completed: currentStep >= 2,
+        current: currentStep === 2,
+      },
+      {
+        step: 3,
+        label: "Обрабатывается",
+        completed: currentStep >= 3,
+        current: currentStep === 3,
+      },
+      {
+        step: 4,
+        label: "Отправлен",
+        completed: currentStep >= 4,
+        current: currentStep === 4,
+      },
+      {
+        step: 5,
+        label: "Доставлен",
+        completed: currentStep >= 5,
+        current: currentStep === 5,
+      },
     ];
   };
 
@@ -174,7 +275,8 @@ export default function OrdersPage() {
               <Package className="h-16 w-16 text-muted-foreground mb-4" />
               <h3 className="text-xl font-semibold mb-2">Заказов пока нет</h3>
               <p className="text-muted-foreground text-center mb-4">
-                Вы еще не сделали ни одного заказа. Начните с просмотра нашего каталога товаров.
+                Вы еще не сделали ни одного заказа. Начните с просмотра нашего
+                каталога товаров.
               </p>
               <Link href="/">
                 <Button>Перейти к покупкам</Button>
@@ -186,10 +288,14 @@ export default function OrdersPage() {
             {orders.map((order) => {
               const lifecycleSteps = getOrderLifecycleSteps(order);
               const progress = getOrderProgress(order);
-              const currentLifecycle = ORDER_LIFECYCLE[order.status as keyof typeof ORDER_LIFECYCLE];
-              
+              const currentLifecycle =
+                ORDER_LIFECYCLE[order.status as keyof typeof ORDER_LIFECYCLE];
+
               return (
-                <Card key={order.id} className="hover:shadow-md transition-shadow">
+                <Card
+                  key={order.id}
+                  className="hover:shadow-md transition-shadow"
+                >
                   <CardContent className="p-6">
                     {/* Заголовок заказа */}
                     <div className="flex items-center justify-between mb-4">
@@ -219,8 +325,12 @@ export default function OrdersPage() {
                     <div className="mb-6">
                       <div className="flex items-center justify-between mb-3">
                         <div className="flex items-center gap-2">
-                          <span className="text-sm font-medium">Прогресс выполнения</span>
-                          <span className="text-sm text-muted-foreground">{Math.round(progress)}%</span>
+                          <span className="text-sm font-medium">
+                            Прогресс выполнения
+                          </span>
+                          <span className="text-sm text-muted-foreground">
+                            {Math.round(progress)}%
+                          </span>
                         </div>
                         {currentLifecycle && (
                           <div className="flex items-center gap-2 text-sm text-muted-foreground">
@@ -230,18 +340,23 @@ export default function OrdersPage() {
                         )}
                       </div>
                       <Progress value={progress} className="h-3 mb-4" />
-                      
+
                       {/* Этапы жизненного цикла */}
                       <div className="flex justify-between text-xs text-muted-foreground">
                         {lifecycleSteps.map((step) => (
-                          <div key={step.step} className="flex flex-col items-center">
-                            <div className={`w-6 h-6 rounded-full flex items-center justify-center mb-1 ${
-                              step.completed 
-                                ? 'bg-green-500 text-white' 
-                                : step.current 
-                                ? 'bg-blue-500 text-white' 
-                                : 'bg-gray-200 text-gray-500'
-                            }`}>
+                          <div
+                            key={step.step}
+                            className="flex flex-col items-center"
+                          >
+                            <div
+                              className={`w-6 h-6 rounded-full flex items-center justify-center mb-1 ${
+                                step.completed
+                                  ? "bg-green-500 text-white"
+                                  : step.current
+                                    ? "bg-blue-500 text-white"
+                                    : "bg-gray-200 text-gray-500"
+                              }`}
+                            >
                               {step.completed ? (
                                 <CheckCircle className="h-3 w-3" />
                               ) : step.current ? (
@@ -250,7 +365,9 @@ export default function OrdersPage() {
                                 <span className="text-xs">{step.step}</span>
                               )}
                             </div>
-                            <span className="text-center max-w-16">{step.label}</span>
+                            <span className="text-center max-w-16">
+                              {step.label}
+                            </span>
                           </div>
                         ))}
                       </div>
@@ -259,7 +376,9 @@ export default function OrdersPage() {
                     {/* Основная информация */}
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                       <div>
-                        <span className="text-muted-foreground">Дата заказа:</span>
+                        <span className="text-muted-foreground">
+                          Дата заказа:
+                        </span>
                         <p className="font-medium">
                           {formatDate(order.createdAt)}
                         </p>
@@ -272,9 +391,7 @@ export default function OrdersPage() {
                       </div>
                       <div>
                         <span className="text-muted-foreground">Товаров:</span>
-                        <p className="font-medium">
-                          {order.items.length} шт.
-                        </p>
+                        <p className="font-medium">{order.items.length} шт.</p>
                       </div>
                       <div>
                         <span className="text-muted-foreground">Статус:</span>
@@ -289,15 +406,26 @@ export default function OrdersPage() {
                       <div className="mt-4 p-3 bg-blue-50 rounded-lg">
                         <div className="flex items-center gap-2 mb-2">
                           <Truck className="h-4 w-4 text-blue-600" />
-                          <span className="font-medium text-blue-800">Информация о доставке</span>
+                          <span className="font-medium text-blue-800">
+                            Информация о доставке
+                          </span>
                         </div>
                         <div className="space-y-1 text-sm">
-                          <p><span className="font-medium">Трек-номер:</span> {order.parcels[0].trackingNumber}</p>
+                          <p>
+                            <span className="font-medium">Трек-номер:</span>{" "}
+                            {order.parcels[0].trackingNumber}
+                          </p>
                           {order.parcels[0].carrier && (
-                            <p><span className="font-medium">Перевозчик:</span> {order.parcels[0].carrier}</p>
+                            <p>
+                              <span className="font-medium">Перевозчик:</span>{" "}
+                              {order.parcels[0].carrier}
+                            </p>
                           )}
                           {order.parcels[0].comment && (
-                            <p><span className="font-medium">Комментарий:</span> {order.parcels[0].comment}</p>
+                            <p>
+                              <span className="font-medium">Комментарий:</span>{" "}
+                              {order.parcels[0].comment}
+                            </p>
                           )}
                         </div>
                       </div>
@@ -307,7 +435,10 @@ export default function OrdersPage() {
                     {order.notes && (
                       <div className="mt-4 p-3 bg-blue-50 rounded-md">
                         <p className="text-sm">
-                          <span className="font-medium">Примечание к заказу:</span> {order.notes}
+                          <span className="font-medium">
+                            Примечание к заказу:
+                          </span>{" "}
+                          {order.notes}
                         </p>
                       </div>
                     )}

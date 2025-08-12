@@ -27,10 +27,10 @@ export default function ProductPage() {
         setLoading(true);
         const productData = await api.products.getProductBySlug(slug);
         setProduct(productData);
-        
+
         // Устанавливаем основное изображение
         if (productData.images && productData.images.length > 0) {
-          const primaryImage = productData.images.find(img => img.isPrimary);
+          const primaryImage = productData.images.find((img) => img.isPrimary);
           const imageUrl = primaryImage?.url || productData.images[0]?.url;
           if (imageUrl) {
             setSelectedImage(imageUrl);
@@ -58,7 +58,9 @@ export default function ProductPage() {
 
   const getDiscountPercent = () => {
     if (!product?.comparePrice || !product?.price) return 0;
-    return Math.round(((product.comparePrice - product.price) / product.comparePrice) * 100);
+    return Math.round(
+      ((product.comparePrice - product.price) / product.comparePrice) * 100,
+    );
   };
 
   const getMaterialLabel = (material: string) => {
@@ -135,7 +137,10 @@ export default function ProductPage() {
             Главная
           </Link>
           <span>/</span>
-          <Link href={`/category/${product.category.slug}`} className="hover:text-foreground">
+          <Link
+            href={`/category/${product.category.slug}`}
+            className="hover:text-foreground"
+          >
             {product.category.name}
           </Link>
           <span>/</span>
@@ -152,7 +157,7 @@ export default function ProductPage() {
                 className="w-full h-full object-contain"
               />
             </div>
-            
+
             {product.images && product.images.length > 1 && (
               <div className="grid grid-cols-4 gap-2">
                 {product.images.map((image) => (
@@ -160,7 +165,9 @@ export default function ProductPage() {
                     key={image.id}
                     onClick={() => setSelectedImage(image.url)}
                     className={`aspect-square bg-gray-50 rounded-lg overflow-hidden border-2 transition-colors ${
-                      selectedImage === image.url ? "border-primary" : "border-transparent"
+                      selectedImage === image.url
+                        ? "border-primary"
+                        : "border-transparent"
                     }`}
                   >
                     <img
@@ -179,10 +186,12 @@ export default function ProductPage() {
             {/* Заголовок и бренд */}
             <div>
               {product.brand && (
-                <p className="text-sm text-muted-foreground uppercase mb-2">{product.brand}</p>
+                <p className="text-sm text-muted-foreground uppercase mb-2">
+                  {product.brand}
+                </p>
               )}
               <h1 className="text-3xl font-bold mb-4">{product.name}</h1>
-              
+
               {/* Бейджи */}
               <div className="flex gap-2 mb-4">
                 {product.isNew && (
@@ -197,9 +206,7 @@ export default function ProductPage() {
                   </Badge>
                 )}
                 {product.isOnSale && getDiscountPercent() > 0 && (
-                  <Badge variant="destructive">
-                    -{getDiscountPercent()}%
-                  </Badge>
+                  <Badge variant="destructive">-{getDiscountPercent()}%</Badge>
                 )}
                 {product.stockQuantity === 0 && (
                   <Badge variant="outline" className="text-destructive">
@@ -212,12 +219,15 @@ export default function ProductPage() {
             {/* Цена */}
             <div className="space-y-2">
               <div className="flex items-center gap-3">
-                <span className="text-3xl font-bold">{formatPrice(product.price)}</span>
-                {product.comparePrice && product.comparePrice > product.price && (
-                  <span className="text-xl text-muted-foreground line-through">
-                    {formatPrice(product.comparePrice)}
-                  </span>
-                )}
+                <span className="text-3xl font-bold">
+                  {formatPrice(product.price)}
+                </span>
+                {product.comparePrice &&
+                  product.comparePrice > product.price && (
+                    <span className="text-xl text-muted-foreground line-through">
+                      {formatPrice(product.comparePrice)}
+                    </span>
+                  )}
               </div>
               {product.stockQuantity > 0 && (
                 <p className="text-sm text-green-600">
@@ -230,7 +240,9 @@ export default function ProductPage() {
             {product.shortDescription && (
               <div>
                 <h3 className="font-semibold mb-2">Краткое описание</h3>
-                <p className="text-muted-foreground">{product.shortDescription}</p>
+                <p className="text-muted-foreground">
+                  {product.shortDescription}
+                </p>
               </div>
             )}
 
@@ -242,7 +254,7 @@ export default function ProductPage() {
                 className="w-full"
                 size="lg"
               />
-              
+
               {/* Информация о доставке */}
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <Truck className="h-4 w-4" />
@@ -286,7 +298,9 @@ export default function ProductPage() {
                 )}
                 {product.bladeHardness && (
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">Твердость лезвия:</span>
+                    <span className="text-muted-foreground">
+                      Твердость лезвия:
+                    </span>
                     <span>{product.bladeHardness} HRC</span>
                   </div>
                 )}
@@ -313,7 +327,7 @@ export default function ProductPage() {
                 </CardHeader>
                 <CardContent>
                   <div className="prose prose-sm max-w-none">
-                    {product.description.split('\n').map((paragraph, index) => (
+                    {product.description.split("\n").map((paragraph, index) => (
                       <p key={index} className="mb-4 last:mb-0">
                         {paragraph}
                       </p>

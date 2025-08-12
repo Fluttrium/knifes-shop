@@ -7,7 +7,14 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { ArrowLeft, Package, MapPin, Phone, Calendar, Truck } from "lucide-react";
+import {
+  ArrowLeft,
+  Package,
+  MapPin,
+  Phone,
+  Calendar,
+  Truck,
+} from "lucide-react";
 import api, { Order } from "@repo/api-client";
 import { useAuth } from "@/hooks/use-auth";
 import Link from "next/link";
@@ -48,7 +55,10 @@ export default function OrderDetailPage() {
 
   const getStatusBadge = (status: string) => {
     const statusConfig = {
-      pending: { label: "Ожидает подтверждения", variant: "secondary" as const },
+      pending: {
+        label: "Ожидает подтверждения",
+        variant: "secondary" as const,
+      },
       confirmed: { label: "Подтвержден", variant: "default" as const },
       processing: { label: "Обрабатывается", variant: "default" as const },
       shipped: { label: "Отправлен", variant: "default" as const },
@@ -120,8 +130,7 @@ export default function OrderDetailPage() {
         <div className="flex items-center gap-4 mb-6">
           <Link href="/profile/orders">
             <Button variant="outline" size="sm">
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              К заказам
+              <ArrowLeft className="h-4 w-4 mr-2" />К заказам
             </Button>
           </Link>
           <div>
@@ -154,7 +163,9 @@ export default function OrderDetailPage() {
                   {order.parcels?.[0]?.trackingNumber && (
                     <div className="text-right">
                       <p className="text-sm font-medium">Трек-номер</p>
-                      <p className="text-sm text-muted-foreground">{order.parcels[0].trackingNumber}</p>
+                      <p className="text-sm text-muted-foreground">
+                        {order.parcels[0].trackingNumber}
+                      </p>
                     </div>
                   )}
                 </div>
@@ -169,7 +180,10 @@ export default function OrderDetailPage() {
               <CardContent>
                 <div className="space-y-4">
                   {order.items.map((item) => (
-                    <div key={item.id} className="flex items-center gap-4 p-4 border rounded-lg">
+                    <div
+                      key={item.id}
+                      className="flex items-center gap-4 p-4 border rounded-lg"
+                    >
                       <div className="flex-1">
                         <h4 className="font-medium">{item.productName}</h4>
                         <p className="text-sm text-muted-foreground">
@@ -177,7 +191,9 @@ export default function OrderDetailPage() {
                         </p>
                       </div>
                       <div className="text-right">
-                        <p className="font-medium">{formatPrice(item.unitPrice)}</p>
+                        <p className="font-medium">
+                          {formatPrice(item.unitPrice)}
+                        </p>
                         <p className="text-sm text-muted-foreground">
                           Итого: {formatPrice(item.totalPrice)}
                         </p>
@@ -189,53 +205,73 @@ export default function OrderDetailPage() {
             </Card>
 
             {/* Информация о доставке */}
-            {order.parcels && order.parcels.length > 0 && (() => {
-              const parcel = order.parcels[0];
-              if (!parcel) return null;
-              
-              return (
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <Truck className="h-5 w-5" />
-                      Информация о доставке
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-3">
-                      <div className="flex justify-between">
-                        <span className="text-sm text-muted-foreground">Статус доставки:</span>
-                        <Badge variant="outline">{parcel.status}</Badge>
+            {order.parcels &&
+              order.parcels.length > 0 &&
+              (() => {
+                const parcel = order.parcels[0];
+                if (!parcel) return null;
+
+                return (
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="flex items-center gap-2">
+                        <Truck className="h-5 w-5" />
+                        Информация о доставке
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-3">
+                        <div className="flex justify-between">
+                          <span className="text-sm text-muted-foreground">
+                            Статус доставки:
+                          </span>
+                          <Badge variant="outline">{parcel.status}</Badge>
+                        </div>
+                        {parcel.trackingNumber && (
+                          <div className="flex justify-between">
+                            <span className="text-sm text-muted-foreground">
+                              Трек-номер:
+                            </span>
+                            <span className="text-sm font-medium">
+                              {parcel.trackingNumber}
+                            </span>
+                          </div>
+                        )}
+                        {parcel.carrier && (
+                          <div className="flex justify-between">
+                            <span className="text-sm text-muted-foreground">
+                              Перевозчик:
+                            </span>
+                            <span className="text-sm font-medium">
+                              {parcel.carrier}
+                            </span>
+                          </div>
+                        )}
+                        {parcel.shippedAt && (
+                          <div className="flex justify-between">
+                            <span className="text-sm text-muted-foreground">
+                              Дата отправки:
+                            </span>
+                            <span className="text-sm font-medium">
+                              {formatDate(parcel.shippedAt)}
+                            </span>
+                          </div>
+                        )}
+                        {parcel.deliveredAt && (
+                          <div className="flex justify-between">
+                            <span className="text-sm text-muted-foreground">
+                              Дата доставки:
+                            </span>
+                            <span className="text-sm font-medium">
+                              {formatDate(parcel.deliveredAt)}
+                            </span>
+                          </div>
+                        )}
                       </div>
-                      {parcel.trackingNumber && (
-                        <div className="flex justify-between">
-                          <span className="text-sm text-muted-foreground">Трек-номер:</span>
-                          <span className="text-sm font-medium">{parcel.trackingNumber}</span>
-                        </div>
-                      )}
-                      {parcel.carrier && (
-                        <div className="flex justify-between">
-                          <span className="text-sm text-muted-foreground">Перевозчик:</span>
-                          <span className="text-sm font-medium">{parcel.carrier}</span>
-                        </div>
-                      )}
-                      {parcel.shippedAt && (
-                        <div className="flex justify-between">
-                          <span className="text-sm text-muted-foreground">Дата отправки:</span>
-                          <span className="text-sm font-medium">{formatDate(parcel.shippedAt)}</span>
-                        </div>
-                      )}
-                      {parcel.deliveredAt && (
-                        <div className="flex justify-between">
-                          <span className="text-sm text-muted-foreground">Дата доставки:</span>
-                          <span className="text-sm font-medium">{formatDate(parcel.deliveredAt)}</span>
-                        </div>
-                      )}
-                    </div>
-                  </CardContent>
-                </Card>
-              );
-            })()}
+                    </CardContent>
+                  </Card>
+                );
+              })()}
           </div>
 
           {/* Боковая панель */}
@@ -251,20 +287,24 @@ export default function OrderDetailPage() {
               <CardContent>
                 <div className="space-y-2">
                   <p className="font-medium">
-                    {order.shippingAddress.firstName} {order.shippingAddress.lastName}
+                    {order.shippingAddress.firstName}{" "}
+                    {order.shippingAddress.lastName}
                   </p>
                   <p className="text-sm">{order.shippingAddress.address1}</p>
                   {order.shippingAddress.address2 && (
                     <p className="text-sm">{order.shippingAddress.address2}</p>
                   )}
                   <p className="text-sm">
-                    {order.shippingAddress.city}, {order.shippingAddress.state} {order.shippingAddress.postalCode}
+                    {order.shippingAddress.city}, {order.shippingAddress.state}{" "}
+                    {order.shippingAddress.postalCode}
                   </p>
                   <p className="text-sm">{order.shippingAddress.country}</p>
                   {order.shippingAddress.phone && (
                     <div className="flex items-center gap-1 mt-2">
                       <Phone className="h-4 w-4 text-muted-foreground" />
-                      <span className="text-sm">{order.shippingAddress.phone}</span>
+                      <span className="text-sm">
+                        {order.shippingAddress.phone}
+                      </span>
                     </div>
                   )}
                 </div>
@@ -279,23 +319,39 @@ export default function OrderDetailPage() {
               <CardContent>
                 <div className="space-y-3">
                   <div className="flex justify-between">
-                    <span className="text-sm text-muted-foreground">Товары:</span>
-                    <span className="text-sm">{formatPrice(order.subtotal)}</span>
+                    <span className="text-sm text-muted-foreground">
+                      Товары:
+                    </span>
+                    <span className="text-sm">
+                      {formatPrice(order.subtotal)}
+                    </span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-sm text-muted-foreground">Доставка:</span>
-                    <span className="text-sm">{formatPrice(order.shippingAmount)}</span>
+                    <span className="text-sm text-muted-foreground">
+                      Доставка:
+                    </span>
+                    <span className="text-sm">
+                      {formatPrice(order.shippingAmount)}
+                    </span>
                   </div>
                   {order.taxAmount > 0 && (
                     <div className="flex justify-between">
-                      <span className="text-sm text-muted-foreground">Налог:</span>
-                      <span className="text-sm">{formatPrice(order.taxAmount)}</span>
+                      <span className="text-sm text-muted-foreground">
+                        Налог:
+                      </span>
+                      <span className="text-sm">
+                        {formatPrice(order.taxAmount)}
+                      </span>
                     </div>
                   )}
                   {order.discountAmount > 0 && (
                     <div className="flex justify-between">
-                      <span className="text-sm text-muted-foreground">Скидка:</span>
-                      <span className="text-sm text-green-600">-{formatPrice(order.discountAmount)}</span>
+                      <span className="text-sm text-muted-foreground">
+                        Скидка:
+                      </span>
+                      <span className="text-sm text-green-600">
+                        -{formatPrice(order.discountAmount)}
+                      </span>
                     </div>
                   )}
                   <Separator />

@@ -1,7 +1,6 @@
 import { Container } from "@/components/shared/container";
 import { Title } from "@/components/shared/title";
 
-
 export default function Contacts() {
   return (
     <>
@@ -36,20 +35,32 @@ export default function Contacts() {
           <p className="font-bold">E-mail:</p>
           <ul className="list-disc pl-6 space-y-2">
             <li>
-              По всем вопросам, связанными с ножами: 
-              <a href="mailto:info@daggerrknives.ru" className="font-bold"> fluttrium@gmail.com</a>
+              По всем вопросам, связанными с ножами:
+              <a href="mailto:info@daggerrknives.ru" className="font-bold">
+                {" "}
+                fluttrium@gmail.com
+              </a>
             </li>
             <li>
-              По вопросам сервисного обслуживания: 
-              <a href="mailto:fluttrium@gmail.com" className="font-bold"> fluttrium@gmail.com</a>
+              По вопросам сервисного обслуживания:
+              <a href="mailto:fluttrium@gmail.com" className="font-bold">
+                {" "}
+                fluttrium@gmail.com
+              </a>
             </li>
             <li>
-              Для дилерского сотрудничества: 
-              <a href="mailto:fluttrium@gmail.com" className="font-bold"> fluttrium@gmail.com</a>
+              Для дилерского сотрудничества:
+              <a href="mailto:fluttrium@gmail.com" className="font-bold">
+                {" "}
+                fluttrium@gmail.com
+              </a>
             </li>
             <li>
-              По вопросам сотрудничества: 
-              <a href="mailto:fluttrium@gmail.com" className="font-bold"> fluttrium@gmail.com</a>
+              По вопросам сотрудничества:
+              <a href="mailto:fluttrium@gmail.com" className="font-bold">
+                {" "}
+                fluttrium@gmail.com
+              </a>
             </li>
           </ul>
         </div>

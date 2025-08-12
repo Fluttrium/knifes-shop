@@ -27,7 +27,7 @@ export const Filters: React.FC<Props> = ({ className }) => {
     clearFilters,
   } = useFilters();
 
-  const hasActiveFilters = 
+  const hasActiveFilters =
     filters.selectedBrands.size > 0 ||
     filters.selectedMaterials.size > 0 ||
     filters.selectedTypes.size > 0 ||
@@ -48,7 +48,9 @@ export const Filters: React.FC<Props> = ({ className }) => {
   }
 
   return (
-    <div className={`${className} bg-white rounded-lg border border-gray-200 p-3 lg:p-4 max-w-full`}>
+    <div
+      className={`${className} bg-white rounded-lg border border-gray-200 p-3 lg:p-4 max-w-full`}
+    >
       <div className="flex items-center justify-between mb-4">
         <Title text="Фильтрация" size="sm" className="font-bold text-sm" />
         {hasActiveFilters && (

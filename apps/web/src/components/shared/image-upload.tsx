@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import React, { useState, useCallback } from 'react';
-import { useDropzone } from 'react-dropzone';
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
-import { X, Upload, Image as ImageIcon } from 'lucide-react';
-import { api } from '@repo/api-client';
-import { toast } from 'sonner';
+import React, { useState, useCallback } from "react";
+import { useDropzone } from "react-dropzone";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { X, Upload, Image as ImageIcon } from "lucide-react";
+import { api } from "@repo/api-client";
+import { toast } from "sonner";
 
 interface ImageUploadProps {
   onImagesUploaded: (images: string[]) => void;
@@ -20,8 +20,8 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
   onImagesUploaded,
   maxFiles = 10,
   maxSize = 5 * 1024 * 1024,
-  acceptedFileTypes = ['image/jpeg', 'image/png', 'image/webp'],
-  className = '',
+  acceptedFileTypes = ["image/jpeg", "image/png", "image/webp"],
+  className = "",
 }) => {
   const [uploadedImages, setUploadedImages] = useState<string[]>([]);
   const [isUploading, setIsUploading] = useState(false);
@@ -33,19 +33,19 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
       setIsUploading(true);
       try {
         const response = await api.upload.uploadMultipleFiles(acceptedFiles, {
-          folder: 'products',
+          folder: "products",
         });
 
         const newImageUrls = response.data.map((file) => file.url);
         const updatedImages = [...uploadedImages, ...newImageUrls];
-        
+
         setUploadedImages(updatedImages);
         onImagesUploaded(updatedImages);
-        
+
         toast.success(`Загружено ${acceptedFiles.length} изображений`);
       } catch (error) {
-        console.error('Ошибка загрузки изображений:', error);
-        toast.error('Ошибка при загрузке изображений');
+        console.error("Ошибка загрузки изображений:", error);
+        toast.error("Ошибка при загрузке изображений");
       } finally {
         setIsUploading(false);
       }
@@ -56,7 +56,7 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept: {
-      'image/*': acceptedFileTypes,
+      "image/*": acceptedFileTypes,
     },
     maxFiles,
     maxSize,
@@ -74,8 +74,8 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
         {...getRootProps()}
         className={`
           border-2 border-dashed rounded-lg p-6 text-center cursor-pointer transition-colors
-          ${isDragActive ? 'border-primary bg-primary/5' : 'border-gray-300 hover:border-primary'}
-          ${isUploading ? 'opacity-50 cursor-not-allowed' : ''}
+          ${isDragActive ? "border-primary bg-primary/5" : "border-gray-300 hover:border-primary"}
+          ${isUploading ? "opacity-50 cursor-not-allowed" : ""}
         `}
       >
         <input {...getInputProps()} />
@@ -86,11 +86,14 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
           ) : (
             <div>
               <p className="text-sm text-gray-600">
-                Перетащите изображения сюда или{' '}
-                <span className="text-primary hover:underline">выберите файлы</span>
+                Перетащите изображения сюда или{" "}
+                <span className="text-primary hover:underline">
+                  выберите файлы
+                </span>
               </p>
               <p className="text-xs text-gray-500 mt-1">
-                Поддерживаются: JPEG, PNG, WebP (макс. {Math.round(maxSize / 1024 / 1024)}MB)
+                Поддерживаются: JPEG, PNG, WebP (макс.{" "}
+                {Math.round(maxSize / 1024 / 1024)}MB)
               </p>
             </div>
           )}
@@ -99,7 +102,9 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
 
       {uploadedImages.length > 0 && (
         <div className="space-y-2">
-          <h4 className="text-sm font-medium text-gray-700">Загруженные изображения:</h4>
+          <h4 className="text-sm font-medium text-gray-700">
+            Загруженные изображения:
+          </h4>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {uploadedImages.map((imageUrl, index) => (
               <Card key={index} className="relative group">
@@ -135,4 +140,4 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
       )}
     </div>
   );
-}; 
+};

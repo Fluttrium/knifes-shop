@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useCart } from "@/hooks/use-cart";
 import { useAuth } from "@/hooks/use-auth";
@@ -7,13 +7,14 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { CountButton } from "@/components/shared/count-button";
-import { Trash2, ShoppingCart, ArrowLeft } from 'lucide-react';
-import Link from 'next/link';
-import Image from 'next/image';
+import { Trash2, ShoppingCart, ArrowLeft } from "lucide-react";
+import Link from "next/link";
+import Image from "next/image";
 
 export default function CartPage() {
   const { isAuthenticated } = useAuth();
-  const { cart, loading, error, updateCartItem, removeFromCart, clearCart } = useCart();
+  const { cart, loading, error, updateCartItem, removeFromCart, clearCart } =
+    useCart();
 
   // Обработчики
   const handleQuantityChange = async (itemId: string, newQuantity: number) => {
@@ -25,7 +26,7 @@ export default function CartPage() {
   };
 
   const handleClearCart = async () => {
-    if (confirm('Вы уверены, что хотите очистить корзину?')) {
+    if (confirm("Вы уверены, что хотите очистить корзину?")) {
       await clearCart();
     }
   };
@@ -107,11 +108,14 @@ export default function CartPage() {
           {/* Список товаров */}
           <div className="lg:col-span-2 space-y-4">
             {cart.items.map((item) => {
-              const productImage = item.product.images.find(img => img.isPrimary) || item.product.images[0];
+              const productImage =
+                item.product.images.find((img) => img.isPrimary) ||
+                item.product.images[0];
               const variant = item.variant;
               const price = Number(variant?.price || item.product.price);
-              const maxQuantity = variant?.stockQuantity || item.product.stockQuantity || 1;
-              
+              const maxQuantity =
+                variant?.stockQuantity || item.product.stockQuantity || 1;
+
               return (
                 <Card key={item.id}>
                   <CardContent className="p-6">
@@ -127,7 +131,9 @@ export default function CartPage() {
                           />
                         ) : (
                           <div className="w-full h-full bg-muted rounded-md flex items-center justify-center">
-                            <span className="text-muted-foreground text-xs">Нет фото</span>
+                            <span className="text-muted-foreground text-xs">
+                              Нет фото
+                            </span>
                           </div>
                         )}
                       </div>
@@ -143,7 +149,7 @@ export default function CartPage() {
                           </p>
                         )}
                         <p className="text-lg font-semibold text-primary mt-2">
-                          {price.toLocaleString('ru-RU')} ₽
+                          {price.toLocaleString("ru-RU")} ₽
                         </p>
                       </div>
 
@@ -152,9 +158,12 @@ export default function CartPage() {
                         <CountButton
                           value={item.quantity}
                           onClick={(type) => {
-                            if (type === 'plus' && item.quantity < maxQuantity) {
+                            if (
+                              type === "plus" &&
+                              item.quantity < maxQuantity
+                            ) {
                               handleQuantityChange(item.id, item.quantity + 1);
-                            } else if (type === 'minus' && item.quantity > 1) {
+                            } else if (type === "minus" && item.quantity > 1) {
                               handleQuantityChange(item.id, item.quantity - 1);
                             }
                           }}
@@ -189,7 +198,9 @@ export default function CartPage() {
                 <Separator />
                 <div className="flex justify-between text-lg font-semibold">
                   <span>Итого:</span>
-                  <span>{Number(cart.totalPrice).toLocaleString('ru-RU')} ₽</span>
+                  <span>
+                    {Number(cart.totalPrice).toLocaleString("ru-RU")} ₽
+                  </span>
                 </div>
                 <Link href="/checkout">
                   <Button className="w-full" size="lg">
@@ -203,4 +214,4 @@ export default function CartPage() {
       </div>
     </Container>
   );
-} 
+}

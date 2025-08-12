@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { AddToCartDto } from './dto/add-to-cart.dto';
 import { UpdateCartItemDto } from './dto/update-cart-item.dto';
@@ -25,7 +29,7 @@ export class CartService {
     const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
     const totalPrice = cartItems.reduce((sum, item) => {
       const price = Number(item.variant?.price || item.product.price);
-      return sum + (price * item.quantity);
+      return sum + price * item.quantity;
     }, 0);
 
     return {
@@ -39,7 +43,12 @@ export class CartService {
     try {
       const { productId, variantId, quantity } = addToCartDto;
 
-      console.log('Adding to cart:', { userId, productId, variantId, quantity });
+      console.log('Adding to cart:', {
+        userId,
+        productId,
+        variantId,
+        quantity,
+      });
 
       // Проверяем существование товара
       const product = await this.prisma.product.findUnique({
@@ -53,52 +62,78 @@ export class CartService {
 
       console.log('Product found:', product.name);
 
-    // Если указан вариант, проверяем его существование
-    if (variantId) {
-      const variant = product.variants.find(v => v.id === variantId);
-      if (!variant) {
-        throw new NotFoundException('Вариант товара не найден');
-      }
-      
-      // Проверяем остаток на складе
-      if (variant.stockQuantity < quantity) {
-        throw new BadRequestException('Недостаточно товара на складе');
-      }
-    } else {
-      // Проверяем остаток основного товара
-      if (product.stockQuantity < quantity) {
-        throw new BadRequestException('Недостаточно товара на складе');
-      }
-    }
-
-    // Проверяем, есть ли уже такой товар в корзине
-    const existingItem = await this.prisma.cartItem.findFirst({
-      where: {
-        userId,
-        productId,
-        variantId: variantId || null,
-      },
-    });
-
-    if (existingItem) {
-      // Обновляем количество существующего товара
-      const newQuantity = existingItem.quantity + quantity;
-      
-      // Проверяем остаток с учетом нового количества
+      // Если указан вариант, проверяем его существование
       if (variantId) {
-        const variant = product.variants.find(v => v.id === variantId);
-        if (variant && variant.stockQuantity < newQuantity) {
+        const variant = product.variants.find((v) => v.id === variantId);
+        if (!variant) {
+          throw new NotFoundException('Вариант товара не найден');
+        }
+
+        // Проверяем остаток на складе
+        if (variant.stockQuantity < quantity) {
           throw new BadRequestException('Недостаточно товара на складе');
         }
       } else {
-        if (product.stockQuantity < newQuantity) {
+        // Проверяем остаток основного товара
+        if (product.stockQuantity < quantity) {
           throw new BadRequestException('Недостаточно товара на складе');
         }
       }
 
-      return this.prisma.cartItem.update({
-        where: { id: existingItem.id },
-        data: { quantity: newQuantity },
+      // Проверяем, есть ли уже такой товар в корзине
+      const existingItem = await this.prisma.cartItem.findFirst({
+        where: {
+          userId,
+          productId,
+          variantId: variantId || null,
+        },
+      });
+
+      if (existingItem) {
+        // Обновляем количество существующего товара
+        const newQuantity = existingItem.quantity + quantity;
+
+        // Проверяем остаток с учетом нового количества
+        if (variantId) {
+          const variant = product.variants.find((v) => v.id === variantId);
+          if (variant && variant.stockQuantity < newQuantity) {
+            throw new BadRequestException('Недостаточно товара на складе');
+          }
+        } else {
+          if (product.stockQuantity < newQuantity) {
+            throw new BadRequestException('Недостаточно товара на складе');
+          }
+        }
+
+        return this.prisma.cartItem.update({
+          where: { id: existingItem.id },
+          data: { quantity: newQuantity },
+          include: {
+            product: {
+              include: {
+                images: true,
+                variants: true,
+              },
+            },
+            variant: true,
+          },
+        });
+      }
+
+      // Создаем новый товар в корзине
+      const cartItemData: any = {
+        userId,
+        productId,
+        quantity,
+      };
+
+      // Добавляем variantId только если он указан
+      if (variantId) {
+        cartItemData.variantId = variantId;
+      }
+
+      return this.prisma.cartItem.create({
+        data: cartItemData,
         include: {
           product: {
             include: {
@@ -109,39 +144,17 @@ export class CartService {
           variant: true,
         },
       });
-    }
-
-    // Создаем новый товар в корзине
-    const cartItemData: any = {
-      userId,
-      productId,
-      quantity,
-    };
-
-    // Добавляем variantId только если он указан
-    if (variantId) {
-      cartItemData.variantId = variantId;
-    }
-
-    return this.prisma.cartItem.create({
-      data: cartItemData,
-      include: {
-        product: {
-          include: {
-            images: true,
-            variants: true,
-          },
-        },
-        variant: true,
-      },
-    });
     } catch (error) {
       console.error('Error in addToCart:', error);
       throw error;
     }
   }
 
-  async updateCartItem(userId: string, itemId: string, updateCartItemDto: UpdateCartItemDto) {
+  async updateCartItem(
+    userId: string,
+    itemId: string,
+    updateCartItemDto: UpdateCartItemDto,
+  ) {
     const { quantity } = updateCartItemDto;
 
     const cartItem = await this.prisma.cartItem.findFirst({
@@ -160,7 +173,9 @@ export class CartService {
 
     // Проверяем остаток на складе
     if (cartItem.variantId) {
-      const variant = cartItem.product.variants.find(v => v.id === cartItem.variantId);
+      const variant = cartItem.product.variants.find(
+        (v) => v.id === cartItem.variantId,
+      );
       if (variant && variant.stockQuantity < quantity) {
         throw new BadRequestException('Недостаточно товара на складе');
       }
@@ -217,4 +232,4 @@ export class CartService {
 
     return { count: result._sum.quantity || 0 };
   }
-} 
+}

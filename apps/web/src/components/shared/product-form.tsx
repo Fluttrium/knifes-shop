@@ -61,12 +61,18 @@ interface Props {
 }
 
 export const ProductForm: React.FC<Props> = ({ product, onSubmit }) => {
-  const [selectedVariant, setSelectedVariant] = useState<ProductVariant | null>(() => {
-    if (product.variants && product.variants.length > 0 && product.variants[0]) {
-      return product.variants[0];
-    }
-    return null;
-  });
+  const [selectedVariant, setSelectedVariant] = useState<ProductVariant | null>(
+    () => {
+      if (
+        product.variants &&
+        product.variants.length > 0 &&
+        product.variants[0]
+      ) {
+        return product.variants[0];
+      }
+      return null;
+    },
+  );
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -117,7 +123,9 @@ export const ProductForm: React.FC<Props> = ({ product, onSubmit }) => {
 
           <div className="absolute top-4 left-4 flex flex-col gap-2">
             {product.isNew && (
-              <Badge className="bg-primary text-primary-foreground">Новинка</Badge>
+              <Badge className="bg-primary text-primary-foreground">
+                Новинка
+              </Badge>
             )}
             {product.isFeatured && (
               <Badge className="bg-primary text-primary-foreground">
@@ -138,9 +146,7 @@ export const ProductForm: React.FC<Props> = ({ product, onSubmit }) => {
                 key={image.id}
                 onClick={() => setSelectedImage(index)}
                 className={`flex-shrink-0 w-16 h-16 bg-gray-50 rounded border-2 p-1 ${
-                  selectedImage === index
-                    ? "border-primary"
-                    : "border-gray-200"
+                  selectedImage === index ? "border-primary" : "border-gray-200"
                 }`}
               >
                 <img

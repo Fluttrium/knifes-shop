@@ -207,11 +207,13 @@ export default function DashboardPage() {
             <ShoppingCart className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{stats?.orders.totalOrders || 0}</div>
+            <div className="text-2xl font-bold">
+              {stats?.orders.totalOrders || 0}
+            </div>
             <p className="text-xs text-muted-foreground">
               <span className="text-primary flex items-center">
-                <TrendingUp className="mr-1 h-3 w-3" />
-                +{stats?.orders.todayOrders || 0}
+                <TrendingUp className="mr-1 h-3 w-3" />+
+                {stats?.orders.todayOrders || 0}
               </span>
               сегодня
             </p>
@@ -224,7 +226,9 @@ export default function DashboardPage() {
             <Package className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{stats?.products.totalProducts || 0}</div>
+            <div className="text-2xl font-bold">
+              {stats?.products.totalProducts || 0}
+            </div>
             <p className="text-xs text-muted-foreground">
               <span className="text-red-600 flex items-center">
                 <TrendingDown className="mr-1 h-3 w-3" />
@@ -240,11 +244,13 @@ export default function DashboardPage() {
             <Users className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{stats?.users.totalUsers || 0}</div>
+            <div className="text-2xl font-bold">
+              {stats?.users.totalUsers || 0}
+            </div>
             <p className="text-xs text-muted-foreground">
               <span className="text-primary flex items-center">
-                <TrendingUp className="mr-1 h-3 w-3" />
-                +{stats?.users.todayUsers || 0}
+                <TrendingUp className="mr-1 h-3 w-3" />+
+                {stats?.users.todayUsers || 0}
               </span>
               сегодня
             </p>
@@ -257,7 +263,9 @@ export default function DashboardPage() {
             <CreditCard className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{stats?.payments.totalPayments || 0}</div>
+            <div className="text-2xl font-bold">
+              {stats?.payments.totalPayments || 0}
+            </div>
             <p className="text-xs text-muted-foreground">
               <span className="text-primary flex items-center">
                 <TrendingUp className="mr-1 h-3 w-3" />
@@ -274,7 +282,9 @@ export default function DashboardPage() {
             <Truck className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{stats?.shipping.totalParcels || 0}</div>
+            <div className="text-2xl font-bold">
+              {stats?.shipping.totalParcels || 0}
+            </div>
             <p className="text-xs text-muted-foreground">
               <span className="text-primary flex items-center">
                 <TrendingUp className="mr-1 h-3 w-3" />
@@ -298,19 +308,27 @@ export default function DashboardPage() {
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <p className="text-sm font-medium">Всего заказов</p>
-                  <p className="text-2xl font-bold">{stats?.orders.totalOrders || 0}</p>
+                  <p className="text-2xl font-bold">
+                    {stats?.orders.totalOrders || 0}
+                  </p>
                 </div>
                 <div className="space-y-2">
                   <p className="text-sm font-medium">Заказов сегодня</p>
-                  <p className="text-2xl font-bold text-primary">{stats?.orders.todayOrders || 0}</p>
+                  <p className="text-2xl font-bold text-primary">
+                    {stats?.orders.todayOrders || 0}
+                  </p>
                 </div>
                 <div className="space-y-2">
                   <p className="text-sm font-medium">Общий доход</p>
-                  <p className="text-2xl font-bold">{formatCurrency(stats?.orders.totalRevenue || 0)}</p>
+                  <p className="text-2xl font-bold">
+                    {formatCurrency(stats?.orders.totalRevenue || 0)}
+                  </p>
                 </div>
                 <div className="space-y-2">
                   <p className="text-sm font-medium">Доход сегодня</p>
-                  <p className="text-2xl font-bold text-primary">{formatCurrency(stats?.orders.todayRevenue || 0)}</p>
+                  <p className="text-2xl font-bold text-primary">
+                    {formatCurrency(stats?.orders.todayRevenue || 0)}
+                  </p>
                 </div>
               </div>
             </div>
@@ -320,23 +338,27 @@ export default function DashboardPage() {
         <Card className="col-span-3">
           <CardHeader>
             <CardTitle>Статистика товаров</CardTitle>
-            <CardDescription>
-              Информация о товарах и их наличии
-            </CardDescription>
+            <CardDescription>Информация о товарах и их наличии</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
               <div className="space-y-2">
                 <p className="text-sm font-medium">Всего товаров</p>
-                <p className="text-2xl font-bold">{stats?.products.totalProducts || 0}</p>
+                <p className="text-2xl font-bold">
+                  {stats?.products.totalProducts || 0}
+                </p>
               </div>
               <div className="space-y-2">
                 <p className="text-sm font-medium">Активных товаров</p>
-                <p className="text-2xl font-bold text-primary">{stats?.products.activeProducts || 0}</p>
+                <p className="text-2xl font-bold text-primary">
+                  {stats?.products.activeProducts || 0}
+                </p>
               </div>
               <div className="space-y-2">
                 <p className="text-sm font-medium">Нет в наличии</p>
-                <p className="text-2xl font-bold text-destructive">{stats?.products.outOfStockProducts || 0}</p>
+                <p className="text-2xl font-bold text-destructive">
+                  {stats?.products.outOfStockProducts || 0}
+                </p>
               </div>
             </div>
           </CardContent>

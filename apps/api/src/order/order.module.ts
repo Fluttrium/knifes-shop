@@ -12,22 +12,8 @@ import { CartModule } from '../cart/cart.module';
 
 @Module({
   imports: [PrismaModule, AuthModule, CartModule],
-  controllers: [
-    AddressController,
-    OrderController,
-    OrderAdminController,
-  ],
-  providers: [
-    OrderService,
-    OrderAdminService,
-    AddressService,
-    ParcelService,
-  ],
-  exports: [
-    OrderService,
-    OrderAdminService,
-    AddressService,
-    ParcelService,
-  ],
+  controllers: [AddressController, OrderController, OrderAdminController],
+  providers: [OrderService, OrderAdminService, AddressService, ParcelService],
+  exports: [OrderService, OrderAdminService, AddressService, ParcelService],
 })
-export class OrderModule {} 
+export class OrderModule {}

@@ -1,7 +1,25 @@
-import { Controller, Get, Post, Patch, Delete, Param, Body, UseGuards } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
+import {
+  Controller,
+  Get,
+  Post,
+  Patch,
+  Delete,
+  Param,
+  Body,
+  UseGuards,
+} from '@nestjs/common';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiResponse,
+  ApiBearerAuth,
+} from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
-import { AddressService, CreateAddressDto, UpdateAddressDto } from './address.service';
+import {
+  AddressService,
+  CreateAddressDto,
+  UpdateAddressDto,
+} from './address.service';
 import { GetUser } from '../auth/decorators/get-user.decorator';
 import { IsString, IsOptional, IsBoolean } from 'class-validator';
 
@@ -136,7 +154,11 @@ export class AddressController {
     @Param('id') addressId: string,
     @Body() updateAddressDto: UpdateAddressRequestDto,
   ) {
-    return this.addressService.updateAddress(userId, addressId, updateAddressDto);
+    return this.addressService.updateAddress(
+      userId,
+      addressId,
+      updateAddressDto,
+    );
   }
 
   @Delete(':id')
@@ -161,4 +183,4 @@ export class AddressController {
   ) {
     return this.addressService.setDefaultAddress(userId, addressId);
   }
-} 
+}

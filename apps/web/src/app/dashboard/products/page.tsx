@@ -36,7 +36,7 @@ export default function ProductsPage() {
   const fetchProducts = async () => {
     setIsLoading(true);
     try {
-              // Fetching products
+      // Fetching products
       const response = await api.products.getAllProductsAdmin();
       // Products fetched successfully
       setProducts(response.products || []);
@@ -158,9 +158,7 @@ export default function ProductsPage() {
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Товары</h1>
-          <p className="text-muted-foreground">
-            Управление товарами магазина
-          </p>
+          <p className="text-muted-foreground">Управление товарами магазина</p>
         </div>
         <div className="flex gap-2">
           <AddCategoryDialog onCategoryCreated={handleCategoryCreated} />

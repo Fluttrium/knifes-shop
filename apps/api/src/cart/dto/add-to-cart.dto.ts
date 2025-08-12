@@ -6,7 +6,10 @@ export class AddToCartDto {
   @IsString()
   productId: string;
 
-  @ApiProperty({ description: 'ID варианта товара (опционально)', required: false })
+  @ApiProperty({
+    description: 'ID варианта товара (опционально)',
+    required: false,
+  })
   @IsOptional()
   @IsString()
   variantId?: string;
@@ -15,4 +18,4 @@ export class AddToCartDto {
   @IsInt()
   @Min(1)
   quantity: number;
-} 
+}

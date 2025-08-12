@@ -10,14 +10,14 @@ import { Suspense } from "react";
 import api, { Category } from "@repo/api-client";
 
 // Принудительно делаем страницу динамической
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 // Функция для получения категорий через API клиент
 async function getAllCategories(): Promise<Category[]> {
   try {
-          // Fetching categories via API client
+    // Fetching categories via API client
     const categories = await api.products.getCategories();
-          // Categories loaded successfully
+    // Categories loaded successfully
     return categories;
   } catch (error) {
     console.error("❌ Error fetching categories via API client:", error);

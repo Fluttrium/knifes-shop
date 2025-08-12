@@ -81,10 +81,8 @@ export default function ProfileLayout({
         </div>
 
         {/* Основной контент */}
-        <div className="flex-1">
-          {children}
-        </div>
+        <div className="flex-1">{children}</div>
       </div>
     </div>
   );
-} 
+}

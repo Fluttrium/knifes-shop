@@ -1,4 +1,10 @@
-import { Controller, Post, Body, Headers, BadRequestException } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Headers,
+  BadRequestException,
+} from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { PaymentService } from './payment.service';
 
@@ -21,7 +27,7 @@ export class PaymentWebhookController {
     // }
 
     await this.paymentService.handlePaymentWebhook(paymentData);
-    
+
     return { success: true };
   }
-} 
+}

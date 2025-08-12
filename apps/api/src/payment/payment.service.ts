@@ -1,4 +1,8 @@
-import { Injectable, BadRequestException, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  BadRequestException,
+  NotFoundException,
+} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreatePaymentDto } from './dto/create-payment.dto';
@@ -60,8 +64,13 @@ export class PaymentService {
     private configService: ConfigService,
   ) {
     this.yooKassaShopId = this.configService.get<string>('YOO_KASSA_SHOP_ID');
-    this.yooKassaSecretKey = this.configService.get<string>('YOO_KASSA_SECRET_KEY');
-    this.yooKassaApiUrl = this.configService.get<string>('YOO_KASSA_API_URL', 'https://api.yookassa.ru/v3');
+    this.yooKassaSecretKey = this.configService.get<string>(
+      'YOO_KASSA_SECRET_KEY',
+    );
+    this.yooKassaApiUrl = this.configService.get<string>(
+      'YOO_KASSA_API_URL',
+      'https://api.yookassa.ru/v3',
+    );
   }
 
   async createPayment(createPaymentDto: CreatePaymentDto, userId: string) {
@@ -131,21 +140,34 @@ export class PaymentService {
       // Проверяем, настроены ли ключи ЮKassa
       console.log('YooKassa Shop ID:', this.yooKassaShopId);
       console.log('YooKassa Secret Key exists:', !!this.yooKassaSecretKey);
-      console.log('YooKassa Secret Key length:', this.yooKassaSecretKey?.length || 0);
+      console.log(
+        'YooKassa Secret Key length:',
+        this.yooKassaSecretKey?.length || 0,
+      );
       console.log('YooKassa API URL:', this.yooKassaApiUrl);
-      
+
       if (!this.yooKassaShopId || !this.yooKassaSecretKey) {
         throw new Error('YooKassa credentials not configured');
       }
 
       // Проверяем, что не используются дефолтные значения
-      if (this.yooKassaShopId === 'your-shop-id' || this.yooKassaSecretKey === 'your-secret-key') {
-        throw new Error('YooKassa credentials are using default values. Please set proper environment variables.');
+      if (
+        this.yooKassaShopId === 'your-shop-id' ||
+        this.yooKassaSecretKey === 'your-secret-key'
+      ) {
+        throw new Error(
+          'YooKassa credentials are using default values. Please set proper environment variables.',
+        );
       }
 
       // Предупреждение о тестовом ключе в продакшене
-      if (this.yooKassaSecretKey.startsWith('test_') && process.env.NODE_ENV === 'production') {
-        console.warn('⚠️  WARNING: Using test YooKassa key in production environment!');
+      if (
+        this.yooKassaSecretKey.startsWith('test_') &&
+        process.env.NODE_ENV === 'production'
+      ) {
+        console.warn(
+          '⚠️  WARNING: Using test YooKassa key in production environment!',
+        );
       }
 
       // Создаем платеж в ЮKassa
@@ -153,7 +175,8 @@ export class PaymentService {
         orderId: payment.id,
         amount: Math.round(amount * 100), // Конвертация в копейки
         currency,
-        description: description || `Заказ #${order.orderNumber} в магазине ножей`,
+        description:
+          description || `Заказ #${order.orderNumber} в магазине ножей`,
         email: order.user.email,
         phone: phone,
         receipt: {
@@ -180,7 +203,10 @@ export class PaymentService {
         where: { id: payment.id },
         data: {
           externalId: yooKassaPayment.id,
-          status: yooKassaPayment.status === 'pending' ? PaymentStatus.pending : PaymentStatus.failed,
+          status:
+            yooKassaPayment.status === 'pending'
+              ? PaymentStatus.pending
+              : PaymentStatus.failed,
         },
       });
 
@@ -190,7 +216,7 @@ export class PaymentService {
       };
     } catch (error) {
       console.error('Error creating YooKassa payment:', error);
-      
+
       // Если ошибка при создании платежа в ЮKassa, удаляем запись из БД
       await this.prisma.payment.delete({
         where: { id: payment.id },
@@ -217,13 +243,18 @@ export class PaymentService {
     if (payment.externalId) {
       try {
         // Получаем актуальный статус из ЮKassa
-        const yooKassaPayment = await this.getYooKassaPayment(payment.externalId);
-        
+        const yooKassaPayment = await this.getYooKassaPayment(
+          payment.externalId,
+        );
+
         // Обновляем статус в базе данных
-        const yooKassaStatus = yooKassaPayment.status === 'succeeded' ? PaymentStatus.paid : 
-                              yooKassaPayment.status === 'pending' ? PaymentStatus.pending : 
-                              PaymentStatus.failed;
-        
+        const yooKassaStatus =
+          yooKassaPayment.status === 'succeeded'
+            ? PaymentStatus.paid
+            : yooKassaPayment.status === 'pending'
+              ? PaymentStatus.pending
+              : PaymentStatus.failed;
+
         await this.prisma.payment.update({
           where: { id: paymentId },
           data: { status: yooKassaStatus },
@@ -266,11 +297,11 @@ export class PaymentService {
     switch (paymentData.object.status) {
       case 'succeeded':
         await this.prisma.$transaction(async (tx) => {
-                  // Обновляем статус платежа
-        await tx.payment.update({
-          where: { id: paymentId },
-          data: { status: PaymentStatus.paid },
-        });
+          // Обновляем статус платежа
+          await tx.payment.update({
+            where: { id: paymentId },
+            data: { status: PaymentStatus.paid },
+          });
 
           // Обновляем статус заказа
           await tx.order.update({
@@ -322,16 +353,18 @@ export class PaymentService {
     }
   }
 
-  private async createYooKassaPayment(paymentData: YooKassaPaymentRequest): Promise<YooKassaPaymentResponse> {
+  private async createYooKassaPayment(
+    paymentData: YooKassaPaymentRequest,
+  ): Promise<YooKassaPaymentResponse> {
     console.log('=== createYooKassaPayment called ===');
-    
+
     // Получаем заказ для правильного URL возврата
     const order = await this.prisma.order.findUnique({
       where: { id: paymentData.orderId },
-      select: { id: true }
+      select: { id: true },
     });
 
-    const returnUrl = order 
+    const returnUrl = order
       ? `${this.configService.get('FRONTEND_URL', 'http://localhost:3000')}/orders/${order.id}`
       : `${this.configService.get('FRONTEND_URL', 'http://localhost:3000')}/profile/orders`;
 
@@ -343,14 +376,14 @@ export class PaymentService {
       secretKeyFirst5: this.yooKassaSecretKey?.substring(0, 5) + '...',
       isTestKey: this.yooKassaSecretKey?.startsWith('test_'),
       authStringLength: authString.length,
-      base64Length: authBase64.length
+      base64Length: authBase64.length,
     });
 
     const response = await fetch(`${this.yooKassaApiUrl}/payments`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Basic ${authBase64}`,
+        Authorization: `Basic ${authBase64}`,
         'Idempotence-Key': paymentData.orderId,
       },
       body: JSON.stringify({
@@ -374,7 +407,9 @@ export class PaymentService {
     if (!response.ok) {
       const error = await response.text();
       console.error('YooKassa API error:', error);
-      throw new BadRequestException(`Ошибка создания платежа в ЮKassa: ${error}`);
+      throw new BadRequestException(
+        `Ошибка создания платежа в ЮKassa: ${error}`,
+      );
     }
 
     const result = await response.json();
@@ -382,14 +417,21 @@ export class PaymentService {
     return result;
   }
 
-  private async getYooKassaPayment(paymentId: string): Promise<YooKassaPaymentResponse> {
-    const authBase64 = Buffer.from(`${this.yooKassaShopId}:${this.yooKassaSecretKey}`).toString('base64');
-    const response = await fetch(`${this.yooKassaApiUrl}/payments/${paymentId}`, {
-      method: 'GET',
-      headers: {
-        'Authorization': `Basic ${authBase64}`,
+  private async getYooKassaPayment(
+    paymentId: string,
+  ): Promise<YooKassaPaymentResponse> {
+    const authBase64 = Buffer.from(
+      `${this.yooKassaShopId}:${this.yooKassaSecretKey}`,
+    ).toString('base64');
+    const response = await fetch(
+      `${this.yooKassaApiUrl}/payments/${paymentId}`,
+      {
+        method: 'GET',
+        headers: {
+          Authorization: `Basic ${authBase64}`,
+        },
       },
-    });
+    );
 
     if (!response.ok) {
       throw new BadRequestException('Ошибка получения платежа из ЮKassa');
@@ -406,10 +448,10 @@ export class PaymentService {
 
   private formatPhoneForYooKassa(phone: string): string | null {
     if (!phone) return null;
-    
+
     // Очищаем от нецифровых символов
     const cleanedPhone = phone.replace(/\D/g, '');
-    
+
     // Проверяем длину
     if (cleanedPhone.length < 10 || cleanedPhone.length > 15) {
       return null;
@@ -450,4 +492,4 @@ export class PaymentService {
       nodeEnv: process.env.NODE_ENV,
     };
   }
-} 
+}

@@ -12,4 +12,4 @@ import { AuthModule } from '../auth/auth.module';
   providers: [PaymentService],
   exports: [PaymentService],
 })
-export class PaymentModule {} 
+export class PaymentModule {}

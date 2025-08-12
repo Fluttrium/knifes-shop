@@ -43,7 +43,8 @@ async function main() {
       data: {
         name: 'Иван Петров',
         email: 'ivan@example.com',
-        password: '$2a$10$sRrJJzLfNqIelp.r9rrMn.Tjr/Db8VI5crBtw27nJWNoYSv8.2Dt2',
+        password:
+          '$2a$10$sRrJJzLfNqIelp.r9rrMn.Tjr/Db8VI5crBtw27nJWNoYSv8.2Dt2',
         role: 'user',
       },
     }),
@@ -51,7 +52,8 @@ async function main() {
       data: {
         name: 'Мария Сидорова',
         email: 'maria@example.com',
-        password: '$2a$10$sRrJJzLfNqIelp.r9rrMn.Tjr/Db8VI5crBtw27nJWNoYSv8.2Dt2',
+        password:
+          '$2a$10$sRrJJzLfNqIelp.r9rrMn.Tjr/Db8VI5crBtw27nJWNoYSv8.2Dt2',
         role: 'user',
       },
     }),
@@ -59,7 +61,8 @@ async function main() {
       data: {
         name: 'Алексей Козлов',
         email: 'alex@example.com',
-        password: '$2a$10$sRrJJzLfNqIelp.r9rrMn.Tjr/Db8VI5crBtw27nJWNoYSv8.2Dt2',
+        password:
+          '$2a$10$sRrJJzLfNqIelp.r9rrMn.Tjr/Db8VI5crBtw27nJWNoYSv8.2Dt2',
         role: 'user',
       },
     }),

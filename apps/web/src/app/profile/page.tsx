@@ -28,7 +28,7 @@ export default function ProfilePage() {
 
   const handleSave = async () => {
     if (!user) return;
-    
+
     setLoading(true);
     try {
       await api.users.updateUser(user.id, formData);
@@ -54,7 +54,7 @@ export default function ProfilePage() {
   useEffect(() => {
     const fetchUserStats = async () => {
       if (!user) return;
-      
+
       try {
         setStatsLoading(true);
         const stats = await api.users.getCurrentUserStats();
@@ -80,9 +80,9 @@ export default function ProfilePage() {
   }, [user]);
 
   const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('ru-RU', {
-      style: 'currency',
-      currency: 'RUB',
+    return new Intl.NumberFormat("ru-RU", {
+      style: "currency",
+      currency: "RUB",
     }).format(amount);
   };
 
@@ -112,7 +112,9 @@ export default function ProfilePage() {
                 <Input
                   id="name"
                   value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, name: e.target.value })
+                  }
                   placeholder="Введите имя"
                 />
               ) : (
@@ -129,7 +131,9 @@ export default function ProfilePage() {
                   id="email"
                   type="email"
                   value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, email: e.target.value })
+                  }
                   placeholder="Введите email"
                 />
               ) : (
@@ -146,7 +150,9 @@ export default function ProfilePage() {
                 <Input
                   id="phone"
                   value={formData.phone}
-                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, phone: e.target.value })
+                  }
                   placeholder="Введите телефон"
                 />
               ) : (
@@ -176,9 +182,7 @@ export default function ProfilePage() {
                 </Button>
               </>
             ) : (
-              <Button onClick={() => setIsEditing(true)}>
-                Редактировать
-              </Button>
+              <Button onClick={() => setIsEditing(true)}>Редактировать</Button>
             )}
           </div>
         </CardContent>
@@ -195,7 +199,10 @@ export default function ProfilePage() {
           {statsLoading ? (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {[1, 2, 3].map((i) => (
-                <div key={i} className="text-center p-4 bg-muted rounded-lg animate-pulse">
+                <div
+                  key={i}
+                  className="text-center p-4 bg-muted rounded-lg animate-pulse"
+                >
                   <div className="h-8 bg-gray-200 rounded mb-2"></div>
                   <div className="h-4 bg-gray-200 rounded"></div>
                 </div>
@@ -204,15 +211,21 @@ export default function ProfilePage() {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="text-center p-4 bg-muted rounded-lg">
-                <div className="text-2xl font-bold text-primary">{userStats.totalOrders}</div>
+                <div className="text-2xl font-bold text-primary">
+                  {userStats.totalOrders}
+                </div>
                 <div className="text-sm text-muted-foreground">Заказов</div>
               </div>
               <div className="text-center p-4 bg-muted rounded-lg">
-                <div className="text-2xl font-bold text-primary">{userStats.totalAddresses}</div>
+                <div className="text-2xl font-bold text-primary">
+                  {userStats.totalAddresses}
+                </div>
                 <div className="text-sm text-muted-foreground">Адресов</div>
               </div>
               <div className="text-center p-4 bg-muted rounded-lg">
-                <div className="text-2xl font-bold text-primary">{formatCurrency(userStats.totalSpent)}</div>
+                <div className="text-2xl font-bold text-primary">
+                  {formatCurrency(userStats.totalSpent)}
+                </div>
                 <div className="text-sm text-muted-foreground">Потрачено</div>
               </div>
             </div>
@@ -233,33 +246,50 @@ export default function ProfilePage() {
           <div className="flex items-center gap-2 mb-4 p-3 bg-muted/50 rounded-lg">
             <AlertCircle className="h-5 w-5 text-muted-foreground" />
             <span className="text-sm text-muted-foreground">
-              Эти функции находятся в разработке и будут доступны в ближайшее время
+              Эти функции находятся в разработке и будут доступны в ближайшее
+              время
             </span>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="p-4 border border-dashed border-muted-foreground/30 rounded-lg text-center">
-              <div className="text-lg font-medium text-muted-foreground mb-2">Избранные товары</div>
-              <div className="text-sm text-muted-foreground">Список избранных товаров</div>
+              <div className="text-lg font-medium text-muted-foreground mb-2">
+                Избранные товары
+              </div>
+              <div className="text-sm text-muted-foreground">
+                Список избранных товаров
+              </div>
             </div>
-            
+
             <div className="p-4 border border-dashed border-muted-foreground/30 rounded-lg text-center">
-              <div className="text-lg font-medium text-muted-foreground mb-2">История просмотров</div>
-              <div className="text-sm text-muted-foreground">Недавно просмотренные товары</div>
+              <div className="text-lg font-medium text-muted-foreground mb-2">
+                История просмотров
+              </div>
+              <div className="text-sm text-muted-foreground">
+                Недавно просмотренные товары
+              </div>
             </div>
-            
+
             <div className="p-4 border border-dashed border-muted-foreground/30 rounded-lg text-center">
-              <div className="text-lg font-medium text-muted-foreground mb-2">Отзывы</div>
-              <div className="text-sm text-muted-foreground">Ваши отзывы о товарах</div>
+              <div className="text-lg font-medium text-muted-foreground mb-2">
+                Отзывы
+              </div>
+              <div className="text-sm text-muted-foreground">
+                Ваши отзывы о товарах
+              </div>
             </div>
-            
+
             <div className="p-4 border border-dashed border-muted-foreground/30 rounded-lg text-center">
-              <div className="text-lg font-medium text-muted-foreground mb-2">Бонусная программа</div>
-              <div className="text-sm text-muted-foreground">Бонусные баллы и скидки</div>
+              <div className="text-lg font-medium text-muted-foreground mb-2">
+                Бонусная программа
+              </div>
+              <div className="text-sm text-muted-foreground">
+                Бонусные баллы и скидки
+              </div>
             </div>
           </div>
         </CardContent>
       </Card>
     </div>
   );
-} 
+}

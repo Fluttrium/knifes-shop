@@ -1,42 +1,42 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { useAuth } from '@/hooks/use-auth';
-import { useCart } from '@/hooks/use-cart';
-import { api } from '@repo/api-client';
-import type { Address } from '@repo/api-client';
-import { Container } from '@/components/shared/container';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { Separator } from '@/components/ui/separator';
-import { Badge } from '@/components/ui/badge';
-import { ArrowLeft, MapPin, Plus, Trash2 } from 'lucide-react';
-import Link from 'next/link';
-import Image from 'next/image';
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/hooks/use-auth";
+import { useCart } from "@/hooks/use-cart";
+import { api } from "@repo/api-client";
+import type { Address } from "@repo/api-client";
+import { Container } from "@/components/shared/container";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Separator } from "@/components/ui/separator";
+import { Badge } from "@/components/ui/badge";
+import { ArrowLeft, MapPin, Plus, Trash2 } from "lucide-react";
+import Link from "next/link";
+import Image from "next/image";
 
 export default function CheckoutPage() {
   const router = useRouter();
   const { isAuthenticated, user } = useAuth();
   const { cart, loading: cartLoading } = useCart();
-  
+
   const [addresses, setAddresses] = useState<Address[]>([]);
-  const [selectedAddressId, setSelectedAddressId] = useState<string>('');
-  const [notes, setNotes] = useState('');
+  const [selectedAddressId, setSelectedAddressId] = useState<string>("");
+  const [notes, setNotes] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!isAuthenticated) {
-      router.push('/signin');
+      router.push("/signin");
       return;
     }
 
     if (cart && cart.items.length === 0) {
-      router.push('/cart');
+      router.push("/cart");
       return;
     }
 
@@ -47,30 +47,34 @@ export default function CheckoutPage() {
     try {
       const response = await api.orders.getAddresses();
       setAddresses(response);
-      
+
       // Выбираем адрес по умолчанию
-      const defaultAddress = response.find(addr => addr.isDefault);
+      const defaultAddress = response.find((addr) => addr.isDefault);
       if (defaultAddress) {
         setSelectedAddressId(defaultAddress.id);
       } else if (response.length > 0) {
-        setSelectedAddressId(response[0]?.id || '');
+        setSelectedAddressId(response[0]?.id || "");
       }
     } catch (err) {
-      console.error('Ошибка при загрузке адресов:', err);
-      setError('Ошибка при загрузке адресов');
+      console.error("Ошибка при загрузке адресов:", err);
+      setError("Ошибка при загрузке адресов");
     }
   };
 
   const handleCreateOrder = async () => {
     if (!selectedAddressId) {
-      setError('Выберите адрес доставки');
+      setError("Выберите адрес доставки");
       return;
     }
 
     // Проверяем, что выбранный адрес имеет телефон
-    const selectedAddress = addresses.find(addr => addr.id === selectedAddressId);
+    const selectedAddress = addresses.find(
+      (addr) => addr.id === selectedAddressId,
+    );
     if (!selectedAddress?.phone) {
-      setError('В выбранном адресе отсутствует номер телефона. Пожалуйста, добавьте телефон в адрес доставки.');
+      setError(
+        "В выбранном адресе отсутствует номер телефона. Пожалуйста, добавьте телефон в адрес доставки.",
+      );
       return;
     }
 
@@ -79,7 +83,7 @@ export default function CheckoutPage() {
 
     try {
       if (!cart) {
-        throw new Error('Корзина недоступна');
+        throw new Error("Корзина недоступна");
       }
 
       // Создаем заказ
@@ -100,7 +104,7 @@ export default function CheckoutPage() {
       };
 
       const payment = await api.payments.createPayment(paymentData);
-              // Payment created successfully
+      // Payment created successfully
 
       // Перенаправляем на страницу оплаты
       if (payment.paymentUrl) {
@@ -109,8 +113,8 @@ export default function CheckoutPage() {
         router.push(`/orders/${order.id}`);
       }
     } catch (err) {
-      console.error('❌ Ошибка при создании заказа:', err);
-      setError('Ошибка при создании заказа. Попробуйте еще раз.');
+      console.error("❌ Ошибка при создании заказа:", err);
+      setError("Ошибка при создании заказа. Попробуйте еще раз.");
     } finally {
       setLoading(false);
     }
@@ -186,9 +190,9 @@ export default function CheckoutPage() {
                         key={address.id}
                         className={`border rounded-lg p-4 cursor-pointer transition-colors ${
                           selectedAddressId === address.id
-                            ? 'border-primary bg-primary/5'
-                            : 'border-border hover:border-primary/50'
-                        } ${!address.phone ? 'border-red-200 bg-red-50' : ''}`}
+                            ? "border-primary bg-primary/5"
+                            : "border-border hover:border-primary/50"
+                        } ${!address.phone ? "border-red-200 bg-red-50" : ""}`}
                         onClick={() => setSelectedAddressId(address.id)}
                       >
                         <div className="flex items-start justify-between">
@@ -201,7 +205,9 @@ export default function CheckoutPage() {
                                 <Badge variant="secondary">По умолчанию</Badge>
                               )}
                               {!address.phone && (
-                                <Badge variant="destructive">Нет телефона</Badge>
+                                <Badge variant="destructive">
+                                  Нет телефона
+                                </Badge>
                               )}
                             </div>
                             <p className="text-sm text-muted-foreground">
@@ -209,7 +215,8 @@ export default function CheckoutPage() {
                               {address.address2 && `, ${address.address2}`}
                             </p>
                             <p className="text-sm text-muted-foreground">
-                              {address.city}, {address.state} {address.postalCode}
+                              {address.city}, {address.state}{" "}
+                              {address.postalCode}
                             </p>
                             <p className="text-sm text-muted-foreground">
                               {address.country}
@@ -262,12 +269,17 @@ export default function CheckoutPage() {
               <CardContent>
                 <div className="space-y-4">
                   {cart.items.map((item) => {
-                    const productImage = item.product.images.find(img => img.isPrimary) || item.product.images[0];
+                    const productImage =
+                      item.product.images.find((img) => img.isPrimary) ||
+                      item.product.images[0];
                     const variant = item.variant;
                     const price = Number(variant?.price || item.product.price);
-                    
+
                     return (
-                      <div key={item.id} className="flex items-center space-x-4">
+                      <div
+                        key={item.id}
+                        className="flex items-center space-x-4"
+                      >
                         <div className="relative w-16 h-16 flex-shrink-0">
                           {productImage ? (
                             <Image
@@ -278,7 +290,9 @@ export default function CheckoutPage() {
                             />
                           ) : (
                             <div className="w-full h-full bg-muted rounded-md flex items-center justify-center">
-                              <span className="text-muted-foreground text-xs">Нет фото</span>
+                              <span className="text-muted-foreground text-xs">
+                                Нет фото
+                              </span>
                             </div>
                           )}
                         </div>
@@ -297,10 +311,10 @@ export default function CheckoutPage() {
                         </div>
                         <div className="text-right">
                           <p className="font-semibold">
-                            {(price * item.quantity).toLocaleString('ru-RU')} ₽
+                            {(price * item.quantity).toLocaleString("ru-RU")} ₽
                           </p>
                           <p className="text-sm text-muted-foreground">
-                            {price.toLocaleString('ru-RU')} ₽ за шт.
+                            {price.toLocaleString("ru-RU")} ₽ за шт.
                           </p>
                         </div>
                       </div>
@@ -324,7 +338,9 @@ export default function CheckoutPage() {
                 </div>
                 <div className="flex justify-between">
                   <span>Стоимость товаров:</span>
-                  <span>{Number(cart.totalPrice).toLocaleString('ru-RU')} ₽</span>
+                  <span>
+                    {Number(cart.totalPrice).toLocaleString("ru-RU")} ₽
+                  </span>
                 </div>
                 <div className="flex justify-between">
                   <span>Доставка:</span>
@@ -333,26 +349,29 @@ export default function CheckoutPage() {
                 <Separator />
                 <div className="flex justify-between text-lg font-semibold">
                   <span>Итого к оплате:</span>
-                  <span>{Number(cart.totalPrice).toLocaleString('ru-RU')} ₽</span>
+                  <span>
+                    {Number(cart.totalPrice).toLocaleString("ru-RU")} ₽
+                  </span>
                 </div>
-                
+
                 {error && (
                   <div className="text-sm text-destructive bg-destructive/10 p-3 rounded-md">
                     {error}
                   </div>
                 )}
 
-                <Button 
-                  className="w-full" 
+                <Button
+                  className="w-full"
                   size="lg"
                   onClick={handleCreateOrder}
                   disabled={loading || !selectedAddressId}
                 >
-                  {loading ? 'Обработка...' : 'Оформить заказ'}
+                  {loading ? "Обработка..." : "Оформить заказ"}
                 </Button>
 
                 <p className="text-xs text-muted-foreground text-center">
-                  Нажимая кнопку «Оформить заказ», вы соглашаетесь с условиями покупки
+                  Нажимая кнопку «Оформить заказ», вы соглашаетесь с условиями
+                  покупки
                 </p>
               </CardContent>
             </Card>
@@ -361,4 +380,4 @@ export default function CheckoutPage() {
       </div>
     </Container>
   );
-} 
+}

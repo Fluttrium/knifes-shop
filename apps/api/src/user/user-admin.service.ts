@@ -6,7 +6,14 @@ export class UserAdminService {
   constructor(private prisma: PrismaService) {}
 
   async getAllUsers(query: any) {
-    const { page = 1, limit = 10, search, role, sortBy = 'createdAt', sortOrder = 'desc' } = query;
+    const {
+      page = 1,
+      limit = 10,
+      search,
+      role,
+      sortBy = 'createdAt',
+      sortOrder = 'desc',
+    } = query;
 
     const where: any = {};
 
@@ -92,7 +99,6 @@ export class UserAdminService {
           },
         },
       }),
-
     ]);
 
     return {
@@ -106,4 +112,4 @@ export class UserAdminService {
       averageOrdersPerUser: 0, // Упрощено для демонстрации
     };
   }
-} 
+}

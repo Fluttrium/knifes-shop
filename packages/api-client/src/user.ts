@@ -58,7 +58,7 @@ export class UserService {
     usersWithOrders: number;
     averageOrdersPerUser: number;
   }> {
-    const response = await instance.get('/admin/users/statistics');
+    const response = await instance.get("/admin/users/statistics");
     return response.data;
   }
 
@@ -68,7 +68,7 @@ export class UserService {
     totalAddresses: number;
     lastOrderDate?: string;
   }> {
-    const response = await instance.get('/users/me/stats');
+    const response = await instance.get("/users/me/stats");
     return response.data;
   }
 }

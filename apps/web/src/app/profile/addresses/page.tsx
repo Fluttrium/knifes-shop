@@ -37,13 +37,11 @@ export default function AddressesPage() {
       <div className="py-8">
         <div className="mb-6">
           <h1 className="text-3xl font-bold">Мои адреса</h1>
-          <p className="text-muted-foreground">
-            Управление адресами доставки
-          </p>
+          <p className="text-muted-foreground">Управление адресами доставки</p>
         </div>
 
         <AddressForm onAddressUpdated={handleAddressUpdated} />
       </div>
     </Container>
   );
-} 
+}

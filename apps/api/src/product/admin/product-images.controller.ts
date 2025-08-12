@@ -11,7 +11,13 @@ import {
 } from '@nestjs/common';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import type { Multer } from 'multer';
-import { ApiTags, ApiConsumes, ApiBody, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiConsumes,
+  ApiBody,
+  ApiOperation,
+  ApiResponse,
+} from '@nestjs/swagger';
 import { ProductAdminService } from './product-admin.service';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
 import { RolProtected } from '../../auth/decorators/rol-protected.decorator';
@@ -54,7 +60,10 @@ export class ProductImagesController {
       throw new BadRequestException('Изображения не предоставлены');
     }
 
-    const result = await this.productAdminService.uploadProductImages(productId, files);
+    const result = await this.productAdminService.uploadProductImages(
+      productId,
+      files,
+    );
     return {
       success: true,
       data: result.images,
@@ -98,10 +107,13 @@ export class ProductImagesController {
       throw new BadRequestException('Список ID изображений не предоставлен');
     }
 
-    const updatedProduct = await this.productAdminService.updateImageOrder(productId, imageIds);
+    const updatedProduct = await this.productAdminService.updateImageOrder(
+      productId,
+      imageIds,
+    );
     return {
       success: true,
       data: updatedProduct,
     };
   }
-} 
+}

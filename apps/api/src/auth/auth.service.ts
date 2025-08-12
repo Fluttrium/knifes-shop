@@ -136,15 +136,15 @@ export class AuthService {
   }
 
   private getRefreshToken(payload: JwtPayload) {
-    return this.jwtService.sign(payload, { 
+    return this.jwtService.sign(payload, {
       expiresIn: '7d',
-      secret: process.env.JWT_REFRESH_SECRET 
+      secret: process.env.JWT_REFRESH_SECRET,
     });
   }
 
   private getJwtToken(payload: JwtPayload) {
     return this.jwtService.sign(payload, {
-      secret: process.env.JWT_SECRET
+      secret: process.env.JWT_SECRET,
     });
   }
 }

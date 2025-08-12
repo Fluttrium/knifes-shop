@@ -116,7 +116,7 @@ export class OrderService {
     todayOrders: number;
     todayRevenue: number;
   }> {
-    const response = await instance.get('/admin/orders/statistics');
+    const response = await instance.get("/admin/orders/statistics");
     return response.data;
   }
 
@@ -130,7 +130,12 @@ export class OrderService {
   // Платежи (админ)
   async getPayments(
     query?: PaymentQueryDto,
-  ): Promise<{ data: OrderPayment[]; total: number; page: number; limit: number }> {
+  ): Promise<{
+    data: OrderPayment[];
+    total: number;
+    page: number;
+    limit: number;
+  }> {
     const params = new URLSearchParams();
     if (query) {
       Object.entries(query).forEach(([key, value]) => {
@@ -193,11 +198,14 @@ export class OrderService {
     orderId: string,
     parcelData: Omit<Parcel, "id" | "orderId" | "createdAt" | "updatedAt">,
   ): Promise<Parcel> {
-    const response = await instance.post<Parcel>(`/admin/orders/${orderId}/parcel`, {
-      trackingNumber: parcelData.trackingNumber,
-      carrier: parcelData.carrier,
-      comment: parcelData.comment,
-    });
+    const response = await instance.post<Parcel>(
+      `/admin/orders/${orderId}/parcel`,
+      {
+        trackingNumber: parcelData.trackingNumber,
+        carrier: parcelData.carrier,
+        comment: parcelData.comment,
+      },
+    );
     return response.data;
   }
 

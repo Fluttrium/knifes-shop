@@ -46,7 +46,7 @@ export interface PresignedUrlDto {
 }
 
 // Используем существующий тип из product.ts
-export type { ProductImage } from './product';
+export type { ProductImage } from "./product";
 
 export interface UploadProductImagesResponse {
   success: boolean;
@@ -70,4 +70,4 @@ export interface DeleteProductImageResponse {
 export interface ReorderProductImagesResponse {
   success: boolean;
   data: any; // ProductEntity
-} 
+}

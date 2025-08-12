@@ -125,7 +125,9 @@ export function AddCategoryDialog({
           <div className="flex flex-col gap-4 py-4">
             {/* Название */}
             <div>
-              <Label htmlFor="name" className="mb-1 block">Название *</Label>
+              <Label htmlFor="name" className="mb-1 block">
+                Название *
+              </Label>
               <Input
                 id="name"
                 value={formData.name}
@@ -142,52 +144,75 @@ export function AddCategoryDialog({
             </div>
             {/* Slug */}
             <div>
-              <Label htmlFor="slug" className="mb-1 block">Slug *</Label>
+              <Label htmlFor="slug" className="mb-1 block">
+                Slug *
+              </Label>
               <Input
                 id="slug"
                 value={formData.slug}
-                onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, slug: e.target.value })
+                }
                 required
               />
             </div>
             {/* Описание */}
             <div>
-              <Label htmlFor="description" className="mb-1 block">Описание</Label>
+              <Label htmlFor="description" className="mb-1 block">
+                Описание
+              </Label>
               <Textarea
                 id="description"
                 value={formData.description}
-                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, description: e.target.value })
+                }
                 rows={3}
               />
             </div>
             {/* Изображение */}
             <div>
-              <Label htmlFor="image" className="mb-1 block">URL изображения</Label>
+              <Label htmlFor="image" className="mb-1 block">
+                URL изображения
+              </Label>
               <Input
                 id="image"
                 value={formData.image}
-                onChange={(e) => setFormData({ ...formData, image: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, image: e.target.value })
+                }
                 placeholder="https://example.com/image.jpg"
               />
             </div>
             {/* Родительская категория */}
             <div>
-              <Label htmlFor="parentId" className="mb-1 block">Родительская категория</Label>
+              <Label htmlFor="parentId" className="mb-1 block">
+                Родительская категория
+              </Label>
               <Input
                 id="parentId"
                 value={formData.parentId}
-                onChange={(e) => setFormData({ ...formData, parentId: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, parentId: e.target.value })
+                }
                 placeholder="ID родительской категории (необязательно)"
               />
             </div>
             {/* Порядок сортировки */}
             <div>
-              <Label htmlFor="sortOrder" className="mb-1 block">Порядок сортировки</Label>
+              <Label htmlFor="sortOrder" className="mb-1 block">
+                Порядок сортировки
+              </Label>
               <Input
                 id="sortOrder"
                 type="number"
                 value={formData.sortOrder}
-                onChange={(e) => setFormData({ ...formData, sortOrder: parseInt(e.target.value) || 0 })}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    sortOrder: parseInt(e.target.value) || 0,
+                  })
+                }
                 min="0"
               />
             </div>
@@ -197,14 +222,20 @@ export function AddCategoryDialog({
                 id="isActive"
                 type="checkbox"
                 checked={formData.isActive}
-                onChange={(e) => setFormData({ ...formData, isActive: e.target.checked })}
+                onChange={(e) =>
+                  setFormData({ ...formData, isActive: e.target.checked })
+                }
                 className="rounded border-gray-300"
               />
               <Label htmlFor="isActive">Активная категория</Label>
             </div>
           </div>
           <DialogFooter>
-            <Button type="button" variant="outline" onClick={() => setIsOpen(false)}>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => setIsOpen(false)}
+            >
               Отмена
             </Button>
             <Button type="submit" disabled={isLoading}>

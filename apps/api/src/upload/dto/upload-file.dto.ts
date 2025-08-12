@@ -43,4 +43,4 @@ export class PresignedUrlDto {
   @Min(60)
   @Max(86400)
   expiresIn?: number;
-} 
+}

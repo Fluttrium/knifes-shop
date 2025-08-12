@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 
 export interface CreateAddressDto {
@@ -24,10 +28,7 @@ export class AddressService {
   async getAddresses(userId: string) {
     return this.prisma.address.findMany({
       where: { userId },
-      orderBy: [
-        { isDefault: 'desc' },
-        { createdAt: 'desc' },
-      ],
+      orderBy: [{ isDefault: 'desc' }, { createdAt: 'desc' }],
     });
   }
 
@@ -66,14 +67,18 @@ export class AddressService {
     });
   }
 
-  async updateAddress(userId: string, addressId: string, updateAddressDto: UpdateAddressDto) {
+  async updateAddress(
+    userId: string,
+    addressId: string,
+    updateAddressDto: UpdateAddressDto,
+  ) {
     const address = await this.getAddressById(userId, addressId);
     const { isDefault, ...addressData } = updateAddressDto;
 
     // Если адрес становится по умолчанию, сбрасываем флаг у других адресов
     if (isDefault) {
       await this.prisma.address.updateMany({
-        where: { 
+        where: {
           userId,
           id: { not: addressId },
         },
@@ -102,7 +107,9 @@ export class AddressService {
     });
 
     if (ordersWithAddress) {
-      throw new BadRequestException('Нельзя удалить адрес, который используется в заказах');
+      throw new BadRequestException(
+        'Нельзя удалить адрес, который используется в заказах',
+      );
     }
 
     await this.prisma.address.delete({
@@ -127,4 +134,4 @@ export class AddressService {
       data: { isDefault: true },
     });
   }
-} 
+}

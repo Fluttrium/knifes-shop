@@ -8,12 +8,22 @@ export class OrderAdminService {
   constructor(private prisma: PrismaService) {}
 
   async getAllOrders(query: OrderQueryDto) {
-    const { page = 1, limit = 10, status, orderNumber, startDate, endDate, sortBy = 'createdAt', sortOrder = 'desc' } = query;
+    const {
+      page = 1,
+      limit = 10,
+      status,
+      orderNumber,
+      startDate,
+      endDate,
+      sortBy = 'createdAt',
+      sortOrder = 'desc',
+    } = query;
 
     const where: any = {};
 
     if (status) where.status = status;
-    if (orderNumber) where.orderNumber = { contains: orderNumber, mode: 'insensitive' };
+    if (orderNumber)
+      where.orderNumber = { contains: orderNumber, mode: 'insensitive' };
     if (startDate || endDate) {
       where.createdAt = {};
       if (startDate) where.createdAt.gte = new Date(startDate);
@@ -131,7 +141,14 @@ export class OrderAdminService {
     });
   }
 
-  async createParcel(orderId: string, createParcelDto: { trackingNumber: string; carrier: string; comment?: string }) {
+  async createParcel(
+    orderId: string,
+    createParcelDto: {
+      trackingNumber: string;
+      carrier: string;
+      comment?: string;
+    },
+  ) {
     const order = await this.prisma.order.findUnique({
       where: { id: orderId },
     });
@@ -217,7 +234,9 @@ export class OrderAdminService {
       this.prisma.order.count({ where: { status: 'delivered' } }),
       this.prisma.order.count({ where: { status: 'cancelled' } }),
       this.prisma.order.aggregate({
-        where: { status: { in: ['confirmed', 'processing', 'shipped', 'delivered'] } },
+        where: {
+          status: { in: ['confirmed', 'processing', 'shipped', 'delivered'] },
+        },
         _sum: { totalAmount: true },
       }),
       this.prisma.order.count({
@@ -250,4 +269,4 @@ export class OrderAdminService {
       todayRevenue: todayRevenue._sum.totalAmount || 0,
     };
   }
-} 
+}

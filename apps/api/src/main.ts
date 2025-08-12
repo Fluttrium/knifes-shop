@@ -35,25 +35,9 @@ export async function bootstrap() {
 
   //Enable CORS
   app.enableCors({
-    origin: [
-      'http://localhost:3000', 
-      'http://localhost:3001',
-      'http://knivesspb.fluttrium.com',
-      'https://knivesspb.fluttrium.com',
-      'http://web:3000' // Внутренняя Docker сеть
-    ],
+    origin: 'http://localhost:3000',
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-    allowedHeaders: [
-      'Content-Type', 
-      'Authorization', 
-      'X-Requested-With', 
-      'Accept',
-      'Cookie',
-      'Set-Cookie',
-      'X-CSRF-Token'
-    ],
-    exposedHeaders: ['Set-Cookie'],
   });
 
   await app.listen(3004);

@@ -18,8 +18,8 @@ import { Plus } from "lucide-react";
 import { Category } from "@repo/api-client";
 import api from "@repo/api-client";
 import { notify } from "@/components/ui/toats/basic-toats";
-import { ImageUpload } from '@/components/shared/image-upload';
-import { Card } from '@/components/ui/card';
+import { ImageUpload } from "@/components/shared/image-upload";
+import { Card } from "@/components/ui/card";
 
 interface AddProductDialogProps {
   categories: Category[];
@@ -171,7 +171,11 @@ export function AddProductDialog({
         sortOrder: formData.sortOrder || undefined,
         metaTitle: formData.metaTitle || undefined,
         metaDescription: formData.metaDescription || undefined,
-        images: images.map((url, idx) => ({ url, isPrimary: idx === 0, sortOrder: idx })),
+        images: images.map((url, idx) => ({
+          url,
+          isPrimary: idx === 0,
+          sortOrder: idx,
+        })),
       };
 
       await api.products.createProduct(productData);
@@ -238,7 +242,9 @@ export function AddProductDialog({
           <div className="flex flex-col gap-4 py-4">
             {/* Название */}
             <div>
-              <Label htmlFor="name" className="mb-1 block">Название *</Label>
+              <Label htmlFor="name" className="mb-1 block">
+                Название *
+              </Label>
               <Input
                 id="name"
                 value={formData.name}
@@ -255,47 +261,68 @@ export function AddProductDialog({
             </div>
             {/* Slug */}
             <div>
-              <Label htmlFor="slug" className="mb-1 block">Slug *</Label>
+              <Label htmlFor="slug" className="mb-1 block">
+                Slug *
+              </Label>
               <Input
                 id="slug"
                 value={formData.slug}
-                onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, slug: e.target.value })
+                }
                 required
               />
             </div>
             {/* SKU */}
             <div>
-              <Label htmlFor="sku" className="mb-1 block">SKU *</Label>
+              <Label htmlFor="sku" className="mb-1 block">
+                SKU *
+              </Label>
               <Input
                 id="sku"
                 value={formData.sku}
-                onChange={(e) => setFormData({ ...formData, sku: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, sku: e.target.value })
+                }
                 required
               />
             </div>
             {/* Категория */}
             <div>
-              <Label htmlFor="categoryId" className="mb-1 block">Категория *</Label>
+              <Label htmlFor="categoryId" className="mb-1 block">
+                Категория *
+              </Label>
               <select
                 id="categoryId"
                 value={formData.categoryId}
-                onChange={(e) => setFormData({ ...formData, categoryId: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, categoryId: e.target.value })
+                }
                 className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                 required
               >
                 <option value="">Выберите категорию</option>
                 {categories.map((category) => (
-                  <option key={category.id} value={category.id}>{category.name}</option>
+                  <option key={category.id} value={category.id}>
+                    {category.name}
+                  </option>
                 ))}
               </select>
             </div>
             {/* Тип товара */}
             <div>
-              <Label htmlFor="productType" className="mb-1 block">Тип товара *</Label>
+              <Label htmlFor="productType" className="mb-1 block">
+                Тип товара *
+              </Label>
               <select
                 id="productType"
                 value={formData.productType}
-                onChange={(e) => setFormData({ ...formData, productType: e.target.value as any })}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    productType: e.target.value as any,
+                  })
+                }
                 className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                 required
               >
@@ -308,12 +335,19 @@ export function AddProductDialog({
             </div>
             {/* Цена */}
             <div>
-              <Label htmlFor="price" className="mb-1 block">Цена *</Label>
+              <Label htmlFor="price" className="mb-1 block">
+                Цена *
+              </Label>
               <Input
                 id="price"
                 type="number"
                 value={formData.price}
-                onChange={(e) => setFormData({ ...formData, price: parseFloat(e.target.value) || 0 })}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    price: parseFloat(e.target.value) || 0,
+                  })
+                }
                 required
                 min="0"
                 step="0.01"
@@ -321,47 +355,75 @@ export function AddProductDialog({
             </div>
             {/* Цена для сравнения */}
             <div>
-              <Label htmlFor="comparePrice" className="mb-1 block">Цена для сравнения</Label>
+              <Label htmlFor="comparePrice" className="mb-1 block">
+                Цена для сравнения
+              </Label>
               <Input
                 id="comparePrice"
                 type="number"
                 value={formData.comparePrice}
-                onChange={(e) => setFormData({ ...formData, comparePrice: parseFloat(e.target.value) || 0 })}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    comparePrice: parseFloat(e.target.value) || 0,
+                  })
+                }
                 min="0"
                 step="0.01"
               />
             </div>
             {/* Себестоимость */}
             <div>
-              <Label htmlFor="costPrice" className="mb-1 block">Себестоимость</Label>
+              <Label htmlFor="costPrice" className="mb-1 block">
+                Себестоимость
+              </Label>
               <Input
                 id="costPrice"
                 type="number"
                 value={formData.costPrice}
-                onChange={(e) => setFormData({ ...formData, costPrice: parseFloat(e.target.value) || 0 })}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    costPrice: parseFloat(e.target.value) || 0,
+                  })
+                }
                 min="0"
                 step="0.01"
               />
             </div>
             {/* Количество на складе */}
             <div>
-              <Label htmlFor="stockQuantity" className="mb-1 block">Количество на складе</Label>
+              <Label htmlFor="stockQuantity" className="mb-1 block">
+                Количество на складе
+              </Label>
               <Input
                 id="stockQuantity"
                 type="number"
                 value={formData.stockQuantity}
-                onChange={(e) => setFormData({ ...formData, stockQuantity: parseInt(e.target.value) || 0 })}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    stockQuantity: parseInt(e.target.value) || 0,
+                  })
+                }
                 min="0"
               />
             </div>
             {/* Вес */}
             <div>
-              <Label htmlFor="weight" className="mb-1 block">Вес (г)</Label>
+              <Label htmlFor="weight" className="mb-1 block">
+                Вес (г)
+              </Label>
               <Input
                 id="weight"
                 type="number"
                 value={formData.weight}
-                onChange={(e) => setFormData({ ...formData, weight: parseFloat(e.target.value) || 0 })}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    weight: parseFloat(e.target.value) || 0,
+                  })
+                }
                 min="0"
               />
             </div>
@@ -371,7 +433,8 @@ export function AddProductDialog({
                 Фотографии товара
               </Label>
               <p className="text-xs text-gray-500 mb-2">
-                Перетащите изображения или выберите файлы. Первое изображение станет основным. Максимум 10 файлов, до 5MB каждый.
+                Перетащите изображения или выберите файлы. Первое изображение
+                станет основным. Максимум 10 файлов, до 5MB каждый.
               </p>
               <ImageUpload
                 onImagesUploaded={setImages}
@@ -400,21 +463,29 @@ export function AddProductDialog({
             </div>
             {/* Краткое описание */}
             <div>
-              <Label htmlFor="shortDescription" className="mb-1 block">Краткое описание</Label>
+              <Label htmlFor="shortDescription" className="mb-1 block">
+                Краткое описание
+              </Label>
               <Textarea
                 id="shortDescription"
                 value={formData.shortDescription}
-                onChange={(e) => setFormData({ ...formData, shortDescription: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, shortDescription: e.target.value })
+                }
                 rows={2}
               />
             </div>
             {/* Описание */}
             <div>
-              <Label htmlFor="description" className="mb-1 block">Описание</Label>
+              <Label htmlFor="description" className="mb-1 block">
+                Описание
+              </Label>
               <Textarea
                 id="description"
                 value={formData.description}
-                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, description: e.target.value })
+                }
                 rows={4}
               />
             </div>
@@ -427,7 +498,9 @@ export function AddProductDialog({
                     type="checkbox"
                     id="isActive"
                     checked={formData.isActive}
-                    onChange={(e) => setFormData({ ...formData, isActive: e.target.checked })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, isActive: e.target.checked })
+                    }
                     className="h-4 w-4"
                   />
                   <Label htmlFor="isActive">Активен</Label>
@@ -437,7 +510,9 @@ export function AddProductDialog({
                     type="checkbox"
                     id="isFeatured"
                     checked={formData.isFeatured}
-                    onChange={(e) => setFormData({ ...formData, isFeatured: e.target.checked })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, isFeatured: e.target.checked })
+                    }
                     className="h-4 w-4"
                   />
                   <Label htmlFor="isFeatured">Рекомендуемый</Label>
@@ -447,7 +522,9 @@ export function AddProductDialog({
                     type="checkbox"
                     id="isNew"
                     checked={formData.isNew}
-                    onChange={(e) => setFormData({ ...formData, isNew: e.target.checked })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, isNew: e.target.checked })
+                    }
                     className="h-4 w-4"
                   />
                   <Label htmlFor="isNew">Новый товар</Label>
@@ -457,7 +534,9 @@ export function AddProductDialog({
                     type="checkbox"
                     id="isOnSale"
                     checked={formData.isOnSale}
-                    onChange={(e) => setFormData({ ...formData, isOnSale: e.target.checked })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, isOnSale: e.target.checked })
+                    }
                     className="h-4 w-4"
                   />
                   <Label htmlFor="isOnSale">На распродаже</Label>
@@ -474,7 +553,7 @@ export function AddProductDialog({
               Отмена
             </Button>
             <Button type="submit" disabled={isLoading}>
-              {isLoading ? 'Сохраняем...' : 'Создать товар'}
+              {isLoading ? "Сохраняем..." : "Создать товар"}
             </Button>
           </DialogFooter>
         </form>

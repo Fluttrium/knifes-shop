@@ -9,7 +9,12 @@ import {
   UseGuards,
   Request,
 } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiResponse,
+  ApiBearerAuth,
+} from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { CartService } from './cart.service';
 import { AddToCartDto } from './dto/add-to-cart.dto';
@@ -69,4 +74,4 @@ export class CartController {
   async getCartItemCount(@Request() req) {
     return this.cartService.getCartItemCount(req.user.id);
   }
-} 
+}

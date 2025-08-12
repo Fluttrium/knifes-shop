@@ -1,18 +1,24 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { Button } from '../ui/button';
-import { ShoppingCart, Loader2 } from 'lucide-react';
-import { useCart } from '../../hooks/use-cart';
-import { CountButton } from './count-button';
+import { useState } from "react";
+import { Button } from "../ui/button";
+import { ShoppingCart, Loader2 } from "lucide-react";
+import { useCart } from "../../hooks/use-cart";
+import { CountButton } from "./count-button";
 
 interface AddToCartButtonProps {
   productId: string;
   variantId?: string;
   stockQuantity: number;
   className?: string;
-  variant?: 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link';
-  size?: 'default' | 'sm' | 'lg' | 'icon';
+  variant?:
+    | "default"
+    | "destructive"
+    | "outline"
+    | "secondary"
+    | "ghost"
+    | "link";
+  size?: "default" | "sm" | "lg" | "icon";
 }
 
 export const AddToCartButton = ({
@@ -20,8 +26,8 @@ export const AddToCartButton = ({
   variantId,
   stockQuantity,
   className,
-  variant = 'default',
-  size = 'default',
+  variant = "default",
+  size = "default",
 }: AddToCartButtonProps) => {
   const { addToCart, loading } = useCart();
   const [quantity, setQuantity] = useState(1);
@@ -30,7 +36,7 @@ export const AddToCartButton = ({
   const handleAddToCart = async (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    
+
     if (quantity > stockQuantity || isAdding) {
       return;
     }
@@ -58,16 +64,16 @@ export const AddToCartButton = ({
         <CountButton
           value={quantity}
           onClick={(type) => {
-            if (type === 'plus' && quantity < stockQuantity) {
+            if (type === "plus" && quantity < stockQuantity) {
               handleQuantityChange(quantity + 1);
-            } else if (type === 'minus' && quantity > 1) {
+            } else if (type === "minus" && quantity > 1) {
               handleQuantityChange(quantity - 1);
             }
           }}
           disabled={isDisabled}
         />
       )}
-      
+
       <Button
         onClick={handleAddToCart}
         disabled={isDisabled}
@@ -80,8 +86,12 @@ export const AddToCartButton = ({
         ) : (
           <ShoppingCart className="h-4 w-4 mr-2" />
         )}
-        {isOutOfStock ? 'Нет в наличии' : isAdding ? 'Добавление...' : 'Добавить в корзину'}
+        {isOutOfStock
+          ? "Нет в наличии"
+          : isAdding
+            ? "Добавление..."
+            : "Добавить в корзину"}
       </Button>
     </div>
   );
-}; 
+};

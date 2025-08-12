@@ -14,17 +14,29 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Progress } from "@/components/ui/progress";
-import { 
-  Eye, 
-  Edit3, 
-  User, 
-  Package, 
-  DollarSign, 
+import {
+  Eye,
+  Edit3,
+  User,
+  Package,
+  DollarSign,
   Calendar,
   MapPin,
   Phone,
@@ -35,7 +47,7 @@ import {
   Clock,
   AlertCircle,
   ArrowRight,
-  ExternalLink
+  ExternalLink,
 } from "lucide-react";
 import { Order, Payment } from "@repo/api-client";
 import { notify } from "@/components/ui/toats/basic-toats";
@@ -53,13 +65,48 @@ interface OrderDisplay {
 
 // Статусы жизненного цикла заказа
 const ORDER_LIFECYCLE = {
-  pending: { step: 1, label: "Оформлен", icon: Clock, color: "text-yellow-600" },
-  confirmed: { step: 2, label: "Подтвержден", icon: CheckCircle, color: "text-blue-600" },
-  processing: { step: 3, label: "Обрабатывается", icon: Package, color: "text-blue-600" },
-  shipped: { step: 4, label: "Отправлен", icon: Truck, color: "text-purple-600" },
-  delivered: { step: 5, label: "Доставлен", icon: CheckCircle, color: "text-green-600" },
-  cancelled: { step: 0, label: "Отменен", icon: AlertCircle, color: "text-red-600" },
-  refunded: { step: 0, label: "Возвращен", icon: AlertCircle, color: "text-red-600" },
+  pending: {
+    step: 1,
+    label: "Оформлен",
+    icon: Clock,
+    color: "text-yellow-600",
+  },
+  confirmed: {
+    step: 2,
+    label: "Подтвержден",
+    icon: CheckCircle,
+    color: "text-blue-600",
+  },
+  processing: {
+    step: 3,
+    label: "Обрабатывается",
+    icon: Package,
+    color: "text-blue-600",
+  },
+  shipped: {
+    step: 4,
+    label: "Отправлен",
+    icon: Truck,
+    color: "text-purple-600",
+  },
+  delivered: {
+    step: 5,
+    label: "Доставлен",
+    icon: CheckCircle,
+    color: "text-green-600",
+  },
+  cancelled: {
+    step: 0,
+    label: "Отменен",
+    icon: AlertCircle,
+    color: "text-red-600",
+  },
+  refunded: {
+    step: 0,
+    label: "Возвращен",
+    icon: AlertCircle,
+    color: "text-red-600",
+  },
 };
 
 export default function OrdersPage() {
@@ -141,41 +188,71 @@ export default function OrdersPage() {
 
   const getPaymentStatusBadge = (status: string) => {
     const statusConfig = {
-      pending: { label: "Ожидает", variant: "secondary" as const, color: "bg-yellow-100 text-yellow-800" },
-      paid: { label: "Оплачен", variant: "default" as const, color: "bg-green-100 text-green-800" },
-      failed: { label: "Ошибка", variant: "destructive" as const, color: "bg-red-100 text-red-800" },
-      refunded: { label: "Возврат", variant: "outline" as const, color: "bg-gray-100 text-gray-800" },
+      pending: {
+        label: "Ожидает",
+        variant: "secondary" as const,
+        color: "bg-yellow-100 text-yellow-800",
+      },
+      paid: {
+        label: "Оплачен",
+        variant: "default" as const,
+        color: "bg-green-100 text-green-800",
+      },
+      failed: {
+        label: "Ошибка",
+        variant: "destructive" as const,
+        color: "bg-red-100 text-red-800",
+      },
+      refunded: {
+        label: "Возврат",
+        variant: "outline" as const,
+        color: "bg-gray-100 text-gray-800",
+      },
     };
 
     const config = statusConfig[status as keyof typeof statusConfig] || {
       label: status,
       variant: "secondary" as const,
-      color: "bg-gray-100 text-gray-800"
+      color: "bg-gray-100 text-gray-800",
     };
 
-    return <Badge variant={config.variant} className={config.color}>{config.label}</Badge>;
+    return (
+      <Badge variant={config.variant} className={config.color}>
+        {config.label}
+      </Badge>
+    );
   };
 
   const getPaymentMethodBadge = (method: string) => {
     const methodConfig = {
       card: { label: "Карта", color: "bg-blue-100 text-blue-800" },
       cash: { label: "Наличные", color: "bg-green-100 text-green-800" },
-      bank_transfer: { label: "Банковский перевод", color: "bg-purple-100 text-purple-800" },
+      bank_transfer: {
+        label: "Банковский перевод",
+        color: "bg-purple-100 text-purple-800",
+      },
     };
 
     const config = methodConfig[method as keyof typeof methodConfig] || {
       label: method,
-      color: "bg-gray-100 text-gray-800"
+      color: "bg-gray-100 text-gray-800",
     };
 
-    return <Badge variant="outline" className={config.color}>{config.label}</Badge>;
+    return (
+      <Badge variant="outline" className={config.color}>
+        {config.label}
+      </Badge>
+    );
   };
 
-  const handlePaymentStatusUpdate = async (paymentId: string, newStatus: string) => {
+  const handlePaymentStatusUpdate = async (
+    paymentId: string,
+    newStatus: string,
+  ) => {
     try {
       await api.payments.updatePaymentStatusAdmin(paymentId, {
         status: newStatus as any,
-        comment: "Статус обновлен администратором"
+        comment: "Статус обновлен администратором",
       });
       notify("Статус платежа обновлен", "success");
       fetchPayments();
@@ -187,26 +264,53 @@ export default function OrdersPage() {
   };
 
   const getOrderByPaymentId = (paymentId: string) => {
-    return orders.find(order => 
-      order.payments?.some(payment => payment.id === paymentId)
+    return orders.find((order) =>
+      order.payments?.some((payment) => payment.id === paymentId),
     );
   };
 
   const getOrderProgress = (order: Order) => {
-    const lifecycle = ORDER_LIFECYCLE[order.status as keyof typeof ORDER_LIFECYCLE];
+    const lifecycle =
+      ORDER_LIFECYCLE[order.status as keyof typeof ORDER_LIFECYCLE];
     if (!lifecycle || lifecycle.step === 0) return 0;
     return (lifecycle.step / 5) * 100;
   };
 
   const getOrderLifecycleSteps = (order: Order) => {
-    const currentStep = ORDER_LIFECYCLE[order.status as keyof typeof ORDER_LIFECYCLE]?.step || 0;
-    
+    const currentStep =
+      ORDER_LIFECYCLE[order.status as keyof typeof ORDER_LIFECYCLE]?.step || 0;
+
     return [
-      { step: 1, label: "Оформлен", completed: currentStep >= 1, current: currentStep === 1 },
-      { step: 2, label: "Подтвержден", completed: currentStep >= 2, current: currentStep === 2 },
-      { step: 3, label: "Обрабатывается", completed: currentStep >= 3, current: currentStep === 3 },
-      { step: 4, label: "Отправлен", completed: currentStep >= 4, current: currentStep === 4 },
-      { step: 5, label: "Доставлен", completed: currentStep >= 5, current: currentStep === 5 },
+      {
+        step: 1,
+        label: "Оформлен",
+        completed: currentStep >= 1,
+        current: currentStep === 1,
+      },
+      {
+        step: 2,
+        label: "Подтвержден",
+        completed: currentStep >= 2,
+        current: currentStep === 2,
+      },
+      {
+        step: 3,
+        label: "Обрабатывается",
+        completed: currentStep >= 3,
+        current: currentStep === 3,
+      },
+      {
+        step: 4,
+        label: "Отправлен",
+        completed: currentStep >= 4,
+        current: currentStep === 4,
+      },
+      {
+        step: 5,
+        label: "Доставлен",
+        completed: currentStep >= 5,
+        current: currentStep === 5,
+      },
     ];
   };
 
@@ -216,7 +320,7 @@ export default function OrdersPage() {
     try {
       // Обновляем статус заказа
       await api.orders.updateOrderStatus(selectedOrder.id, newStatus as any);
-      
+
       // Если указан трек-номер, создаем или обновляем отправление
       if (trackingNumber.trim()) {
         try {
@@ -256,9 +360,10 @@ export default function OrdersPage() {
     setStatusDialogOpen(true);
   };
 
-  const filteredOrders = filterStatus === "all" 
-    ? orders 
-    : orders.filter(order => order.status === filterStatus);
+  const filteredOrders =
+    filterStatus === "all"
+      ? orders
+      : orders.filter((order) => order.status === filterStatus);
 
   if (loading) {
     return (
@@ -336,7 +441,11 @@ export default function OrdersPage() {
         </div>
       </div>
 
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+      <Tabs
+        value={activeTab}
+        onValueChange={setActiveTab}
+        className="space-y-6"
+      >
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="orders" className="flex items-center gap-2">
             <ShoppingCart className="h-4 w-4" />
@@ -360,14 +469,17 @@ export default function OrdersPage() {
                   <p className="text-red-800">{error}</p>
                 </div>
               )}
-              
+
               <div className="space-y-4">
                 {filteredOrders.map((order) => {
                   const lifecycleSteps = getOrderLifecycleSteps(order);
                   const progress = getOrderProgress(order);
-                  
+
                   return (
-                    <Card key={order.id} className="hover:shadow-md transition-shadow">
+                    <Card
+                      key={order.id}
+                      className="hover:shadow-md transition-shadow"
+                    >
                       <CardContent className="p-6">
                         {/* Заголовок заказа */}
                         <div className="flex items-center justify-between mb-4">
@@ -379,7 +491,9 @@ export default function OrdersPage() {
                             {order.payments?.[0]?.status && (
                               <div className="flex items-center gap-2">
                                 <CreditCard className="h-4 w-4 text-muted-foreground" />
-                                {getPaymentStatusBadge(order.payments[0].status)}
+                                {getPaymentStatusBadge(
+                                  order.payments[0].status,
+                                )}
                               </div>
                             )}
                           </div>
@@ -392,33 +506,49 @@ export default function OrdersPage() {
                               </DialogTrigger>
                               <DialogContent className="max-w-4xl">
                                 <DialogHeader>
-                                  <DialogTitle>Детали заказа #{order.orderNumber}</DialogTitle>
+                                  <DialogTitle>
+                                    Детали заказа #{order.orderNumber}
+                                  </DialogTitle>
                                 </DialogHeader>
                                 <div className="space-y-6">
                                   {/* Прогресс заказа */}
                                   <div>
-                                    <Label className="text-base font-medium mb-3 block">Прогресс заказа</Label>
+                                    <Label className="text-base font-medium mb-3 block">
+                                      Прогресс заказа
+                                    </Label>
                                     <div className="space-y-4">
-                                      <Progress value={progress} className="h-3" />
+                                      <Progress
+                                        value={progress}
+                                        className="h-3"
+                                      />
                                       <div className="flex justify-between text-sm text-muted-foreground">
                                         {lifecycleSteps.map((step, idx) => (
-                                          <div key={step.step} className="flex flex-col items-center">
-                                            <div className={`w-8 h-8 rounded-full flex items-center justify-center mb-2 ${
-                                              step.completed 
-                                                ? 'bg-green-500 text-white' 
-                                                : step.current 
-                                                ? 'bg-blue-500 text-white' 
-                                                : 'bg-gray-200 text-gray-500'
-                                            }`}>
+                                          <div
+                                            key={step.step}
+                                            className="flex flex-col items-center"
+                                          >
+                                            <div
+                                              className={`w-8 h-8 rounded-full flex items-center justify-center mb-2 ${
+                                                step.completed
+                                                  ? "bg-green-500 text-white"
+                                                  : step.current
+                                                    ? "bg-blue-500 text-white"
+                                                    : "bg-gray-200 text-gray-500"
+                                              }`}
+                                            >
                                               {step.completed ? (
                                                 <CheckCircle className="h-4 w-4" />
                                               ) : step.current ? (
                                                 <Clock className="h-4 w-4" />
                                               ) : (
-                                                <span className="text-xs">{step.step}</span>
+                                                <span className="text-xs">
+                                                  {step.step}
+                                                </span>
                                               )}
                                             </div>
-                                            <span className="text-xs text-center">{step.label}</span>
+                                            <span className="text-xs text-center">
+                                              {step.label}
+                                            </span>
                                           </div>
                                         ))}
                                       </div>
@@ -429,44 +559,61 @@ export default function OrdersPage() {
                                   <div className="grid grid-cols-2 gap-4">
                                     <div>
                                       <Label>Статус заказа</Label>
-                                      <div className="mt-1">{getStatusBadge(order.status)}</div>
+                                      <div className="mt-1">
+                                        {getStatusBadge(order.status)}
+                                      </div>
                                     </div>
                                     <div>
                                       <Label>Статус оплаты</Label>
                                       <div className="mt-1">
-                                        {order.payments?.[0]?.status && getPaymentStatusBadge(order.payments[0].status)}
+                                        {order.payments?.[0]?.status &&
+                                          getPaymentStatusBadge(
+                                            order.payments[0].status,
+                                          )}
                                       </div>
                                     </div>
                                     <div>
                                       <Label>Сумма</Label>
                                       <p className="text-sm font-medium">
-                                        {formatCurrency(order.totalAmount, order.currency)}
+                                        {formatCurrency(
+                                          order.totalAmount,
+                                          order.currency,
+                                        )}
                                       </p>
                                     </div>
                                     <div>
                                       <Label>Дата создания</Label>
-                                      <p className="text-sm">{formatDate(order.createdAt.toString())}</p>
+                                      <p className="text-sm">
+                                        {formatDate(order.createdAt.toString())}
+                                      </p>
                                     </div>
                                   </div>
 
                                   {/* Информация о клиенте */}
                                   <div>
-                                    <Label className="text-base font-medium mb-2 block">Информация о клиенте</Label>
+                                    <Label className="text-base font-medium mb-2 block">
+                                      Информация о клиенте
+                                    </Label>
                                     <div className="p-3 bg-muted rounded-md">
                                       <div className="flex items-center gap-2 mb-2">
                                         <User className="h-4 w-4" />
                                         <span className="font-medium">
-                                          {order.shippingAddress?.firstName} {order.shippingAddress?.lastName}
+                                          {order.shippingAddress?.firstName}{" "}
+                                          {order.shippingAddress?.lastName}
                                         </span>
                                       </div>
                                       <div className="flex items-center gap-2 mb-2">
                                         <Phone className="h-4 w-4" />
-                                        <span className="text-sm">{order.shippingAddress?.phone || 'Нет телефона'}</span>
+                                        <span className="text-sm">
+                                          {order.shippingAddress?.phone ||
+                                            "Нет телефона"}
+                                        </span>
                                       </div>
                                       <div className="flex items-center gap-2">
                                         <MapPin className="h-4 w-4" />
                                         <span className="text-sm">
-                                          {order.shippingAddress?.address1}, {order.shippingAddress?.city}
+                                          {order.shippingAddress?.address1},{" "}
+                                          {order.shippingAddress?.city}
                                         </span>
                                       </div>
                                     </div>
@@ -474,21 +621,31 @@ export default function OrdersPage() {
 
                                   {/* Товары в заказе */}
                                   <div>
-                                    <Label className="text-base font-medium mb-2 block">Товары в заказе</Label>
+                                    <Label className="text-base font-medium mb-2 block">
+                                      Товары в заказе
+                                    </Label>
                                     <div className="space-y-2">
                                       {order.items?.map((item, index) => (
-                                        <div key={index} className="flex items-center justify-between p-3 bg-muted rounded-md">
+                                        <div
+                                          key={index}
+                                          className="flex items-center justify-between p-3 bg-muted rounded-md"
+                                        >
                                           <div className="flex items-center gap-3">
                                             <Package className="h-4 w-4" />
                                             <div>
-                                              <p className="font-medium">{item.productName}</p>
+                                              <p className="font-medium">
+                                                {item.productName}
+                                              </p>
                                               <p className="text-sm text-muted-foreground">
-                                                Количество: {item.quantity} × {formatCurrency(item.unitPrice)}
+                                                Количество: {item.quantity} ×{" "}
+                                                {formatCurrency(item.unitPrice)}
                                               </p>
                                             </div>
                                           </div>
                                           <div className="text-right">
-                                            <p className="font-medium">{formatCurrency(item.totalPrice)}</p>
+                                            <p className="font-medium">
+                                              {formatCurrency(item.totalPrice)}
+                                            </p>
                                           </div>
                                         </div>
                                       ))}
@@ -500,15 +657,32 @@ export default function OrdersPage() {
                                     <div className="mt-4 p-3 bg-blue-50 rounded-lg">
                                       <div className="flex items-center gap-2 mb-2">
                                         <Truck className="h-4 w-4 text-blue-600" />
-                                        <span className="font-medium text-blue-800">Информация о доставке</span>
+                                        <span className="font-medium text-blue-800">
+                                          Информация о доставке
+                                        </span>
                                       </div>
                                       <div className="space-y-1 text-sm">
-                                        <p><span className="font-medium">Трек-номер:</span> {order.parcels[0].trackingNumber}</p>
+                                        <p>
+                                          <span className="font-medium">
+                                            Трек-номер:
+                                          </span>{" "}
+                                          {order.parcels[0].trackingNumber}
+                                        </p>
                                         {order.parcels[0].carrier && (
-                                          <p><span className="font-medium">Перевозчик:</span> {order.parcels[0].carrier}</p>
+                                          <p>
+                                            <span className="font-medium">
+                                              Перевозчик:
+                                            </span>{" "}
+                                            {order.parcels[0].carrier}
+                                          </p>
                                         )}
                                         {order.parcels[0].comment && (
-                                          <p><span className="font-medium">Комментарий:</span> {order.parcels[0].comment}</p>
+                                          <p>
+                                            <span className="font-medium">
+                                              Комментарий:
+                                            </span>{" "}
+                                            {order.parcels[0].comment}
+                                          </p>
                                         )}
                                       </div>
                                     </div>
@@ -518,15 +692,17 @@ export default function OrdersPage() {
                                   {order.notes && (
                                     <div>
                                       <Label>Примечания к заказу</Label>
-                                      <p className="text-sm mt-1 p-2 bg-muted rounded">{order.notes}</p>
+                                      <p className="text-sm mt-1 p-2 bg-muted rounded">
+                                        {order.notes}
+                                      </p>
                                     </div>
                                   )}
                                 </div>
                               </DialogContent>
                             </Dialog>
-                            
-                            <Button 
-                              variant="ghost" 
+
+                            <Button
+                              variant="ghost"
                               size="sm"
                               onClick={() => openStatusDialog(order)}
                             >
@@ -538,8 +714,12 @@ export default function OrdersPage() {
                         {/* Прогресс заказа */}
                         <div className="mb-4">
                           <div className="flex items-center justify-between mb-2">
-                            <span className="text-sm font-medium">Прогресс выполнения</span>
-                            <span className="text-sm text-muted-foreground">{Math.round(progress)}%</span>
+                            <span className="text-sm font-medium">
+                              Прогресс выполнения
+                            </span>
+                            <span className="text-sm text-muted-foreground">
+                              {Math.round(progress)}%
+                            </span>
                           </div>
                           <Progress value={progress} className="h-2" />
                         </div>
@@ -547,15 +727,23 @@ export default function OrdersPage() {
                         {/* Основная информация */}
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                           <div>
-                            <span className="text-muted-foreground">Клиент:</span>
+                            <span className="text-muted-foreground">
+                              Клиент:
+                            </span>
                             <p className="font-medium">
-                              {order.shippingAddress?.firstName} {order.shippingAddress?.lastName}
+                              {order.shippingAddress?.firstName}{" "}
+                              {order.shippingAddress?.lastName}
                             </p>
                           </div>
                           <div>
-                            <span className="text-muted-foreground">Сумма:</span>
+                            <span className="text-muted-foreground">
+                              Сумма:
+                            </span>
                             <p className="font-medium">
-                              {formatCurrency(order.totalAmount, order.currency)}
+                              {formatCurrency(
+                                order.totalAmount,
+                                order.currency,
+                              )}
                             </p>
                           </div>
                           <div>
@@ -565,7 +753,9 @@ export default function OrdersPage() {
                             </p>
                           </div>
                           <div>
-                            <span className="text-muted-foreground">Товаров:</span>
+                            <span className="text-muted-foreground">
+                              Товаров:
+                            </span>
                             <p className="font-medium">
                               {order.items?.length || 0} шт.
                             </p>
@@ -576,12 +766,14 @@ export default function OrdersPage() {
                   );
                 })}
               </div>
-              
+
               {filteredOrders.length === 0 && !loading && (
                 <div className="text-center py-8">
                   <ShoppingCart className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
                   <p className="text-muted-foreground">
-                    {filterStatus === "all" ? "Заказы не найдены" : `Заказы со статусом "${filterStatus}" не найдены`}
+                    {filterStatus === "all"
+                      ? "Заказы не найдены"
+                      : `Заказы со статусом "${filterStatus}" не найдены`}
                   </p>
                 </div>
               )}
@@ -625,8 +817,12 @@ export default function OrdersPage() {
                           </span>
                         </div>
                       </TableCell>
-                      <TableCell>{getPaymentStatusBadge(payment.status)}</TableCell>
-                      <TableCell>{getPaymentMethodBadge(payment.method || "")}</TableCell>
+                      <TableCell>
+                        {getPaymentStatusBadge(payment.status)}
+                      </TableCell>
+                      <TableCell>
+                        {getPaymentMethodBadge(payment.method || "")}
+                      </TableCell>
                       <TableCell>
                         <div className="flex items-center gap-1">
                           <Calendar className="h-4 w-4 text-muted-foreground" />
@@ -651,45 +847,62 @@ export default function OrdersPage() {
                                 <div className="grid grid-cols-2 gap-4">
                                   <div>
                                     <Label>ID платежа</Label>
-                                    <p className="text-sm font-mono">{payment.id}</p>
+                                    <p className="text-sm font-mono">
+                                      {payment.id}
+                                    </p>
                                   </div>
                                   <div>
                                     <Label>Заказ</Label>
                                     <p className="text-sm">
-                                      #{getOrderByPaymentId(payment.id)?.orderNumber || "N/A"}
+                                      #
+                                      {getOrderByPaymentId(payment.id)
+                                        ?.orderNumber || "N/A"}
                                     </p>
                                   </div>
                                   <div>
                                     <Label>Сумма</Label>
                                     <p className="text-sm font-medium">
-                                      {formatCurrency(payment.amount, payment.currency)}
+                                      {formatCurrency(
+                                        payment.amount,
+                                        payment.currency,
+                                      )}
                                     </p>
                                   </div>
                                   <div>
                                     <Label>Статус</Label>
-                                    <div className="mt-1">{getPaymentStatusBadge(payment.status)}</div>
+                                    <div className="mt-1">
+                                      {getPaymentStatusBadge(payment.status)}
+                                    </div>
                                   </div>
                                   <div>
                                     <Label>Метод оплаты</Label>
-                                    <div className="mt-1">{getPaymentMethodBadge(payment.method || "")}</div>
+                                    <div className="mt-1">
+                                      {getPaymentMethodBadge(
+                                        payment.method || "",
+                                      )}
+                                    </div>
                                   </div>
                                   <div>
                                     <Label>Дата создания</Label>
-                                    <p className="text-sm">{formatDate(payment.createdAt.toString())}</p>
+                                    <p className="text-sm">
+                                      {formatDate(payment.createdAt.toString())}
+                                    </p>
                                   </div>
                                 </div>
                                 {payment.comment && (
                                   <div>
                                     <Label>Комментарий</Label>
-                                    <p className="text-sm mt-1">{payment.comment}</p>
+                                    <p className="text-sm mt-1">
+                                      {payment.comment}
+                                    </p>
                                   </div>
                                 )}
                               </div>
                             </DialogContent>
                           </Dialog>
-                          
-                          <Button 
-                            variant="ghost" 
+
+                          <Button
+                            variant="ghost"
                             size="sm"
                             onClick={() => {
                               setSelectedPayment(payment);
@@ -704,7 +917,7 @@ export default function OrdersPage() {
                   ))}
                 </TableBody>
               </Table>
-              
+
               {payments.length === 0 && !loading && (
                 <div className="text-center py-8">
                   <CreditCard className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
@@ -720,16 +933,17 @@ export default function OrdersPage() {
       <Dialog open={statusDialogOpen} onOpenChange={setStatusDialogOpen}>
         <DialogContent className="max-w-2xl">
           <DialogHeader>
-            <DialogTitle>Управление заказом #{selectedOrder?.orderNumber}</DialogTitle>
+            <DialogTitle>
+              Управление заказом #{selectedOrder?.orderNumber}
+            </DialogTitle>
           </DialogHeader>
           <div className="space-y-6">
             {/* Статус заказа */}
             <div>
-              <Label htmlFor="status" className="text-base font-medium">Статус заказа</Label>
-              <Select
-                value={newStatus}
-                onValueChange={setNewStatus}
-              >
+              <Label htmlFor="status" className="text-base font-medium">
+                Статус заказа
+              </Label>
+              <Select value={newStatus} onValueChange={setNewStatus}>
                 <SelectTrigger className="mt-2">
                   <SelectValue />
                 </SelectTrigger>
@@ -746,8 +960,10 @@ export default function OrdersPage() {
 
             {/* Информация о доставке */}
             <div className="space-y-4">
-              <Label className="text-base font-medium">Информация о доставке</Label>
-              
+              <Label className="text-base font-medium">
+                Информация о доставке
+              </Label>
+
               <div>
                 <Label htmlFor="trackingNumber">Трек-номер</Label>
                 <input
@@ -763,10 +979,7 @@ export default function OrdersPage() {
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <Label htmlFor="carrier">Перевозчик</Label>
-                  <Select
-                    value={carrier}
-                    onValueChange={setCarrier}
-                  >
+                  <Select value={carrier} onValueChange={setCarrier}>
                     <SelectTrigger className="mt-1">
                       <SelectValue placeholder="Выберите перевозчика" />
                     </SelectTrigger>
@@ -780,14 +993,14 @@ export default function OrdersPage() {
                     </SelectContent>
                   </Select>
                 </div>
-                
+
                 <div>
                   <Label htmlFor="shippingDate">Дата отправки</Label>
                   <input
                     type="date"
                     id="shippingDate"
                     className="w-full p-2 border rounded-md mt-1"
-                    defaultValue={new Date().toISOString().split('T')[0]}
+                    defaultValue={new Date().toISOString().split("T")[0]}
                   />
                 </div>
               </div>
@@ -835,12 +1048,13 @@ export default function OrdersPage() {
             </div>
 
             <div className="flex justify-end gap-2">
-              <Button variant="outline" onClick={() => setStatusDialogOpen(false)}>
+              <Button
+                variant="outline"
+                onClick={() => setStatusDialogOpen(false)}
+              >
                 Отмена
               </Button>
-              <Button onClick={handleUpdateStatus}>
-                Сохранить изменения
-              </Button>
+              <Button onClick={handleUpdateStatus}>Сохранить изменения</Button>
             </div>
           </div>
         </DialogContent>
@@ -875,7 +1089,10 @@ export default function OrdersPage() {
               </Select>
             </div>
             <div className="flex justify-end gap-2">
-              <Button variant="outline" onClick={() => setPaymentDialogOpen(false)}>
+              <Button
+                variant="outline"
+                onClick={() => setPaymentDialogOpen(false)}
+              >
                 Отмена
               </Button>
             </div>

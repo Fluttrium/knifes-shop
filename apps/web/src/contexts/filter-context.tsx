@@ -36,7 +36,9 @@ export const useFilters = () => {
   return context;
 };
 
-export const FilterProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const FilterProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const [filters, setFilters] = useState<FilterState>({
     priceRange: [0, 50000],
     selectedBrands: new Set(),
@@ -45,9 +47,15 @@ export const FilterProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     searchQuery: "",
   });
 
-  const [brands, setBrands] = useState<Array<{ text: string; value: string }>>([]);
-  const [materials, setMaterials] = useState<Array<{ text: string; value: string }>>([]);
-  const [types, setTypes] = useState<Array<{ text: string; value: string }>>([]);
+  const [brands, setBrands] = useState<Array<{ text: string; value: string }>>(
+    [],
+  );
+  const [materials, setMaterials] = useState<
+    Array<{ text: string; value: string }>
+  >([]);
+  const [types, setTypes] = useState<Array<{ text: string; value: string }>>(
+    [],
+  );
   const [loading, setLoading] = useState(true);
 
   // Загружаем данные для фильтров
@@ -55,12 +63,12 @@ export const FilterProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     const loadFilterData = async () => {
       try {
         setLoading(true);
-        
+
         // Получаем бренды из API
         const brandsData = await api.products.getBrands();
-        const brandsOptions = brandsData.map(brand => ({
+        const brandsOptions = brandsData.map((brand) => ({
           text: brand,
-          value: brand.toLowerCase().replace(/\s+/g, '_')
+          value: brand.toLowerCase().replace(/\s+/g, "_"),
         }));
 
         // Материалы из enum
@@ -122,11 +130,11 @@ export const FilterProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   }, []);
 
   const updatePriceRange = (range: [number, number]) => {
-    setFilters(prev => ({ ...prev, priceRange: range }));
+    setFilters((prev) => ({ ...prev, priceRange: range }));
   };
 
   const toggleBrand = (brand: string) => {
-    setFilters(prev => {
+    setFilters((prev) => {
       const newSelected = new Set(prev.selectedBrands);
       if (newSelected.has(brand)) {
         newSelected.delete(brand);
@@ -138,7 +146,7 @@ export const FilterProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   };
 
   const toggleMaterial = (material: string) => {
-    setFilters(prev => {
+    setFilters((prev) => {
       const newSelected = new Set(prev.selectedMaterials);
       if (newSelected.has(material)) {
         newSelected.delete(material);
@@ -150,7 +158,7 @@ export const FilterProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   };
 
   const toggleType = (type: string) => {
-    setFilters(prev => {
+    setFilters((prev) => {
       const newSelected = new Set(prev.selectedTypes);
       if (newSelected.has(type)) {
         newSelected.delete(type);
@@ -162,7 +170,7 @@ export const FilterProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   };
 
   const setSearchQuery = (query: string) => {
-    setFilters(prev => ({ ...prev, searchQuery: query }));
+    setFilters((prev) => ({ ...prev, searchQuery: query }));
   };
 
   const clearFilters = () => {
@@ -191,8 +199,6 @@ export const FilterProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   };
 
   return (
-    <FilterContext.Provider value={value}>
-      {children}
-    </FilterContext.Provider>
+    <FilterContext.Provider value={value}>{children}</FilterContext.Provider>
   );
 };

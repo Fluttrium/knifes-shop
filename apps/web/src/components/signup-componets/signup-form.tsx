@@ -77,10 +77,10 @@ export function SignUpForm({
     setError(null);
 
     try {
-      const response = await fetch('/api/auth/register', {
-        method: 'POST',
+      const response = await fetch("/api/auth/register", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           name: formData.name,
@@ -93,16 +93,18 @@ export function SignUpForm({
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || 'Ошибка регистрации');
+        throw new Error(errorData.message || "Ошибка регистрации");
       }
 
       const success = await login(formData.email, formData.password);
-      
+
       if (success) {
         notify("Регистрация прошла успешно!", "success");
         router.push("/");
       } else {
-        setError("Регистрация прошла успешно, но не удалось войти автоматически");
+        setError(
+          "Регистрация прошла успешно, но не удалось войти автоматически",
+        );
       }
     } catch (err: any) {
       console.error("Ошибка регистрации:", err);

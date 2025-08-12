@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { useEffect, useRef } from 'react';
-import { authService } from '@/lib/auth';
+import { useEffect, useRef } from "react";
+import { authService } from "@/lib/auth";
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const hasInitialized = useRef(false);
@@ -14,4 +14,4 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   return <>{children}</>;
-} 
+}

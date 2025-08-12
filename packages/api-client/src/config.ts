@@ -4,36 +4,8 @@ import axios, {
   AxiosResponse,
 } from "axios";
 
-// Переменные окружения для API
-// В продакшене внутри Docker используем внутренний URL, иначе - внешний
-const API_BASE_URL = (() => {
-  // Если явно задан URL в env - используем его
-  if (process.env.NEXT_PUBLIC_API_URL) {
-    return process.env.NEXT_PUBLIC_API_URL;
-  }
-  
-  // Проверяем окружение
-  const isServer = typeof globalThis !== 'undefined' && typeof (globalThis as any).window === 'undefined';
-  const isProduction = process.env.NODE_ENV === 'production';
-  
-  if (isServer) {
-    // Server-side рендеринг
-    if (isProduction) {
-      // В продакшене используем внутренний Docker URL для SSR
-      return 'http://api:3004/api/v1';
-    } else {
-      // В разработке используем localhost для SSR
-      return 'http://localhost:3001/api/v1';
-    }
-  } else {
-    // Client-side - всегда внешний URL
-    if (isProduction) {
-      return 'https://knivesspb.fluttrium.com/api/v1';
-    } else {
-      return 'http://localhost:3001/api/v1';
-    }
-  }
-})();
+
+const API_BASE_URL = 'http://localhost:3004/api/v1';
 
 // Флаг для предотвращения множественных запросов refresh
 let isRefreshing = false;
@@ -50,7 +22,7 @@ const processQueue = (error: any, token: string | null = null) => {
       resolve(token);
     }
   });
-  
+
   failedQueue = [];
 };
 
@@ -61,7 +33,7 @@ const instance: AxiosInstance = axios.create({
   timeout: 10000, // Таймаут 10 секунд
   headers: {
     "Content-Type": "application/json",
-    "Cache-Control": "no-cache, no-store, must-revalidate",
+   // "Cache-Control": "no-cache, no-store, must-revalidate",
     Pragma: "no-cache",
     Expires: "0",
   },
@@ -91,16 +63,22 @@ instance.interceptors.response.use(
     const originalRequest = error.config;
 
     // Если ошибка 401 и это не запрос на refresh
-    if (error.response?.status === 401 && !originalRequest._retry && !originalRequest.url?.includes('/auth/refresh')) {
+    if (
+      error.response?.status === 401 &&
+      !originalRequest._retry &&
+      !originalRequest.url?.includes("/auth/refresh")
+    ) {
       if (isRefreshing) {
         // Если уже идет обновление токена, добавляем в очередь
         return new Promise((resolve, reject) => {
           failedQueue.push({ resolve, reject });
-        }).then(() => {
-          return instance(originalRequest);
-        }).catch((err) => {
-          return Promise.reject(err);
-        });
+        })
+          .then(() => {
+            return instance(originalRequest);
+          })
+          .catch((err) => {
+            return Promise.reject(err);
+          });
       }
 
       originalRequest._retry = true;
@@ -108,7 +86,7 @@ instance.interceptors.response.use(
 
       try {
         // Пытаемся обновить токен
-        await instance.post('/auth/refresh');
+        await instance.post("/auth/refresh");
         processQueue(null, null);
         return instance(originalRequest);
       } catch (refreshError) {

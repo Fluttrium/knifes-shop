@@ -37,7 +37,7 @@ export const SearchInput: React.FC<Props> = ({ className }) => {
         });
         setProducts(response.products);
       } catch (error) {
-        console.error('Search error:', error);
+        console.error("Search error:", error);
         setProducts([]);
       } finally {
         setLoading(false);

@@ -68,7 +68,12 @@ export function AddressForm({ onAddressUpdated }: AddressFormProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!formData.firstName || !formData.lastName || !formData.address1 || !formData.city) {
+    if (
+      !formData.firstName ||
+      !formData.lastName ||
+      !formData.address1 ||
+      !formData.city
+    ) {
       notify("Пожалуйста, заполните обязательные поля", "error");
       return;
     }
@@ -235,7 +240,9 @@ export function AddressForm({ onAddressUpdated }: AddressFormProps) {
                   <Input
                     id="firstName"
                     value={formData.firstName}
-                    onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, firstName: e.target.value })
+                    }
                     required
                   />
                 </div>
@@ -244,7 +251,9 @@ export function AddressForm({ onAddressUpdated }: AddressFormProps) {
                   <Input
                     id="lastName"
                     value={formData.lastName}
-                    onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, lastName: e.target.value })
+                    }
                     required
                   />
                 </div>
@@ -255,7 +264,9 @@ export function AddressForm({ onAddressUpdated }: AddressFormProps) {
                 <Input
                   id="company"
                   value={formData.company}
-                  onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, company: e.target.value })
+                  }
                 />
               </div>
 
@@ -264,17 +275,23 @@ export function AddressForm({ onAddressUpdated }: AddressFormProps) {
                 <Input
                   id="address1"
                   value={formData.address1}
-                  onChange={(e) => setFormData({ ...formData, address1: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, address1: e.target.value })
+                  }
                   required
                 />
               </div>
 
               <div>
-                <Label htmlFor="address2">Дополнительная информация об адресе</Label>
+                <Label htmlFor="address2">
+                  Дополнительная информация об адресе
+                </Label>
                 <Input
                   id="address2"
                   value={formData.address2}
-                  onChange={(e) => setFormData({ ...formData, address2: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, address2: e.target.value })
+                  }
                 />
               </div>
 
@@ -284,7 +301,9 @@ export function AddressForm({ onAddressUpdated }: AddressFormProps) {
                   <Input
                     id="city"
                     value={formData.city}
-                    onChange={(e) => setFormData({ ...formData, city: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, city: e.target.value })
+                    }
                     required
                   />
                 </div>
@@ -293,7 +312,9 @@ export function AddressForm({ onAddressUpdated }: AddressFormProps) {
                   <Input
                     id="state"
                     value={formData.state}
-                    onChange={(e) => setFormData({ ...formData, state: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, state: e.target.value })
+                    }
                   />
                 </div>
                 <div>
@@ -301,7 +322,9 @@ export function AddressForm({ onAddressUpdated }: AddressFormProps) {
                   <Input
                     id="postalCode"
                     value={formData.postalCode}
-                    onChange={(e) => setFormData({ ...formData, postalCode: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, postalCode: e.target.value })
+                    }
                   />
                 </div>
               </div>
@@ -312,7 +335,9 @@ export function AddressForm({ onAddressUpdated }: AddressFormProps) {
                   <Input
                     id="country"
                     value={formData.country}
-                    onChange={(e) => setFormData({ ...formData, country: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, country: e.target.value })
+                    }
                   />
                 </div>
                 <div>
@@ -320,7 +345,9 @@ export function AddressForm({ onAddressUpdated }: AddressFormProps) {
                   <Input
                     id="phone"
                     value={formData.phone}
-                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, phone: e.target.value })
+                    }
                     placeholder="+7 (999) 123-45-67"
                   />
                 </div>
@@ -331,10 +358,14 @@ export function AddressForm({ onAddressUpdated }: AddressFormProps) {
                   id="isDefault"
                   type="checkbox"
                   checked={formData.isDefault}
-                  onChange={(e) => setFormData({ ...formData, isDefault: e.target.checked })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, isDefault: e.target.checked })
+                  }
                   className="rounded border-gray-300"
                 />
-                <Label htmlFor="isDefault">Использовать как адрес по умолчанию</Label>
+                <Label htmlFor="isDefault">
+                  Использовать как адрес по умолчанию
+                </Label>
               </div>
 
               <div className="flex justify-end gap-2">

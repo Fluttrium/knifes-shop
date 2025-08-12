@@ -16,17 +16,23 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { 
-  Plus, 
-  Edit3, 
-  Trash2, 
+import {
+  Plus,
+  Edit3,
+  Trash2,
   Eye,
   FolderOpen,
   Package,
-  Calendar
+  Calendar,
 } from "lucide-react";
 
 import { Category } from "@repo/api-client";
@@ -35,7 +41,9 @@ export default function CategoriesPage() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<Category | null>(
+    null,
+  );
   const [dialogOpen, setDialogOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
@@ -44,7 +52,7 @@ export default function CategoriesPage() {
     description: "",
     image: "",
     sortOrder: 0,
-    isActive: true
+    isActive: true,
   });
 
   useEffect(() => {
@@ -53,7 +61,7 @@ export default function CategoriesPage() {
 
   const fetchCategories = async () => {
     try {
-              // Fetching categories
+      // Fetching categories
       const response = await api.products.getCategories();
       // Categories fetched successfully
       setCategories(response);
@@ -79,7 +87,7 @@ export default function CategoriesPage() {
 
   const handleUpdateCategory = async () => {
     if (!selectedCategory) return;
-    
+
     try {
       await api.products.updateCategory(selectedCategory.id, formData);
       setDialogOpen(false);
@@ -93,7 +101,7 @@ export default function CategoriesPage() {
 
   const handleDeleteCategory = async (id: string) => {
     if (!confirm("Вы уверены, что хотите удалить эту категорию?")) return;
-    
+
     try {
       await api.products.deleteCategory(id);
       fetchCategories();
@@ -110,7 +118,7 @@ export default function CategoriesPage() {
       description: "",
       image: "",
       sortOrder: 0,
-      isActive: true
+      isActive: true,
     });
     setSelectedCategory(null);
     setIsEditing(false);
@@ -131,7 +139,7 @@ export default function CategoriesPage() {
       description: category.description || "",
       image: category.image || "",
       sortOrder: category.sortOrder || 0,
-      isActive: category.isActive
+      isActive: category.isActive,
     });
     setDialogOpen(true);
   };
@@ -199,7 +207,7 @@ export default function CategoriesPage() {
               <p className="text-red-800">{error}</p>
             </div>
           )}
-          
+
           <Table>
             <TableHeader>
               <TableRow>
@@ -220,8 +228,8 @@ export default function CategoriesPage() {
                       <div>
                         <p className="font-medium">{category.name}</p>
                         {category.image && (
-                          <img 
-                            src={category.image} 
+                          <img
+                            src={category.image}
                             alt={category.name}
                             className="w-8 h-8 rounded object-cover mt-1"
                           />
@@ -242,7 +250,9 @@ export default function CategoriesPage() {
                     </div>
                   </TableCell>
                   <TableCell>
-                    <span className="text-sm font-medium">{category.sortOrder || 0}</span>
+                    <span className="text-sm font-medium">
+                      {category.sortOrder || 0}
+                    </span>
                   </TableCell>
                   <TableCell>
                     <div className="flex items-center gap-1">
@@ -268,40 +278,54 @@ export default function CategoriesPage() {
                             <div className="grid grid-cols-2 gap-4">
                               <div>
                                 <Label>ID категории</Label>
-                                <p className="text-sm font-mono">{category.id}</p>
+                                <p className="text-sm font-mono">
+                                  {category.id}
+                                </p>
                               </div>
                               <div>
                                 <Label>Slug</Label>
-                                <p className="text-sm font-mono">{category.slug}</p>
+                                <p className="text-sm font-mono">
+                                  {category.slug}
+                                </p>
                               </div>
                               <div>
                                 <Label>Название</Label>
-                                <p className="text-sm font-medium">{category.name}</p>
+                                <p className="text-sm font-medium">
+                                  {category.name}
+                                </p>
                               </div>
                               <div>
                                 <Label>Порядок сортировки</Label>
-                                <p className="text-sm">{category.sortOrder || 0}</p>
+                                <p className="text-sm">
+                                  {category.sortOrder || 0}
+                                </p>
                               </div>
                               <div>
                                 <Label>Дата создания</Label>
-                                <p className="text-sm">{formatDate(category.createdAt)}</p>
+                                <p className="text-sm">
+                                  {formatDate(category.createdAt)}
+                                </p>
                               </div>
                               <div>
                                 <Label>Дата обновления</Label>
-                                <p className="text-sm">{formatDate(category.updatedAt)}</p>
+                                <p className="text-sm">
+                                  {formatDate(category.updatedAt)}
+                                </p>
                               </div>
                             </div>
                             {category.description && (
                               <div>
                                 <Label>Описание</Label>
-                                <p className="text-sm mt-1">{category.description}</p>
+                                <p className="text-sm mt-1">
+                                  {category.description}
+                                </p>
                               </div>
                             )}
                             {category.image && (
                               <div>
                                 <Label>Изображение</Label>
-                                <img 
-                                  src={category.image} 
+                                <img
+                                  src={category.image}
                                   alt={category.name}
                                   className="w-32 h-32 rounded object-cover mt-1"
                                 />
@@ -310,17 +334,17 @@ export default function CategoriesPage() {
                           </div>
                         </DialogContent>
                       </Dialog>
-                      
-                      <Button 
-                        variant="ghost" 
+
+                      <Button
+                        variant="ghost"
                         size="sm"
                         onClick={() => openEditDialog(category)}
                       >
                         <Edit3 className="h-4 w-4" />
                       </Button>
-                      
-                      <Button 
-                        variant="ghost" 
+
+                      <Button
+                        variant="ghost"
                         size="sm"
                         onClick={() => handleDeleteCategory(category.id)}
                         className="text-red-600 hover:text-red-700"
@@ -333,7 +357,7 @@ export default function CategoriesPage() {
               ))}
             </TableBody>
           </Table>
-          
+
           {categories.length === 0 && !loading && (
             <div className="text-center py-8">
               <FolderOpen className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
@@ -358,7 +382,9 @@ export default function CategoriesPage() {
                 <Input
                   id="name"
                   value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, name: e.target.value })
+                  }
                   placeholder="Введите название категории"
                 />
               </div>
@@ -367,7 +393,9 @@ export default function CategoriesPage() {
                 <Input
                   id="slug"
                   value={formData.slug}
-                  onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, slug: e.target.value })
+                  }
                   placeholder="category-slug"
                 />
               </div>
@@ -377,7 +405,9 @@ export default function CategoriesPage() {
               <Textarea
                 id="description"
                 value={formData.description}
-                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, description: e.target.value })
+                }
                 placeholder="Введите описание категории..."
                 rows={3}
               />
@@ -388,7 +418,9 @@ export default function CategoriesPage() {
                 <Input
                   id="image"
                   value={formData.image}
-                  onChange={(e) => setFormData({ ...formData, image: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, image: e.target.value })
+                  }
                   placeholder="https://example.com/image.jpg"
                 />
               </div>
@@ -398,7 +430,12 @@ export default function CategoriesPage() {
                   id="sortOrder"
                   type="number"
                   value={formData.sortOrder}
-                  onChange={(e) => setFormData({ ...formData, sortOrder: parseInt(e.target.value) || 0 })}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      sortOrder: parseInt(e.target.value) || 0,
+                    })
+                  }
                   placeholder="0"
                 />
               </div>
@@ -407,7 +444,9 @@ export default function CategoriesPage() {
               <Checkbox
                 id="isActive"
                 checked={formData.isActive}
-                onCheckedChange={(checked) => setFormData({ ...formData, isActive: checked as boolean })}
+                onCheckedChange={(checked) =>
+                  setFormData({ ...formData, isActive: checked as boolean })
+                }
               />
               <Label htmlFor="isActive">Активная категория</Label>
             </div>
@@ -415,7 +454,11 @@ export default function CategoriesPage() {
               <Button variant="outline" onClick={() => setDialogOpen(false)}>
                 Отмена
               </Button>
-              <Button onClick={isEditing ? handleUpdateCategory : handleCreateCategory}>
+              <Button
+                onClick={
+                  isEditing ? handleUpdateCategory : handleCreateCategory
+                }
+              >
                 {isEditing ? "Сохранить" : "Создать"}
               </Button>
             </div>
@@ -424,4 +467,4 @@ export default function CategoriesPage() {
       </Dialog>
     </div>
   );
-} 
+}

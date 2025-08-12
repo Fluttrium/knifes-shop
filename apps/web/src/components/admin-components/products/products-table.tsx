@@ -153,16 +153,16 @@ export function ProductsTable({
     setIsUploadingImages(true);
     try {
       const response = await api.upload.uploadMultipleFiles(files, {
-        folder: 'products',
+        folder: "products",
       });
 
       const newImageUrls = response.data.map((file) => file.url);
       setImages([...images, ...newImageUrls]);
-      
+
       notify(`Загружено ${files.length} изображений`, "success");
     } catch (error) {
-      console.error('Ошибка загрузки изображений:', error);
-      notify('Ошибка при загрузке изображений', "error");
+      console.error("Ошибка загрузки изображений:", error);
+      notify("Ошибка при загрузке изображений", "error");
     } finally {
       setIsUploadingImages(false);
     }
@@ -286,10 +286,10 @@ export function ProductsTable({
         metaTitle: editData.metaTitle,
         metaDescription: editData.metaDescription,
         // Добавляем изображения
-        images: images.map((url, idx) => ({ 
-          url, 
-          isPrimary: idx === 0, 
-          sortOrder: idx 
+        images: images.map((url, idx) => ({
+          url,
+          isPrimary: idx === 0,
+          sortOrder: idx,
         })),
       };
 
@@ -574,13 +574,16 @@ export function ProductsTable({
       </Dialog>
 
       {/* Диалог редактирования товара */}
-      <Dialog open={isEditDialogOpen} onOpenChange={(open) => {
-        setIsEditDialogOpen(open);
-        if (!open) {
-          setEditingProduct(null);
-          setImages([]); // Сбрасываем изображения при закрытии
-        }
-      }}>
+      <Dialog
+        open={isEditDialogOpen}
+        onOpenChange={(open) => {
+          setIsEditDialogOpen(open);
+          if (!open) {
+            setEditingProduct(null);
+            setImages([]); // Сбрасываем изображения при закрытии
+          }
+        }}
+      >
         <DialogContent className="sm:max-w-[600px] max-h-[80vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Редактировать товар</DialogTitle>
@@ -781,63 +784,68 @@ export function ProductsTable({
               <Label className="text-right">Изображения</Label>
               <div className="col-span-3">
                 <div className="space-y-4">
-                   {/* Существующие изображения */}
-                   {images.length > 0 && (
-                     <div className="grid grid-cols-3 gap-2 mb-4">
-                       {images.map((url, idx) => (
-                         <Card key={url} className="relative group overflow-hidden">
-                           <img
-                             src={url}
-                             alt={`Фото ${idx + 1}`}
-                             className="w-full h-24 object-cover rounded"
-                           />
-                           {idx === 0 && (
-                             <span className="absolute top-1 left-1 bg-primary text-white text-xs px-2 py-0.5 rounded">
-                               Основное
-                             </span>
-                           )}
-                           <div className="absolute top-1 right-1 flex gap-1">
-                             {/* Кнопка сделать основным */}
-                             {idx !== 0 && (
-                               <button
-                                 type="button"
-                                 onClick={() => {
-                                   const newImages = [...images];
-                                   const temp = newImages[0];
-                                   const currentImage = newImages[idx];
-                                   if (temp && currentImage) {
-                                     newImages[0] = currentImage;
-                                     newImages[idx] = temp;
-                                     setImages(newImages);
-                                   }
-                                 }}
-                                 className="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-blue-600"
-                                 title="Сделать основным"
-                               >
-                                 ★
-                               </button>
-                             )}
-                             {/* Кнопка удаления */}
-                             <button
-                               type="button"
-                               onClick={() => {
-                                 const newImages = images.filter((_, i) => i !== idx);
-                                 setImages(newImages);
-                               }}
-                               className="bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-red-600"
-                               title="Удалить"
-                             >
-                               ×
-                             </button>
-                           </div>
-                           <div className="absolute bottom-1 left-1 bg-black/50 text-white text-xs px-2 py-0.5 rounded">
-                             {idx + 1}
-                           </div>
-                         </Card>
-                       ))}
-                     </div>
-                   )}
-                  
+                  {/* Существующие изображения */}
+                  {images.length > 0 && (
+                    <div className="grid grid-cols-3 gap-2 mb-4">
+                      {images.map((url, idx) => (
+                        <Card
+                          key={url}
+                          className="relative group overflow-hidden"
+                        >
+                          <img
+                            src={url}
+                            alt={`Фото ${idx + 1}`}
+                            className="w-full h-24 object-cover rounded"
+                          />
+                          {idx === 0 && (
+                            <span className="absolute top-1 left-1 bg-primary text-white text-xs px-2 py-0.5 rounded">
+                              Основное
+                            </span>
+                          )}
+                          <div className="absolute top-1 right-1 flex gap-1">
+                            {/* Кнопка сделать основным */}
+                            {idx !== 0 && (
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  const newImages = [...images];
+                                  const temp = newImages[0];
+                                  const currentImage = newImages[idx];
+                                  if (temp && currentImage) {
+                                    newImages[0] = currentImage;
+                                    newImages[idx] = temp;
+                                    setImages(newImages);
+                                  }
+                                }}
+                                className="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-blue-600"
+                                title="Сделать основным"
+                              >
+                                ★
+                              </button>
+                            )}
+                            {/* Кнопка удаления */}
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const newImages = images.filter(
+                                  (_, i) => i !== idx,
+                                );
+                                setImages(newImages);
+                              }}
+                              className="bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-red-600"
+                              title="Удалить"
+                            >
+                              ×
+                            </button>
+                          </div>
+                          <div className="absolute bottom-1 left-1 bg-black/50 text-white text-xs px-2 py-0.5 rounded">
+                            {idx + 1}
+                          </div>
+                        </Card>
+                      ))}
+                    </div>
+                  )}
+
                   {/* Загрузка новых изображений */}
                   {images.length < 10 && (
                     <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center">
@@ -856,10 +864,12 @@ export function ProductsTable({
                       <label
                         htmlFor="image-upload"
                         className={`inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary cursor-pointer ${
-                          isUploadingImages ? 'opacity-50 cursor-not-allowed' : ''
+                          isUploadingImages
+                            ? "opacity-50 cursor-not-allowed"
+                            : ""
                         }`}
                       >
-                        {isUploadingImages ? 'Загрузка...' : 'Выбрать файлы'}
+                        {isUploadingImages ? "Загрузка..." : "Выбрать файлы"}
                       </label>
                       <p className="text-xs text-gray-500 mt-2">
                         Текущих изображений: {images.length}/10

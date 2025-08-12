@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { OrderQueryDto } from './dto/order-query.dto';
@@ -40,16 +44,24 @@ export class OrderService {
       });
 
       if (!product) {
-        throw new NotFoundException(`Товар с ID ${cartItem.productId} не найден`);
+        throw new NotFoundException(
+          `Товар с ID ${cartItem.productId} не найден`,
+        );
       }
 
       if (cartItem.variantId) {
-        const variant = product.variants.find(v => v.id === cartItem.variantId);
+        const variant = product.variants.find(
+          (v) => v.id === cartItem.variantId,
+        );
         if (!variant) {
-          throw new NotFoundException(`Вариант товара с ID ${cartItem.variantId} не найден`);
+          throw new NotFoundException(
+            `Вариант товара с ID ${cartItem.variantId} не найден`,
+          );
         }
         if (variant.stockQuantity < cartItem.quantity) {
-          throw new BadRequestException(`Недостаточно товара ${product.name} (вариант: ${variant.name})`);
+          throw new BadRequestException(
+            `Недостаточно товара ${product.name} (вариант: ${variant.name})`,
+          );
         }
       } else {
         if (product.stockQuantity < cartItem.quantity) {
@@ -68,8 +80,8 @@ export class OrderService {
         include: { variants: true },
       });
 
-      const variant = cartItem.variantId 
-        ? product.variants.find(v => v.id === cartItem.variantId)
+      const variant = cartItem.variantId
+        ? product.variants.find((v) => v.id === cartItem.variantId)
         : null;
 
       const unitPrice = Number(variant?.price || product.price);
@@ -133,12 +145,22 @@ export class OrderService {
   }
 
   async getOrders(userId: string, query: OrderQueryDto) {
-    const { page = 1, limit = 10, status, orderNumber, startDate, endDate, sortBy = 'createdAt', sortOrder = 'desc' } = query;
+    const {
+      page = 1,
+      limit = 10,
+      status,
+      orderNumber,
+      startDate,
+      endDate,
+      sortBy = 'createdAt',
+      sortOrder = 'desc',
+    } = query;
 
     const where: any = { userId };
 
     if (status) where.status = status;
-    if (orderNumber) where.orderNumber = { contains: orderNumber, mode: 'insensitive' };
+    if (orderNumber)
+      where.orderNumber = { contains: orderNumber, mode: 'insensitive' };
     if (startDate || endDate) {
       where.createdAt = {};
       if (startDate) where.createdAt.gte = new Date(startDate);
@@ -250,7 +272,9 @@ export class OrderService {
     }
 
     if (order.status !== 'pending') {
-      throw new BadRequestException('Можно отменить только заказы в статусе "Ожидает"');
+      throw new BadRequestException(
+        'Можно отменить только заказы в статусе "Ожидает"',
+      );
     }
 
     const updatedOrder = await this.prisma.order.update({
@@ -268,7 +292,10 @@ export class OrderService {
     });
 
     // Автоматически обновляем статус посылки
-    await this.parcelService.updateParcelStatusByOrderStatus(orderId, 'cancelled');
+    await this.parcelService.updateParcelStatusByOrderStatus(
+      orderId,
+      'cancelled',
+    );
 
     return updatedOrder;
   }
@@ -303,14 +330,19 @@ export class OrderService {
     });
 
     // Автоматически обновляем статус посылки
-    await this.parcelService.updateParcelStatusByOrderStatus(orderId, newStatus);
+    await this.parcelService.updateParcelStatusByOrderStatus(
+      orderId,
+      newStatus,
+    );
 
     return updatedOrder;
   }
 
   private generateOrderNumber(): string {
     const timestamp = Date.now().toString();
-    const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+    const random = Math.floor(Math.random() * 1000)
+      .toString()
+      .padStart(3, '0');
     return `ORD-${timestamp}-${random}`;
   }
-} 
+}

@@ -43,19 +43,19 @@ export default function RootLayout({
               toastOptions={{
                 duration: 3000,
                 style: {
-                  background: '#363636',
-                  color: '#fff',
+                  background: "#363636",
+                  color: "#fff",
                 },
                 success: {
                   duration: 3000,
                   style: {
-                    background: '#22c55e',
+                    background: "#22c55e",
                   },
                 },
                 error: {
                   duration: 4000,
                   style: {
-                    background: '#ef4444',
+                    background: "#ef4444",
                   },
                 },
               }}

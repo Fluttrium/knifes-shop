@@ -1,7 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -9,18 +15,18 @@ import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
-import { 
-  Store, 
-  Mail, 
-  Phone, 
-  MapPin, 
-  Globe, 
-  CreditCard, 
-  Truck, 
+import {
+  Store,
+  Mail,
+  Phone,
+  MapPin,
+  Globe,
+  CreditCard,
+  Truck,
   Shield,
   Save,
   Settings as SettingsIcon,
-  ShoppingCart
+  ShoppingCart,
 } from "lucide-react";
 
 interface StoreSettings {
@@ -31,21 +37,21 @@ interface StoreSettings {
   storePhone: string;
   storeAddress: string;
   storeWebsite: string;
-  
+
   // Настройки заказов
   allowGuestCheckout: boolean;
   requireEmailConfirmation: boolean;
   autoConfirmOrders: boolean;
-  
+
   // Настройки платежей
   defaultCurrency: string;
   taxRate: number;
   freeShippingThreshold: number;
-  
+
   // Настройки доставки
   defaultShippingMethod: string;
   allowPickup: boolean;
-  
+
   // Настройки безопасности
   requireStrongPasswords: boolean;
   enableTwoFactorAuth: boolean;
@@ -70,7 +76,7 @@ export default function SettingsPage() {
     allowPickup: true,
     requireStrongPasswords: true,
     enableTwoFactorAuth: false,
-    sessionTimeout: 30
+    sessionTimeout: 30,
   });
 
   const [loading, setLoading] = useState(false);
@@ -81,7 +87,7 @@ export default function SettingsPage() {
     try {
       // Здесь будет API вызов для сохранения настроек
       console.log("💾 Saving settings:", settings);
-      await new Promise(resolve => setTimeout(resolve, 1000)); // Имитация API
+      await new Promise((resolve) => setTimeout(resolve, 1000)); // Имитация API
       setSaved(true);
       setTimeout(() => setSaved(false), 3000);
     } catch (error) {
@@ -120,9 +126,7 @@ export default function SettingsPage() {
               <Store className="h-5 w-5" />
               Основная информация
             </CardTitle>
-            <CardDescription>
-              Основные данные о вашем магазине
-            </CardDescription>
+            <CardDescription>Основные данные о вашем магазине</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -131,7 +135,9 @@ export default function SettingsPage() {
                 <Input
                   id="storeName"
                   value={settings.storeName}
-                  onChange={(e) => setSettings({ ...settings, storeName: e.target.value })}
+                  onChange={(e) =>
+                    setSettings({ ...settings, storeName: e.target.value })
+                  }
                   placeholder="Введите название магазина"
                 />
               </div>
@@ -141,7 +147,9 @@ export default function SettingsPage() {
                   id="storeEmail"
                   type="email"
                   value={settings.storeEmail}
-                  onChange={(e) => setSettings({ ...settings, storeEmail: e.target.value })}
+                  onChange={(e) =>
+                    setSettings({ ...settings, storeEmail: e.target.value })
+                  }
                   placeholder="info@example.com"
                 />
               </div>
@@ -150,7 +158,9 @@ export default function SettingsPage() {
                 <Input
                   id="storePhone"
                   value={settings.storePhone}
-                  onChange={(e) => setSettings({ ...settings, storePhone: e.target.value })}
+                  onChange={(e) =>
+                    setSettings({ ...settings, storePhone: e.target.value })
+                  }
                   placeholder="+7 (999) 123-45-67"
                 />
               </div>
@@ -159,7 +169,9 @@ export default function SettingsPage() {
                 <Input
                   id="storeWebsite"
                   value={settings.storeWebsite}
-                  onChange={(e) => setSettings({ ...settings, storeWebsite: e.target.value })}
+                  onChange={(e) =>
+                    setSettings({ ...settings, storeWebsite: e.target.value })
+                  }
                   placeholder="https://example.com"
                 />
               </div>
@@ -169,7 +181,9 @@ export default function SettingsPage() {
               <Textarea
                 id="storeDescription"
                 value={settings.storeDescription}
-                onChange={(e) => setSettings({ ...settings, storeDescription: e.target.value })}
+                onChange={(e) =>
+                  setSettings({ ...settings, storeDescription: e.target.value })
+                }
                 placeholder="Краткое описание вашего магазина"
                 rows={3}
               />
@@ -179,7 +193,9 @@ export default function SettingsPage() {
               <Input
                 id="storeAddress"
                 value={settings.storeAddress}
-                onChange={(e) => setSettings({ ...settings, storeAddress: e.target.value })}
+                onChange={(e) =>
+                  setSettings({ ...settings, storeAddress: e.target.value })
+                }
                 placeholder="Полный адрес магазина"
               />
             </div>
@@ -208,12 +224,16 @@ export default function SettingsPage() {
               <Switch
                 id="guestCheckout"
                 checked={settings.allowGuestCheckout}
-                onCheckedChange={(checked) => setSettings({ ...settings, allowGuestCheckout: checked })}
+                onCheckedChange={(checked) =>
+                  setSettings({ ...settings, allowGuestCheckout: checked })
+                }
               />
             </div>
             <div className="flex items-center justify-between">
               <div>
-                <Label htmlFor="emailConfirmation">Требовать подтверждение email</Label>
+                <Label htmlFor="emailConfirmation">
+                  Требовать подтверждение email
+                </Label>
                 <p className="text-sm text-muted-foreground">
                   Отправлять подтверждение на email после заказа
                 </p>
@@ -221,7 +241,12 @@ export default function SettingsPage() {
               <Switch
                 id="emailConfirmation"
                 checked={settings.requireEmailConfirmation}
-                onCheckedChange={(checked) => setSettings({ ...settings, requireEmailConfirmation: checked })}
+                onCheckedChange={(checked) =>
+                  setSettings({
+                    ...settings,
+                    requireEmailConfirmation: checked,
+                  })
+                }
               />
             </div>
             <div className="flex items-center justify-between">
@@ -234,7 +259,9 @@ export default function SettingsPage() {
               <Switch
                 id="autoConfirm"
                 checked={settings.autoConfirmOrders}
-                onCheckedChange={(checked) => setSettings({ ...settings, autoConfirmOrders: checked })}
+                onCheckedChange={(checked) =>
+                  setSettings({ ...settings, autoConfirmOrders: checked })
+                }
               />
             </div>
           </CardContent>
@@ -247,9 +274,7 @@ export default function SettingsPage() {
               <CreditCard className="h-5 w-5" />
               Настройки платежей
             </CardTitle>
-            <CardDescription>
-              Управление платежными настройками
-            </CardDescription>
+            <CardDescription>Управление платежными настройками</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -258,7 +283,12 @@ export default function SettingsPage() {
                 <select
                   id="currency"
                   value={settings.defaultCurrency}
-                  onChange={(e) => setSettings({ ...settings, defaultCurrency: e.target.value })}
+                  onChange={(e) =>
+                    setSettings({
+                      ...settings,
+                      defaultCurrency: e.target.value,
+                    })
+                  }
                   className="w-full p-2 border rounded-md"
                 >
                   <option value="RUB">Рубль (RUB)</option>
@@ -272,7 +302,12 @@ export default function SettingsPage() {
                   id="taxRate"
                   type="number"
                   value={settings.taxRate}
-                  onChange={(e) => setSettings({ ...settings, taxRate: parseFloat(e.target.value) || 0 })}
+                  onChange={(e) =>
+                    setSettings({
+                      ...settings,
+                      taxRate: parseFloat(e.target.value) || 0,
+                    })
+                  }
                   placeholder="20"
                 />
               </div>
@@ -282,7 +317,12 @@ export default function SettingsPage() {
                   id="freeShipping"
                   type="number"
                   value={settings.freeShippingThreshold}
-                  onChange={(e) => setSettings({ ...settings, freeShippingThreshold: parseFloat(e.target.value) || 0 })}
+                  onChange={(e) =>
+                    setSettings({
+                      ...settings,
+                      freeShippingThreshold: parseFloat(e.target.value) || 0,
+                    })
+                  }
                   placeholder="5000"
                 />
               </div>
@@ -297,18 +337,23 @@ export default function SettingsPage() {
               <Truck className="h-5 w-5" />
               Настройки доставки
             </CardTitle>
-            <CardDescription>
-              Управление методами доставки
-            </CardDescription>
+            <CardDescription>Управление методами доставки</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <Label htmlFor="shippingMethod">Метод доставки по умолчанию</Label>
+                <Label htmlFor="shippingMethod">
+                  Метод доставки по умолчанию
+                </Label>
                 <select
                   id="shippingMethod"
                   value={settings.defaultShippingMethod}
-                  onChange={(e) => setSettings({ ...settings, defaultShippingMethod: e.target.value })}
+                  onChange={(e) =>
+                    setSettings({
+                      ...settings,
+                      defaultShippingMethod: e.target.value,
+                    })
+                  }
                   className="w-full p-2 border rounded-md"
                 >
                   <option value="courier">Курьерская доставка</option>
@@ -326,7 +371,9 @@ export default function SettingsPage() {
                 <Switch
                   id="allowPickup"
                   checked={settings.allowPickup}
-                  onCheckedChange={(checked) => setSettings({ ...settings, allowPickup: checked })}
+                  onCheckedChange={(checked) =>
+                    setSettings({ ...settings, allowPickup: checked })
+                  }
                 />
               </div>
             </div>
@@ -347,7 +394,9 @@ export default function SettingsPage() {
           <CardContent className="space-y-4">
             <div className="flex items-center justify-between">
               <div>
-                <Label htmlFor="strongPasswords">Требовать сложные пароли</Label>
+                <Label htmlFor="strongPasswords">
+                  Требовать сложные пароли
+                </Label>
                 <p className="text-sm text-muted-foreground">
                   Пароли должны содержать буквы, цифры и символы
                 </p>
@@ -355,7 +404,9 @@ export default function SettingsPage() {
               <Switch
                 id="strongPasswords"
                 checked={settings.requireStrongPasswords}
-                onCheckedChange={(checked) => setSettings({ ...settings, requireStrongPasswords: checked })}
+                onCheckedChange={(checked) =>
+                  setSettings({ ...settings, requireStrongPasswords: checked })
+                }
               />
             </div>
             <div className="flex items-center justify-between">
@@ -368,7 +419,9 @@ export default function SettingsPage() {
               <Switch
                 id="twoFactor"
                 checked={settings.enableTwoFactorAuth}
-                onCheckedChange={(checked) => setSettings({ ...settings, enableTwoFactorAuth: checked })}
+                onCheckedChange={(checked) =>
+                  setSettings({ ...settings, enableTwoFactorAuth: checked })
+                }
               />
             </div>
             <div>
@@ -377,7 +430,12 @@ export default function SettingsPage() {
                 id="sessionTimeout"
                 type="number"
                 value={settings.sessionTimeout}
-                onChange={(e) => setSettings({ ...settings, sessionTimeout: parseInt(e.target.value) || 30 })}
+                onChange={(e) =>
+                  setSettings({
+                    ...settings,
+                    sessionTimeout: parseInt(e.target.value) || 30,
+                  })
+                }
                 placeholder="30"
               />
             </div>
@@ -386,4 +444,4 @@ export default function SettingsPage() {
       </div>
     </div>
   );
-} 
+}

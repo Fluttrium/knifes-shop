@@ -10,9 +10,9 @@ interface Props {
   placeholder?: string;
 }
 
-export const SearchBar: React.FC<Props> = ({ 
-  className, 
-  placeholder = "Поиск товаров..." 
+export const SearchBar: React.FC<Props> = ({
+  className,
+  placeholder = "Поиск товаров...",
 }) => {
   const { filters, setSearchQuery } = useFilters();
 

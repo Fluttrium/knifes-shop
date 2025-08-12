@@ -438,8 +438,11 @@ export class ProductAdminService {
         images,
       };
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-      throw new BadRequestException(`Ошибка загрузки изображений: ${errorMessage}`);
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error';
+      throw new BadRequestException(
+        `Ошибка загрузки изображений: ${errorMessage}`,
+      );
     }
   }
 
@@ -461,8 +464,11 @@ export class ProductAdminService {
         where: { id: imageId },
       });
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-      throw new BadRequestException(`Ошибка удаления изображения: ${errorMessage}`);
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error';
+      throw new BadRequestException(
+        `Ошибка удаления изображения: ${errorMessage}`,
+      );
     }
   }
 

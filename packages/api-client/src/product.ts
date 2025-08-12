@@ -44,9 +44,11 @@ export class ProductService {
   async getOnSaleProducts(limit?: number): Promise<Product[]> {
     const params = new URLSearchParams();
     if (limit) {
-      params.append('limit', limit.toString());
+      params.append("limit", limit.toString());
     }
-    const response = await instance.get<Product[]>(`/products/sale?${params.toString()}`);
+    const response = await instance.get<Product[]>(
+      `/products/sale?${params.toString()}`,
+    );
     return response.data;
   }
 
@@ -159,7 +161,7 @@ export class ProductService {
     totalCategories: number;
     totalBrands: number;
   }> {
-    const response = await instance.get('/admin/products/statistics');
+    const response = await instance.get("/admin/products/statistics");
     return response.data;
   }
 }

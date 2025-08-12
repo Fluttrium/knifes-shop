@@ -21,7 +21,9 @@ export class PaymentService {
   }
 
   // Admin methods
-  async getAllPaymentsAdmin(filter?: AdminPaymentFilterDto): Promise<Payment[]> {
+  async getAllPaymentsAdmin(
+    filter?: AdminPaymentFilterDto,
+  ): Promise<Payment[]> {
     const response = await instance.get<Payment[]>("/admin/payments", {
       params: filter,
     });
@@ -29,24 +31,26 @@ export class PaymentService {
   }
 
   async getPaymentByIdAdmin(paymentId: string): Promise<Payment> {
-    const response = await instance.get<Payment>(`/admin/payments/${paymentId}`);
+    const response = await instance.get<Payment>(
+      `/admin/payments/${paymentId}`,
+    );
     return response.data;
   }
 
   async updatePaymentStatusAdmin(
     paymentId: string,
-    data: AdminUpdatePaymentStatusDto
+    data: AdminUpdatePaymentStatusDto,
   ): Promise<Payment> {
     const response = await instance.patch<Payment>(
       `/admin/payments/${paymentId}/status`,
-      data
+      data,
     );
     return response.data;
   }
 
   async getPaymentHistoryByOrderAdmin(orderId: string): Promise<Payment[]> {
     const response = await instance.get<Payment[]>(
-      `/admin/payments/order/${orderId}`
+      `/admin/payments/order/${orderId}`,
     );
     return response.data;
   }

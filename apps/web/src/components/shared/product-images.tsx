@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
-import { X, ZoomIn, ArrowLeft, ArrowRight } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import React, { useState } from "react";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { X, ZoomIn, ArrowLeft, ArrowRight } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface ProductImage {
   id: string;
@@ -28,13 +28,14 @@ export const ProductImages: React.FC<ProductImagesProps> = ({
   onImageDelete,
   onReorder,
   editable = false,
-  className = '',
+  className = "",
 }) => {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
 
   const sortedImages = [...images].sort((a, b) => a.sortOrder - b.sortOrder);
-  const primaryImage = sortedImages.find(img => img.isPrimary) || sortedImages[0];
+  const primaryImage =
+    sortedImages.find((img) => img.isPrimary) || sortedImages[0];
 
   const handleImageClick = (index: number) => {
     setSelectedImageIndex(index);
@@ -42,42 +43,42 @@ export const ProductImages: React.FC<ProductImagesProps> = ({
   };
 
   const handlePrevious = () => {
-    setSelectedImageIndex((prev) => 
-      prev === 0 ? sortedImages.length - 1 : prev - 1
+    setSelectedImageIndex((prev) =>
+      prev === 0 ? sortedImages.length - 1 : prev - 1,
     );
   };
 
   const handleNext = () => {
-    setSelectedImageIndex((prev) => 
-      prev === sortedImages.length - 1 ? 0 : prev + 1
+    setSelectedImageIndex((prev) =>
+      prev === sortedImages.length - 1 ? 0 : prev + 1,
     );
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'ArrowLeft') {
+    if (e.key === "ArrowLeft") {
       handlePrevious();
-    } else if (e.key === 'ArrowRight') {
+    } else if (e.key === "ArrowRight") {
       handleNext();
-    } else if (e.key === 'Escape') {
+    } else if (e.key === "Escape") {
       setIsLightboxOpen(false);
     }
   };
 
   if (images.length === 0) {
     return (
-      <Card className={cn('p-8 text-center text-gray-500', className)}>
+      <Card className={cn("p-8 text-center text-gray-500", className)}>
         <p>Изображения не найдены</p>
       </Card>
     );
   }
 
   return (
-    <div className={cn('space-y-4', className)}>
+    <div className={cn("space-y-4", className)}>
       {/* Основное изображение */}
       <div className="relative aspect-square overflow-hidden rounded-lg">
         <img
           src={primaryImage?.url}
-          alt={primaryImage?.alt || 'Основное изображение продукта'}
+          alt={primaryImage?.alt || "Основное изображение продукта"}
           className="w-full h-full object-cover cursor-pointer hover:scale-105 transition-transform duration-200"
           onClick={() => handleImageClick(0)}
         />
@@ -105,13 +106,16 @@ export const ProductImages: React.FC<ProductImagesProps> = ({
       {sortedImages.length > 1 && (
         <div className="grid grid-cols-4 gap-2">
           {sortedImages.map((image, index) => (
-            <div key={image.id} className="relative aspect-square overflow-hidden rounded-lg">
+            <div
+              key={image.id}
+              className="relative aspect-square overflow-hidden rounded-lg"
+            >
               <img
                 src={image.url}
                 alt={image.alt || `Изображение ${index + 1}`}
                 className={cn(
-                  'w-full h-full object-cover cursor-pointer transition-all duration-200',
-                  image.isPrimary ? 'ring-2 ring-primary' : 'hover:scale-105'
+                  "w-full h-full object-cover cursor-pointer transition-all duration-200",
+                  image.isPrimary ? "ring-2 ring-primary" : "hover:scale-105",
                 )}
                 onClick={() => handleImageClick(index)}
               />
@@ -136,12 +140,15 @@ export const ProductImages: React.FC<ProductImagesProps> = ({
           <div className="relative w-full h-full">
             <img
               src={sortedImages[selectedImageIndex]?.url}
-              alt={sortedImages[selectedImageIndex]?.alt || `Изображение ${selectedImageIndex + 1}`}
+              alt={
+                sortedImages[selectedImageIndex]?.alt ||
+                `Изображение ${selectedImageIndex + 1}`
+              }
               className="w-full h-full object-contain"
               onKeyDown={handleKeyDown}
               tabIndex={0}
             />
-            
+
             {/* Навигационные кнопки */}
             {sortedImages.length > 1 && (
               <>
@@ -183,4 +190,4 @@ export const ProductImages: React.FC<ProductImagesProps> = ({
       </Dialog>
     </div>
   );
-}; 
+};
