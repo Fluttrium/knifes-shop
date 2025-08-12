@@ -77,7 +77,7 @@ export function SignUpForm({
     setError(null);
 
     try {
-      const response = await fetch("/api/auth/register", {
+      const response = await fetch("/api/v1/auth/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
