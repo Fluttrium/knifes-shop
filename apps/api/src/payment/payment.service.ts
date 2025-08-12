@@ -187,7 +187,7 @@ export class PaymentService {
           description: item.product.name,
           quantity: item.quantity.toString(),
           amount: {
-            value: Math.round(Number(item.unitPrice) * 100).toString(), // Конвертация в копейки
+            value: Math.round(Number(item.unitPrice) * 10).toString(), // Конвертация в копейки
             currency,
           },
           vat_code: 1, // НДС 20%

@@ -69,7 +69,7 @@ export default async function Home() {
   return (
     <FilterProvider>
       {/* Заголовок */}
-      <Container className="mt-6 sm:mt-10 px-4 sm:px-0">
+      <Container className="mt-6  sm:mt-10  sm:px-0">
         <Title text="Магазин ножей" size="lg" className="font-extrabold" />
         <p className="text-gray-600 mt-2">
           Качественные ножи для кухни, охоты и повседневного использования
@@ -77,7 +77,7 @@ export default async function Home() {
       </Container>
 
       {/* Поиск */}
-      <Container className="mt-6 px-4 sm:px-0">
+      <Container className=" lg:hidden mt-6 px-4 sm:px-0">
         <SearchBar className="max-w-md" />
       </Container>
 
