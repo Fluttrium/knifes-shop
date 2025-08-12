@@ -178,6 +178,26 @@ export class PaymentService {
       }
 
       // Создаем платеж в ЮKassa
+      const receiptData = {
+        customer: {
+          email: order.user.email,
+          phone: phone,
+        },
+        items: order.items.map((item) => ({
+          description: item.product.name,
+          quantity: item.quantity.toString(),
+          amount: {
+            value: Math.round(Number(item.unitPrice) * 100).toString(), // Конвертация в копейки
+            currency,
+          },
+          vat_code: 1, // НДС 20%
+          payment_subject: 'commodity',
+          payment_mode: 'full_payment',
+        })),
+      };
+
+      console.log('Receipt data for YooKassa:', JSON.stringify(receiptData, null, 2));
+
       const yooKassaPayment = await this.createYooKassaPayment({
         orderId: payment.id,
         amount: Math.round(amount * 100), // Конвертация в копейки
@@ -186,23 +206,7 @@ export class PaymentService {
           description || `Заказ #${order.orderNumber} в магазине ножей`,
         email: order.user.email,
         phone: phone,
-        receipt: {
-          customer: {
-            email: order.user.email,
-            phone: phone,
-          },
-          items: order.items.map((item) => ({
-            description: item.product.name,
-            quantity: item.quantity.toString(),
-            amount: {
-              value: item.unitPrice.toString(),
-              currency,
-            },
-            vat_code: 1, // НДС 20%
-            payment_subject: 'commodity',
-            payment_mode: 'full_payment',
-          })),
-        },
+        receipt: receiptData,
       });
 
       // Обновляем платеж с данными от ЮKassa
@@ -410,6 +414,17 @@ export class PaymentService {
           orderId: paymentData.orderId,
         },
       }),
+    });
+
+    // Логируем данные, отправленные в API
+    console.log('Data sent to YooKassa API:', {
+      amount: {
+        value: paymentData.amount.toString(),
+        currency: paymentData.currency,
+      },
+      description: paymentData.description,
+      receipt: paymentData.receipt,
+      returnUrl
     });
 
     if (!response.ok) {

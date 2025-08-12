@@ -38,13 +38,4 @@ export class PaymentController {
   ) {
     return this.paymentService.getPaymentStatus(paymentId, userId);
   }
-
-  @Get('config/check')
-  @ApiOperation({
-    summary: 'Проверить конфигурацию ЮKassa (только для отладки)',
-  })
-  @ApiResponse({ status: 200, description: 'Конфигурация проверена' })
-  async checkYooKassaConfig() {
-    return this.paymentService.checkYooKassaConfig();
-  }
 }
