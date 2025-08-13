@@ -4,7 +4,7 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 import api from "@repo/api-client";
 
 export interface FilterState {
-  priceRange: [number, number];
+  priceRange: [number | null, number | null];
   selectedBrands: Set<string>;
   selectedMaterials: Set<string>;
   selectedTypes: Set<string>;
@@ -18,7 +18,7 @@ interface FilterContextType {
   materials: Array<{ text: string; value: string }>;
   types: Array<{ text: string; value: string }>;
   loading: boolean;
-  updatePriceRange: (range: [number, number]) => void;
+  updatePriceRange: (range: [number | null, number | null]) => void;
   toggleBrand: (brand: string) => void;
   toggleMaterial: (material: string) => void;
   toggleType: (type: string) => void;
@@ -40,7 +40,7 @@ export const FilterProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [filters, setFilters] = useState<FilterState>({
-    priceRange: [0, 50000],
+    priceRange: [null, null],
     selectedBrands: new Set(),
     selectedMaterials: new Set(),
     selectedTypes: new Set(),
@@ -129,7 +129,7 @@ export const FilterProvider: React.FC<{ children: React.ReactNode }> = ({
     loadFilterData();
   }, []);
 
-  const updatePriceRange = (range: [number, number]) => {
+  const updatePriceRange = (range: [number | null, number | null]) => {
     setFilters((prev) => ({ ...prev, priceRange: range }));
   };
 
@@ -175,7 +175,7 @@ export const FilterProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const clearFilters = () => {
     setFilters({
-      priceRange: [0, 50000],
+      priceRange: [null, null],
       selectedBrands: new Set(),
       selectedMaterials: new Set(),
       selectedTypes: new Set(),

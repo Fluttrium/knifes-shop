@@ -31,8 +31,8 @@ export const Filters: React.FC<Props> = ({ className }) => {
     filters.selectedBrands.size > 0 ||
     filters.selectedMaterials.size > 0 ||
     filters.selectedTypes.size > 0 ||
-    filters.priceRange[0] > 0 ||
-    filters.priceRange[1] < 50000;
+    filters.priceRange[0] !== null ||
+    filters.priceRange[1] !== null;
 
   if (loading) {
     return (
@@ -68,28 +68,52 @@ export const Filters: React.FC<Props> = ({ className }) => {
 
       {/* Цена */}
       <div className="mt-4 border-y border-y-neutral-100 py-4">
-        <p className="font-bold mb-2 text-sm">Цена от и до:</p>
+        <div className="flex items-center justify-between mb-2">
+          <p className="font-bold text-sm">Цена от и до:</p>
+          {(filters.priceRange[0] !== null || filters.priceRange[1] !== null) && (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => updatePriceRange([null, null])}
+              className="text-xs px-2 py-1 h-6 text-gray-500 hover:text-gray-700"
+            >
+              Сбросить
+            </Button>
+          )}
+        </div>
         <div className="flex gap-2 mb-3">
           <Input
             type="number"
-            placeholder="0"
+            placeholder="От"
             min={0}
-            max={50000}
-            value={filters.priceRange[0]}
-            onChange={(e) =>
-              updatePriceRange([Number(e.target.value), filters.priceRange[1]])
-            }
+            max={filters.priceRange[1] !== null ? filters.priceRange[1] : 50000}
+            value={filters.priceRange[0] || ""}
+            onChange={(e) => {
+              const newMin = e.target.value === "" ? null : Number(e.target.value);
+              const newMax = filters.priceRange[1];
+              if (newMin !== null && newMax !== null && newMin >= newMax) {
+                updatePriceRange([newMax - 100, newMax]);
+              } else {
+                updatePriceRange([newMin, newMax]);
+              }
+            }}
             className="text-sm h-8"
           />
           <Input
             type="number"
-            placeholder="50000"
-            min={100}
+            placeholder="До"
+            min={filters.priceRange[0] !== null ? filters.priceRange[0] : 0}
             max={50000}
-            value={filters.priceRange[1]}
-            onChange={(e) =>
-              updatePriceRange([filters.priceRange[0], Number(e.target.value)])
-            }
+            value={filters.priceRange[1] || ""}
+            onChange={(e) => {
+              const newMax = e.target.value === "" ? null : Number(e.target.value);
+              const newMin = filters.priceRange[0];
+              if (newMax !== null && newMin !== null && newMax <= newMin) {
+                updatePriceRange([newMin, newMin + 100]);
+              } else {
+                updatePriceRange([newMin, newMax]);
+              }
+            }}
             className="text-sm h-8"
           />
         </div>
@@ -97,8 +121,8 @@ export const Filters: React.FC<Props> = ({ className }) => {
           min={0}
           max={50000}
           step={100}
-          value={filters.priceRange}
-          onValueChange={updatePriceRange}
+          value={[filters.priceRange[0] || 0, filters.priceRange[1] || 50000]}
+          onValueChange={(range) => updatePriceRange(range)}
         />
       </div>
 

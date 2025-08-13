@@ -63,6 +63,7 @@ interface CreateProductData {
   sortOrder?: number;
   metaTitle?: string;
   metaDescription?: string;
+  brand?: string;
 }
 
 export function AddProductDialog({
@@ -87,8 +88,8 @@ export function AddProductDialog({
     minStockLevel: 5,
     maxStockLevel: 100,
     productType: "knife",
-    material: "stainless_steel",
-    handleType: "fixed",
+    material: undefined,
+    handleType: undefined,
     bladeLength: 0,
     totalLength: 0,
     bladeHardness: 0,
@@ -99,6 +100,7 @@ export function AddProductDialog({
     sortOrder: 0,
     metaTitle: "",
     metaDescription: "",
+    brand: "",
   });
   const [images, setImages] = useState<string[]>([]);
 
@@ -171,6 +173,7 @@ export function AddProductDialog({
         sortOrder: formData.sortOrder || undefined,
         metaTitle: formData.metaTitle || undefined,
         metaDescription: formData.metaDescription || undefined,
+        brand: formData.brand || undefined,
         images: images.map((url, idx) => ({
           url,
           isPrimary: idx === 0,
@@ -201,8 +204,8 @@ export function AddProductDialog({
         minStockLevel: 5,
         maxStockLevel: 100,
         productType: "knife",
-        material: "stainless_steel",
-        handleType: "fixed",
+        material: undefined,
+        handleType: undefined,
         bladeLength: 0,
         totalLength: 0,
         bladeHardness: 0,
@@ -213,6 +216,7 @@ export function AddProductDialog({
         sortOrder: 0,
         metaTitle: "",
         metaDescription: "",
+        brand: "",
       });
       setImages([]); // Сброс изображений
     } catch (error) {
@@ -287,6 +291,21 @@ export function AddProductDialog({
                 required
               />
             </div>
+            
+            {/* Бренд */}
+            <div>
+              <Label htmlFor="brand" className="mb-1 block">
+                Бренд
+              </Label>
+              <Input
+                id="brand"
+                value={formData.brand || ""}
+                onChange={(e) =>
+                  setFormData({ ...formData, brand: e.target.value || undefined })
+                }
+                placeholder="Например: Zwilling, Wüsthof"
+              />
+            </div>
             {/* Категория */}
             <div>
               <Label htmlFor="categoryId" className="mb-1 block">
@@ -331,6 +350,58 @@ export function AddProductDialog({
                 <option value="sheath">Ножны</option>
                 <option value="accessory">Аксессуар</option>
                 <option value="gift_set">Подарочный набор</option>
+              </select>
+            </div>
+            
+            {/* Материал */}
+            <div>
+              <Label htmlFor="material" className="mb-1 block">
+                Материал
+              </Label>
+              <select
+                id="material"
+                value={formData.material || ""}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    material: e.target.value as any || undefined,
+                  })
+                }
+                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                <option value="">Не указан</option>
+                <option value="stainless_steel">Нержавеющая сталь</option>
+                <option value="carbon_steel">Углеродистая сталь</option>
+                <option value="damascus_steel">Дамасская сталь</option>
+                <option value="ceramic">Керамика</option>
+                <option value="titanium">Титан</option>
+                <option value="wood">Дерево</option>
+                <option value="plastic">Пластик</option>
+                <option value="leather">Кожа</option>
+                <option value="synthetic">Синтетика</option>
+              </select>
+            </div>
+            
+            {/* Тип рукояти */}
+            <div>
+              <Label htmlFor="handleType" className="mb-1 block">
+                Тип рукояти
+              </Label>
+              <select
+                id="handleType"
+                value={formData.handleType || ""}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    handleType: e.target.value as any || undefined,
+                  })
+                }
+                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                <option value="">Не указан</option>
+                <option value="fixed">Фиксированная</option>
+                <option value="folding">Складная</option>
+                <option value="multi_tool">Мультитул</option>
               </select>
             </div>
             {/* Цена */}
@@ -425,6 +496,66 @@ export function AddProductDialog({
                   })
                 }
                 min="0"
+              />
+            </div>
+            
+            {/* Длина лезвия */}
+            <div>
+              <Label htmlFor="bladeLength" className="mb-1 block">
+                Длина лезвия (см)
+              </Label>
+              <Input
+                id="bladeLength"
+                type="number"
+                value={formData.bladeLength}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    bladeLength: parseFloat(e.target.value) || 0,
+                  })
+                }
+                min="0"
+                step="0.1"
+              />
+            </div>
+            
+            {/* Общая длина */}
+            <div>
+              <Label htmlFor="totalLength" className="mb-1 block">
+                Общая длина (см)
+              </Label>
+              <Input
+                id="totalLength"
+                type="number"
+                value={formData.totalLength}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    totalLength: parseFloat(e.target.value) || 0,
+                  })
+                }
+                min="0"
+                step="0.1"
+              />
+            </div>
+            
+            {/* Твердость лезвия */}
+            <div>
+              <Label htmlFor="bladeHardness" className="mb-1 block">
+                Твердость лезвия (HRC)
+              </Label>
+              <Input
+                id="bladeHardness"
+                type="number"
+                value={formData.bladeHardness}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    bladeHardness: parseInt(e.target.value) || 0,
+                  })
+                }
+                min="0"
+                max="70"
               />
             </div>
             {/* СЕКЦИЯ ЗАГРУЗКИ ФОТО */}

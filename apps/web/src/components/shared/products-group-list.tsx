@@ -37,8 +37,8 @@ export const ProductsGroupList: React.FC<Props> = ({
           const categoryResponse = await api.products.getProducts({
             categoryId,
             limit: 100,
-            minPrice: filters.priceRange[0],
-            maxPrice: filters.priceRange[1],
+            minPrice: filters.priceRange[0] !== null ? filters.priceRange[0] : undefined,
+            maxPrice: filters.priceRange[1] !== null ? filters.priceRange[1] : undefined,
             search: filters.searchQuery || undefined,
           });
           response = applyFilters(categoryResponse.products);
@@ -89,7 +89,10 @@ export const ProductsGroupList: React.FC<Props> = ({
 
       // Фильтр по цене (уже применяется на сервере, но проверяем еще раз)
       const price = Number(product.price);
-      if (price < filters.priceRange[0] || price > filters.priceRange[1]) {
+      if (filters.priceRange[0] !== null && price < filters.priceRange[0]) {
+        return false;
+      }
+      if (filters.priceRange[1] !== null && price > filters.priceRange[1]) {
         return false;
       }
 
