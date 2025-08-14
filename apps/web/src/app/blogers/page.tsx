@@ -4,7 +4,7 @@ import { Title } from "@/components/shared/title";
 export default function Collaboration() {
   return (
     <>
-      <Container className="mt-10">
+      <Container className="mt-10 px-4 sm:px-6 md:px-10">
         <Title
           text="Сотрудничество с блогерами"
           size="lg"
@@ -12,7 +12,7 @@ export default function Collaboration() {
         />
       </Container>
 
-      <Container className="mt-10 pb-14">
+      <Container className="mt-10 pb-14 px-4 sm:px-6 md:px-10">
         <div className="space-y-6">
           <p className="font-bold">
             Компания Ножи СПБ открыта к сотрудничеству с блогерами!

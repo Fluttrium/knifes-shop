@@ -8,6 +8,7 @@ import { Filters } from "@/components/shared/filters";
 import { FilterProvider } from "@/contexts/filter-context";
 import { Suspense } from "react";
 import api, { Category } from "@repo/api-client";
+import BannerSlider from "@/components/ui/banerSlider";
 
 // Принудительно делаем страницу динамической
 export const dynamic = "force-dynamic";
@@ -69,13 +70,42 @@ export default async function Home() {
   return (
     <FilterProvider>
       {/* Заголовок */}
-      <Container className="mt-6  sm:mt-10  sm:px-0">
-        <Title text="Магазин ножей" size="lg" className="font-extrabold" />
-        <p className="text-gray-600 mt-2">
-          Качественные ножи для кухни, охоты и повседневного использования
-        </p>
-      </Container>
+      <Container className="mt-6 sm:mt-10 sm:px-0">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+          {/* Левый блок — текст */}
+          <div className="text-center sm:text-left">
+            <Title text="Магазин ножей" size="lg" className="font-extrabold" />
+            <p className="text-gray-600 mt-2">
+              Качественные ножи для кухни, охоты и повседневного использования
+            </p>
+          </div>
 
+          {/* Правый блок — телефон */}
+          <div className="flex justify-center sm:justify-end mt-4 sm:mt-0 sm:pr-6 w-full sm:w-auto">
+            <a
+              href="tel:+79214570057"
+              className="flex items-center bg-gray-100 hover:bg-gray-200 transition-all duration-200 px-4 py-2 rounded-lg text-gray-700 shadow-sm hover:shadow-md"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5 mr-2 text-gray-500 group-hover:scale-110 transition-transform"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M2 5.5A3.5 3.5 0 015.5 2h.8a1 1 0 01.97.757l.7 2.8a1 1 0 01-.27.95l-1.2 1.2a16 16 0 006.8 6.8l1.2-1.2a1 1 0 01.95-.27l2.8.7a1 1 0 01.757.97v.8A3.5 3.5 0 0118.5 22h-1A15.5 15.5 0 012 6.5v-1z"
+                />
+              </svg>
+              +7 921 457-00-57
+            </a>
+          </div>
+
+        </div>
+      </Container>
       {/* Поиск */}
       <Container className=" lg:hidden mt-6 px-4 sm:px-0">
         <SearchBar className="max-w-md" />
@@ -87,7 +117,7 @@ export default async function Home() {
           <TopBar categories={categories} />
         </div>
       </Container>
-
+      <BannerSlider />
       {/*/!* Stories *!/*/}
       {/*<Container className="mt-10">*/}
       {/*  <div className="overflow-x-auto px-4 sm:px-0">*/}

@@ -4,12 +4,12 @@ import { Title } from "@/components/shared/title";
 export default function Warranty() {
   return (
     <>
-      <Container className="mt-10">
+      <Container className="mt-10 px-4 sm:px-6 md:px-10">
         <Title text="Гарантия" size="lg" className="font-extrabold" />
       </Container>
 
-      <Container className="mt-10 pb-14">
-        <div className="space-y-6">
+      <Container className="mt-10 pb-14 px-4 sm:px-6 md:px-10">
+        <div className="space-y-4 sm:space-y-6 text-sm sm:text-base">
           <p>
             Гарантия — это важный вопрос для каждого клиента. Мы понимаем, что
             при покупке ножей вы ожидаете, что они будут служить долго и

@@ -69,41 +69,14 @@ export const Footer: React.FC = () => {
 
           {/* Каталог */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">Каталог</h3>
-            <ul className="space-y-2">
-              <li>
-                <Link
-                  href="/knives"
-                  className="text-gray-300 hover:text-white transition-colors"
-                >
-                  Кухонные ножи
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/accessories"
-                  className="text-gray-300 hover:text-white transition-colors"
-                >
-                  Аксессуары
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/sharpening"
-                  className="text-gray-300 hover:text-white transition-colors"
-                >
-                  Заточка ножей
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/sets"
-                  className="text-gray-300 hover:text-white transition-colors"
-                >
-                  Наборы ножей
-                </Link>
-              </li>
-            </ul>
+            <h3 className="text-lg font-semibold mb-4">Способы оплаты</h3>
+            <Image
+              src="/ic_visa_mastercard_mir.png"
+              alt="Способы оплаты: Visa, MasterCard, МИР"
+              width={200} // подбери нужный размер
+              height={40}
+              className="object-cover"
+            />
           </div>
 
           {/* Информация */}

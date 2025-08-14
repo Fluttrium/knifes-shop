@@ -145,9 +145,9 @@ export const Header: React.FC<Props> = ({
               <ul className="flex flex-col items-center space-y-4 text-lg">
                 <li className="flex items-center space-x-2 font-bold">
                   <FaFolderOpen />
-                  <Link href="/catalog" onClick={handleMenuClose}>
+                  <p>
                     Каталог
-                  </Link>
+                  </p>
                 </li>
                 <li>
                   <Link href="/company" onClick={handleMenuClose}>
@@ -177,11 +177,6 @@ export const Header: React.FC<Props> = ({
                 <li>
                   <Link href="/discounts" onClick={handleMenuClose}>
                     Скидки
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/certificates" onClick={handleMenuClose}>
-                    Сертификаты
                   </Link>
                 </li>
                 <li>

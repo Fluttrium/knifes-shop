@@ -4,12 +4,12 @@ import { Title } from "@/components/shared/title";
 export default function ReturnAndExchange() {
   return (
     <>
-      <Container className="mt-10">
+      <Container className="mt-10 pb-4 px-4 sm:px-6 md:px-10">
         <Title text="Возврат и обмен" size="lg" className="font-extrabold" />
       </Container>
 
-      <Container className="mt-10 pb-14">
-        <div className="space-y-6">
+      <Container className="pb-14 px-4 sm:px-6 md:px-10">
+        <div className="space-y-4 sm:space-y-6 text-sm sm:text-base">
           <p>
             Если покупатель обнаружит какие-либо недостатки товара, он имеет
             право вернуть его в течение 7 дней со дня покупки. Если продавец не

@@ -4,11 +4,11 @@ import { Title } from "@/components/shared/title";
 export default function Contacts() {
   return (
     <>
-      <Container className="mt-10">
+      <Container className="mt-10 px-4 sm:px-6 md:px-10">
         <Title text="Контакты" size="lg" className="font-extrabold" />
       </Container>
 
-      <Container className="mt-10 pb-14">
+      <Container className="mt-10 pb-14 px-4 sm:px-6 md:px-10">
         <div className="space-y-6">
           <p className="font-bold">Название компании: ООО «Fluttrium»</p>
           <p>

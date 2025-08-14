@@ -4,12 +4,11 @@ import { Title } from "@/components/shared/title";
 export default function Discounts() {
   return (
     <>
-      <Container className="mt-10">
+      <Container className="mt-10 px-4 sm:px-6 md:px-10">
         <Title text="Скидки" size="lg" className="font-extrabold" />
       </Container>
-
-      <Container className="mt-10 pb-14">
-        <div className="space-y-6">
+      <Container className="mt-10 pb-14 px-4 sm:px-6 md:px-10">
+        <div className="space-y-4 sm:space-y-6 text-sm sm:text-base">
           <p>
             Добро пожаловать в Ножи СПБ! Мы всегда стремимся вознаградить наших
             постоянных клиентов, и поэтому у нас действует специальная система
