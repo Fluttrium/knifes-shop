@@ -25,6 +25,9 @@ export const metadata: Metadata = {
   description:
     "Бесплатная доставка по РФ. Качественные ножи и кухонные принадлежности",
   keywords: ["ножи", "кухонные ножи", "СПБ", "доставка"],
+  icons: {
+    icon: "/logo1.png", // путь к иконке в public/
+  },
 };
 
 export default function RootLayout({
