@@ -1,5 +1,5 @@
 import { User } from "./types/auth";
-import instance from "./config";
+import instance from "./config.js";
 
 export class UserService {
   async getAllUsers(): Promise<User[]> {

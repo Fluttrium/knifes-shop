@@ -5,7 +5,7 @@ import {
   AdminPaymentFilterDto,
   AdminUpdatePaymentStatusDto,
 } from "./types/payment";
-import instance from "./config";
+import instance from "./config.js";
 
 export class PaymentService {
   async createPayment(paymentData: CreatePaymentDto): Promise<Payment> {

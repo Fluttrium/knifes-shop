@@ -6,7 +6,7 @@ import {
   ProductQueryDto,
   Category,
 } from "./types/product";
-import instance from "./config";
+import instance from "./config.js";
 
 export class ProductService {
   // Пользовательские методы
@@ -15,7 +15,14 @@ export class ProductService {
     if (query) {
       Object.entries(query).forEach(([key, value]) => {
         if (value !== undefined) {
-          params.append(key, value.toString());
+          if (Array.isArray(value)) {
+            // Для массивов добавляем каждый элемент отдельно
+            value.forEach(item => {
+              params.append(key, item.toString());
+            });
+          } else {
+            params.append(key, value.toString());
+          }
         }
       });
     }
@@ -70,7 +77,14 @@ export class ProductService {
     if (query) {
       Object.entries(query).forEach(([key, value]) => {
         if (value !== undefined) {
-          params.append(key, value.toString());
+          if (Array.isArray(value)) {
+            // Для массивов добавляем каждый элемент отдельно
+            value.forEach(item => {
+              params.append(key, item.toString());
+            });
+          } else {
+            params.append(key, value.toString());
+          }
         }
       });
     }
@@ -116,7 +130,14 @@ export class ProductService {
     if (query) {
       Object.entries(query).forEach(([key, value]) => {
         if (value !== undefined) {
-          params.append(key, value.toString());
+          if (Array.isArray(value)) {
+            // Для массивов добавляем каждый элемент отдельно
+            value.forEach(item => {
+              params.append(key, item.toString());
+            });
+          } else {
+            params.append(key, value.toString());
+          }
         }
       });
     }

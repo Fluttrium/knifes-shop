@@ -5,8 +5,9 @@ import {
   IsNumber,
   IsEnum,
   IsBoolean,
+  IsArray,
 } from 'class-validator';
-import { Type } from 'class-transformer';
+import { Type, Transform } from 'class-transformer';
 import { ProductType, Material, HandleType } from '@prisma/client';
 
 export class ProductQueryDto {
@@ -45,12 +46,23 @@ export class ProductQueryDto {
   categoryId?: string;
 
   @ApiPropertyOptional({
-    description: 'Бренд для фильтрации',
-    example: 'Zwilling',
+    description: 'Бренды для фильтрации (массив)',
+    example: ['Zwilling', 'Wüsthof'],
+    type: [String],
   })
   @IsOptional()
-  @IsString()
-  brand?: string;
+  @Transform(({ value }) => {
+    if (typeof value === 'string') {
+      return [value];
+    }
+    if (Array.isArray(value)) {
+      return value;
+    }
+    return undefined;
+  })
+  @IsArray()
+  @IsString({ each: true })
+  brands?: string[];
 
   @ApiPropertyOptional({
     description: 'Тип товара для фильтрации',

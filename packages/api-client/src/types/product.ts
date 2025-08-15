@@ -131,7 +131,7 @@ export interface ProductQueryDto {
   categoryId?: string;
   minPrice?: number;
   maxPrice?: number;
-  brand?: string;
+  brands?: string[];
   isActive?: boolean;
   isFeatured?: boolean;
   sortBy?: "name" | "price" | "createdAt" | "rating";

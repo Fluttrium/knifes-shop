@@ -4,7 +4,7 @@ import {
   RegisterRequest,
   User,
 } from "./types/auth";
-import instance from "./config";
+import instance from "./config.js";
 
 export class AuthService {
   async login(userData: LoginRequest): Promise<AuthResponse> {

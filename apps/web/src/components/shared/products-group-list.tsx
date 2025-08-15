@@ -34,13 +34,18 @@ export const ProductsGroupList: React.FC<Props> = ({
           response = applyFilters(saleProducts);
         } else {
           // Получаем товары по категории с фильтрами
+          const brandsParam = filters.selectedBrands.size > 0 ? 
+            Array.from(filters.selectedBrands) : undefined;
+          
           const categoryResponse = await api.products.getProducts({
             categoryId,
             limit: 100,
             minPrice: filters.priceRange[0] !== null ? filters.priceRange[0] : undefined,
             maxPrice: filters.priceRange[1] !== null ? filters.priceRange[1] : undefined,
             search: filters.searchQuery || undefined,
+            brands: brandsParam,
           });
+          
           response = applyFilters(categoryResponse.products);
         }
 
@@ -65,24 +70,26 @@ export const ProductsGroupList: React.FC<Props> = ({
   // Функция для применения фильтров на клиентской стороне
   const applyFilters = (products: Product[]): Product[] => {
     return products.filter((product) => {
-      // Фильтр по брендам
-      if (filters.selectedBrands.size > 0 && product.brand) {
-        const brandValue = product.brand.toLowerCase().replace(/\s+/g, "_");
-        if (!filters.selectedBrands.has(brandValue)) {
-          return false;
-        }
-      }
+      // Фильтр по брендам уже применяется на сервере, поэтому пропускаем
 
       // Фильтр по материалам
       if (filters.selectedMaterials.size > 0 && product.material) {
-        if (!filters.selectedMaterials.has(product.material)) {
+        const selectedMaterialsArray = Array.from(filters.selectedMaterials);
+        const hasMatchingMaterial = selectedMaterialsArray.some(selectedMaterial => 
+          selectedMaterial === product.material
+        );
+        if (!hasMatchingMaterial) {
           return false;
         }
       }
 
       // Фильтр по типам товаров
       if (filters.selectedTypes.size > 0) {
-        if (!filters.selectedTypes.has(product.productType)) {
+        const selectedTypesArray = Array.from(filters.selectedTypes);
+        const hasMatchingType = selectedTypesArray.some(selectedType => 
+          selectedType === product.productType
+        );
+        if (!hasMatchingType) {
           return false;
         }
       }

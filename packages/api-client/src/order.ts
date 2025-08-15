@@ -11,7 +11,7 @@ import {
   UpdateParcelDto,
   Address,
 } from "./types/order";
-import instance from "./config";
+import instance from "./config.js";
 
 export class OrderService {
   // Пользовательские методы

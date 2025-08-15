@@ -68,7 +68,7 @@ export const FilterProvider: React.FC<{ children: React.ReactNode }> = ({
         const brandsData = await api.products.getBrands();
         const brandsOptions = brandsData.map((brand) => ({
           text: brand,
-          value: brand.toLowerCase().replace(/\s+/g, "_"),
+          value: brand, // Сохраняем оригинальное значение бренда
         }));
 
         // Материалы из enum
@@ -98,14 +98,10 @@ export const FilterProvider: React.FC<{ children: React.ReactNode }> = ({
         setTypes(typesOptions);
       } catch (error) {
         console.error("Ошибка при загрузке данных фильтров:", error);
-        // Fallback к базовым данным
+        // Fallback к базовым данным (используем реальные бренды из БД)
         setBrands([
-          { text: "Zwilling", value: "zwilling" },
-          { text: "Wüsthof", value: "wusthof" },
-          { text: "Buck Knives", value: "buck" },
-          { text: "Spyderco", value: "spyderco" },
-          { text: "Chef's Choice", value: "chefs_choice" },
-          { text: "Condor", value: "condor" },
+          { text: "Brand Test 1", value: "brandTest1" },
+          { text: "Brand Test 2", value: "brandTest2" },
         ]);
         setMaterials([
           { text: "Нержавеющая сталь", value: "stainless_steel" },

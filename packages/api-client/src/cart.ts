@@ -6,7 +6,7 @@ import {
   CartResponse,
   WishlistResponse,
 } from "./types/cart";
-import instance from "./config";
+import instance from "./config.js";
 
 export class CartService {
   // Корзина

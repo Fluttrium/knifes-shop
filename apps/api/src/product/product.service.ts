@@ -17,7 +17,7 @@ export class ProductService {
       limit = 20,
       search,
       categoryId,
-      brand,
+      brands,
       productType,
       material,
       handleType,
@@ -50,8 +50,8 @@ export class ProductService {
       where.categoryId = categoryId;
     }
 
-    if (brand) {
-      where.brand = { contains: brand, mode: 'insensitive' };
+    if (brands && brands.length > 0) {
+      where.brand = { in: brands };
     }
 
     if (productType) {

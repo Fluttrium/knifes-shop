@@ -57,6 +57,9 @@ interface ProductsTableProps {
 
 interface EditProductData {
   name: string;
+  slug: string;
+  sku: string;
+  brand?: string;
   description?: string;
   shortDescription?: string;
   categoryId: string;
@@ -100,6 +103,9 @@ export function ProductsTable({
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [editData, setEditData] = useState<EditProductData>({
     name: "",
+    slug: "",
+    sku: "",
+    brand: "",
     description: "",
     shortDescription: "",
     categoryId: "",
@@ -180,6 +186,9 @@ export function ProductsTable({
     setEditingProduct(product);
     setEditData({
       name: product.name,
+      slug: product.slug,
+      sku: product.sku,
+      brand: product.brand || "",
       description: product.description || "",
       shortDescription: product.shortDescription || "",
       categoryId: product.categoryId,
@@ -249,6 +258,9 @@ export function ProductsTable({
       // Подготавливаем данные для отправки, исключая id и конвертируя числовые поля
       const updateData = {
         name: editData.name,
+        slug: editData.slug,
+        sku: editData.sku,
+        brand: editData.brand || undefined,
         description: editData.description,
         shortDescription: editData.shortDescription,
         categoryId: editData.categoryId,
@@ -606,6 +618,46 @@ export function ProductsTable({
               />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="slug" className="text-right">
+                Slug
+              </Label>
+              <Input
+                id="slug"
+                value={editData.slug}
+                onChange={(e) =>
+                  setEditData({ ...editData, slug: e.target.value })
+                }
+                className="col-span-3"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="sku" className="text-right">
+                SKU
+              </Label>
+              <Input
+                id="sku"
+                value={editData.sku}
+                onChange={(e) =>
+                  setEditData({ ...editData, sku: e.target.value })
+                }
+                className="col-span-3"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="brand" className="text-right">
+                Бренд
+              </Label>
+              <Input
+                id="brand"
+                value={editData.brand || ""}
+                onChange={(e) =>
+                  setEditData({ ...editData, brand: e.target.value })
+                }
+                className="col-span-3"
+                placeholder="Например: Zwilling, Wüsthof"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="categoryId" className="text-right">
                 Категория
               </Label>
@@ -623,6 +675,76 @@ export function ProductsTable({
                     {category.name}
                   </option>
                 ))}
+              </select>
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="productType" className="text-right">
+                Тип товара
+              </Label>
+              <select
+                id="productType"
+                value={editData.productType}
+                onChange={(e) =>
+                  setEditData({
+                    ...editData,
+                    productType: e.target.value as any,
+                  })
+                }
+                className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                <option value="knife">Нож</option>
+                <option value="sharpener">Точилка</option>
+                <option value="sheath">Ножны</option>
+                <option value="accessory">Аксессуар</option>
+                <option value="gift_set">Подарочный набор</option>
+              </select>
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="material" className="text-right">
+                Материал
+              </Label>
+              <select
+                id="material"
+                value={editData.material || ""}
+                onChange={(e) =>
+                  setEditData({
+                    ...editData,
+                    material: e.target.value as any || undefined,
+                  })
+                }
+                className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                <option value="">Не указан</option>
+                <option value="stainless_steel">Нержавеющая сталь</option>
+                <option value="carbon_steel">Углеродистая сталь</option>
+                <option value="damascus_steel">Дамасская сталь</option>
+                <option value="ceramic">Керамика</option>
+                <option value="titanium">Титан</option>
+                <option value="wood">Дерево</option>
+                <option value="plastic">Пластик</option>
+                <option value="leather">Кожа</option>
+                <option value="synthetic">Синтетика</option>
+              </select>
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="handleType" className="text-right">
+                Тип рукояти
+              </Label>
+              <select
+                id="handleType"
+                value={editData.handleType || ""}
+                onChange={(e) =>
+                  setEditData({
+                    ...editData,
+                    handleType: e.target.value as any || undefined,
+                  })
+                }
+                className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                <option value="">Не указан</option>
+                <option value="fixed">Фиксированная</option>
+                <option value="folding">Складная</option>
+                <option value="multi_tool">Мультитул</option>
               </select>
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
@@ -694,6 +816,42 @@ export function ProductsTable({
               />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="minStockLevel" className="text-right">
+                Минимальный запас
+              </Label>
+              <Input
+                id="minStockLevel"
+                type="number"
+                value={editData.minStockLevel}
+                onChange={(e) =>
+                  setEditData({
+                    ...editData,
+                    minStockLevel: parseInt(e.target.value) || 5,
+                  })
+                }
+                className="col-span-3"
+                min="0"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="maxStockLevel" className="text-right">
+                Максимальный запас
+              </Label>
+              <Input
+                id="maxStockLevel"
+                type="number"
+                value={editData.maxStockLevel}
+                onChange={(e) =>
+                  setEditData({
+                    ...editData,
+                    maxStockLevel: parseInt(e.target.value) || 100,
+                  })
+                }
+                className="col-span-3"
+                min="0"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="weight" className="text-right">
                 Вес (г)
               </Label>
@@ -721,6 +879,63 @@ export function ProductsTable({
                   setEditData({ ...editData, dimensions: e.target.value })
                 }
                 className="col-span-3"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="bladeLength" className="text-right">
+                Длина лезвия (см)
+              </Label>
+              <Input
+                id="bladeLength"
+                type="number"
+                value={editData.bladeLength}
+                onChange={(e) =>
+                  setEditData({
+                    ...editData,
+                    bladeLength: parseFloat(e.target.value) || 0,
+                  })
+                }
+                className="col-span-3"
+                min="0"
+                step="0.1"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="totalLength" className="text-right">
+                Общая длина (см)
+              </Label>
+              <Input
+                id="totalLength"
+                type="number"
+                value={editData.totalLength}
+                onChange={(e) =>
+                  setEditData({
+                    ...editData,
+                    totalLength: parseFloat(e.target.value) || 0,
+                  })
+                }
+                className="col-span-3"
+                min="0"
+                step="0.1"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="bladeHardness" className="text-right">
+                Твердость лезвия (HRC)
+              </Label>
+              <Input
+                id="bladeHardness"
+                type="number"
+                value={editData.bladeHardness}
+                onChange={(e) =>
+                  setEditData({
+                    ...editData,
+                    bladeHardness: parseInt(e.target.value) || 0,
+                  })
+                }
+                className="col-span-3"
+                min="0"
+                max="70"
               />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
@@ -752,6 +967,52 @@ export function ProductsTable({
               />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="sortOrder" className="text-right">
+                Порядок сортировки
+              </Label>
+              <Input
+                id="sortOrder"
+                type="number"
+                value={editData.sortOrder}
+                onChange={(e) =>
+                  setEditData({
+                    ...editData,
+                    sortOrder: parseInt(e.target.value) || 0,
+                  })
+                }
+                className="col-span-3"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="metaTitle" className="text-right">
+                Meta Title
+              </Label>
+              <Input
+                id="metaTitle"
+                value={editData.metaTitle || ""}
+                onChange={(e) =>
+                  setEditData({ ...editData, metaTitle: e.target.value })
+                }
+                className="col-span-3"
+                placeholder="SEO заголовок страницы"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="metaDescription" className="text-right">
+                Meta Description
+              </Label>
+              <Textarea
+                id="metaDescription"
+                value={editData.metaDescription || ""}
+                onChange={(e) =>
+                  setEditData({ ...editData, metaDescription: e.target.value })
+                }
+                className="col-span-3"
+                rows={2}
+                placeholder="SEO описание страницы"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
               <Label className="text-right">Статусы</Label>
               <div className="col-span-3 space-y-2">
                 <div className="flex items-center space-x-2">
@@ -777,6 +1038,30 @@ export function ProductsTable({
                     className="h-4 w-4"
                   />
                   <Label htmlFor="isFeatured">Рекомендуемый</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <input
+                    type="checkbox"
+                    id="isNew"
+                    checked={editData.isNew}
+                    onChange={(e) =>
+                      setEditData({ ...editData, isNew: e.target.checked })
+                    }
+                    className="h-4 w-4"
+                  />
+                  <Label htmlFor="isNew">Новый товар</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <input
+                    type="checkbox"
+                    id="isOnSale"
+                    checked={editData.isOnSale}
+                    onChange={(e) =>
+                      setEditData({ ...editData, isOnSale: e.target.checked })
+                    }
+                    className="h-4 w-4"
+                  />
+                  <Label htmlFor="isOnSale">На распродаже</Label>
                 </div>
               </div>
             </div>

@@ -1,10 +1,10 @@
-import { AuthService } from "./auth";
-import { UserService } from "./user";
-import { ProductService } from "./product";
-import { OrderService } from "./order";
-import { CartService } from "./cart";
-import { PaymentService } from "./payment";
-import { uploadApi } from "./upload";
+import { AuthService } from "./auth.js";
+import { UserService } from "./user.js";
+import { ProductService } from "./product.js";
+import { OrderService } from "./order.js";
+import { CartService } from "./cart.js";
+import { PaymentService } from "./payment.js";
+import { uploadApi } from "./upload.js";
 
 const authService = new AuthService();
 const userService = new UserService();
