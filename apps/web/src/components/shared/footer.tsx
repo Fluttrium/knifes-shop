@@ -23,7 +23,7 @@ export const Footer: React.FC = () => {
               <div className="flex space-x-3">
                 {/* ВК */}
                 <a
-                    href="https://knivesspb.fluttrium.com"
+                    href="https://vk.com/club232150298"
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="VK"
